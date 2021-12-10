@@ -1,0 +1,62 @@
+Connessione: vuoi giocare? s/n
+
+	c;nome_giocatore1 //richiesta di connessione per giocare
+	
+Risposta:
+
+	y;c;nome_giocatore2
+	n;c
+	
+Scelta colore:
+	
+	(giocatore1):*
+	sc;colore
+	
+	(giocatore2):
+	y;sc
+	n;sc;l(rilancia colore*) o d(si disconnette)
+	
+Regole:
+	
+	(giocatore1):*
+	
+	//count è un contatore che parte da 0 e quando arriva a 5 si chiude la connessione
+	
+	//amichevole=0 -> no tempo, si aiuti, no punteggio
+	r;count;0
+	
+	//competitiva=1 -> tempo=10 minuti, no aiuti, vinci=+100punti, perdi=-100punti 
+	r;count;1
+	
+	//personalizzata=2 -> no punteggio, tiposcacchi: è la disposizione della scacchiera(standard,Scacchi960)
+	r;count;2;tempo;aiuti;tipoScacchi
+	
+	(giocatore2):
+	
+	y;r;
+	n;r;l(lancia) o d(disconnette)
+	
+	//se giocatore2 rifiuta può lanciare una proposta seguendo lo schema sopra* o disconnettersi
+
+Avvio gioco:
+
+	(chi ha il bianco):
+	m;daPos;aPos;inizialeStandardEnglish;arresa;patta	
+	
+	(patta):
+	y;m;->finisce la partita in parità
+	n;m;->si continua la partita
+	
+	(vittoria/sconfitta)
+	fp; //controllo automatico vittoria o sconfitta	
+	
+Rivincita:
+	
+	a;->voglio rigiocare
+	
+	y;a-->il colore si inverte e si riavvia la partita
+	n;a-->chiusura partita	
+
+Chiusura:
+
+	d;
