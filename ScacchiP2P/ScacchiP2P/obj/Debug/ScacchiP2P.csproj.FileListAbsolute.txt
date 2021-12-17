@@ -1,0 +1,15 @@
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\bin\Debug\ScacchiP2P.exe.config
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\bin\Debug\ScacchiP2P.exe
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\bin\Debug\ScacchiP2P.pdb
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.csproj.AssemblyReference.cache
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\MainWindow.g.cs
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\App.g.cs
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P_MarkupCompile.cache
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P_MarkupCompile.lref
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\MainWindow.baml
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.g.resources
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.Properties.Resources.resources
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.csproj.GenerateResource.cache
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.csproj.CoreCompileInputs.cache
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.exe
+E:\Skorolitniy\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.pdb
