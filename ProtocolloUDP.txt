@@ -1,3 +1,4 @@
+Porta di ascolto: 42069
 Connessione: vuoi giocare? s/n
 
 	c;nome_giocatore1 //richiesta di connessione per giocare
@@ -42,6 +43,7 @@ Avvio gioco:
 
 	(chi ha il bianco):
 	m;daPos;aPos;inizialeStandardEnglish;arresa;patta	
+	m;a1;a2;R;false;false //esempio
 	
 	(patta):
 	y;m;->finisce la partita in parità
