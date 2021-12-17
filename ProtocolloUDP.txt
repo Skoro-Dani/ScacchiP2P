@@ -12,6 +12,7 @@ Scelta colore:
 	
 	(giocatore1):*
 	sc;colore
+	string colore -> bianco o nero //esempio
 	
 	(giocatore2):
 	y;sc
