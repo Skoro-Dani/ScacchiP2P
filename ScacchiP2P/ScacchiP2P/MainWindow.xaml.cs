@@ -30,8 +30,9 @@ namespace ScacchiP2P
         private void Click(object sender, MouseButtonEventArgs e)
         {
             //e.GetPosition((IInputElement)sender)
-            int x = (int)e.GetPosition((IInputElement)sender).X / 50;
-            int y = ((int)e.GetPosition((IInputElement)sender).Y/ 50 );
+            char[] a = { 'A', 'B', 'C', 'D', 'E', 'F', 'G','H' };
+            int x = (int)e.GetPosition((IInputElement)sender).X / (int)(Scacchiera.Width/8);
+            int y = (int)e.GetPosition((IInputElement)sender).Y/ (int)(Scacchiera.Height/8);
 
             if (Dati.PezzoGiocante.Equals("bianco"))
             {
@@ -51,8 +52,8 @@ namespace ScacchiP2P
 
                 }
             }
-            MessageBox.Show(Dati.Scacchieram[x,y].ToString());
-
+            y += 1;
+            MessageBox.Show(a[x]+""+ y);
         }
     }
 }
