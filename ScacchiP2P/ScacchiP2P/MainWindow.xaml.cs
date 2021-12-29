@@ -20,11 +20,11 @@ namespace ScacchiP2P
     /// </summary>
     public partial class MainWindow : Window
     {
-        DatiCondivisi Dati = new DatiCondivisi();
+        DatiCondivisi Dati = DatiCondivisi.Istanza;
         public MainWindow()
         {
             InitializeComponent();
-            Dati.PezzoGiocante = "bianco";
+            Dati.ColoreGiocante = "bianco";
         }
 
         private void Click(object sender, MouseButtonEventArgs e)
@@ -34,7 +34,7 @@ namespace ScacchiP2P
             int x = (int)e.GetPosition((IInputElement)sender).X / (int)(Scacchiera.Width/8);
             int y = (int)e.GetPosition((IInputElement)sender).Y/ (int)(Scacchiera.Height/8);
 
-            if (Dati.PezzoGiocante.Equals("bianco"))
+            if (Dati.ColoreGiocante.Equals("bianco"))
             {
                 y -= 7;
                 if (y < 0)
