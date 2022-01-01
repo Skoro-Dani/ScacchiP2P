@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace ScacchiP2P
 {
@@ -26,11 +27,34 @@ namespace ScacchiP2P
                 _Colore = value;
             }
         }
+        private string img_;
+        public string img { get { return img_; } set { img_ = value; } }
+
+        public Pezzo()
+        {
+            Nome = InizialePezzo.Vuoto;
+            Colore = inColore.nulla;
+        }
 
         public Pezzo(InizialePezzo Nome, inColore Colore)
         {
             this.Nome = Nome;
             this.Colore = Colore;
+            img = "component/PNGPezzi/ReBiancoS.jpg";
+            //img = Image.FromFile("D:\\GitHub\\ScacchiP2P\\ScacchiP2P\\ScacchiP2P\\PNGPezzi\\ReBiancoS.jpg");
+            /*switch(Nome)
+            {
+                case InizialePezzo.Pedone:
+                    if(Colore==inColore.Bianco)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                    break;
+            }*/
         }
         public enum InizialePezzo
         {
@@ -40,11 +64,13 @@ namespace ScacchiP2P
             Torre = 'R',
             Regina = 'Q',
             Re = 'K',
+            Vuoto= ' ',
         }
         public enum inColore
         {
             Bianco = 'b',
             Nero = 'n',
+            nulla = ' ',
         }
 
 

@@ -27,20 +27,6 @@ namespace ScacchiP2P
                 }
             }
         }
-        //Scacchiera -> classe che contiene tutti i dati della scacchiera con le relative posizioni dei pezzi
-        private static object LockIScacchiera = new object();
-        private Scacchiera Scacchiera_;
-        public Scacchiera Scacchiera
-        {
-            get { lock (LockIScacchiera) { return Scacchiera_; } }
-            set
-            {
-                lock (LockIScacchiera)
-                {
-                    Scacchiera_ = value;
-                }
-            }
-        }
         //lista Dati ricevuti dal listener
         private static object LockDatiRL = new object();
         private List<string> DatiRL_;

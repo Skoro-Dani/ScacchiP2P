@@ -102,11 +102,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="PNGScacchiera\" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Standard.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="PNGPezzi\" />
-    <Folder Include="PNGScacchiera\" />
+    <Resource Include="PNGPezzi\ReBiancoS.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

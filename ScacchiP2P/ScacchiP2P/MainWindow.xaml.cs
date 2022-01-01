@@ -21,18 +21,20 @@ namespace ScacchiP2P
     public partial class MainWindow : Window
     {
         DatiCondivisi Dati = DatiCondivisi.Istanza;
+        Scacchiera sc = Scacchiera.Istanza;
         public MainWindow()
         {
             InitializeComponent();
             Dati.ColoreGiocante = "bianco";
+            
         }
 
         private void Click(object sender, MouseButtonEventArgs e)
         {
             //e.GetPosition((IInputElement)sender)
             char[] a = { 'A', 'B', 'C', 'D', 'E', 'F', 'G','H' };
-            int x = (int)e.GetPosition((IInputElement)sender).X / (int)(Scacchiera.Width/8);
-            int y = (int)e.GetPosition((IInputElement)sender).Y/ (int)(Scacchiera.Height/8);
+            int x = (int)e.GetPosition((IInputElement)sender).X / (int)(ScacchieraRet.Width/8);
+            int y = (int)e.GetPosition((IInputElement)sender).Y/ (int)(ScacchieraRet.Height/8);
 
             if (Dati.ColoreGiocante.Equals("bianco"))
             {
@@ -54,6 +56,15 @@ namespace ScacchiP2P
             }
             y += 1;
             MessageBox.Show(a[x]+""+ y);
+            Image img = new Image();
+            string image = "/ScacchiP;" + sc.getPezzo(x, y-1).img;
+            img.Source = new BitmapImage(new Uri(image, UriKind.Relative));
+            ScacchieraRet.Children.Add(img);
+            Canvas.SetTop(img, (double)x);
+            Canvas.SetLeft(img, (double)y + 1);
+
+
+
         }
     }
 }
