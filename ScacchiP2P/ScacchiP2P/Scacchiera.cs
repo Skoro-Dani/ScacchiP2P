@@ -33,6 +33,12 @@ namespace ScacchiP2P
         private static object LockPunti = new object();
         private bool Punti_;
         public bool Punti { get { lock (LockPunti) { return Punti_; } } set { lock (LockPunti) { Punti_ = value; } } }
+        //MosseU->lista delle mosse attuate dall'utente
+        private static object LockMossaBianco = new object();
+        private List<string> MosseBianco;
+        //MosseA->lista delle mosse attuate dall'utente
+        private static object LockMossaNero = new object();
+        private List<string> MosseNero;
 
         private Scacchiera()
         {
@@ -40,6 +46,8 @@ namespace ScacchiP2P
             TipoGioco = "standard";
             tempo = 0;
             GeneraScacchiera();
+            MosseBianco = new List<string>();
+            MosseNero = new List<string>();
         }
 
         public static Scacchiera Istanza
@@ -136,6 +144,34 @@ namespace ScacchiP2P
             else
                 Colore = "bianco";
         }
+        public void AddMosseU(string mossa)
+        {
+            lock (LockMossaBianco)
+            {
+                MosseBianco.Add(mossa);
+            }
+        }
+        public void AddMosseA(string mossa)
+        {
+            lock (LockMossaNero)
+            {
+                MosseNero.Add(mossa);
+            }
+        }
 
+        public List<string> GetListMosseU()
+        {
+            lock (LockMossaBianco)
+            {
+                return MosseBianco;
+            }
+        }
+        public List<string> GetListMosseA()
+        {
+            lock (LockMossaNero)
+            {
+                return MosseNero;
+            }
+        }
     }
 }

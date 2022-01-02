@@ -55,7 +55,14 @@ namespace ScacchiP2P
         private static object LockPartitaStart = new object();
         private bool PartitaStart_;
         public bool PartitaStart { get { lock (LockPartitaStart) { return PartitaStart_; } } set { lock (LockPartitaStart) { PartitaStart_ = value; } } }
-
+        //Nome Del giocatore che gioca
+        private static object LockNome = new object();
+        private string Nome_;
+        public string Nome { get { lock (LockNome) { return Nome_; } } set { lock (LockNome) { Nome_ = value; } } }
+        //Count contatore delle regole
+        private static object LockCount = new object();
+        private int Count_;
+        public int Count { get { lock (LockCount) { return Count_; } } set { lock (LockCount) { Count_ = value; } } }
 
 
 
@@ -171,6 +178,7 @@ namespace ScacchiP2P
             Flag = false;
             w = MainWindow.GetMainWindow();
             PartitaStart = false;
+            Count = 0;
         }
     }
 }

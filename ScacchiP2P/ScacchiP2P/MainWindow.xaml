@@ -5,32 +5,80 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScacchiP2P"
         mc:Ignorable="d"
-        Title="MainWindow" Height="604.501" Width="771.723">
+        Title="MainWindow" Height="601.501" Width="837.723">
     <Window.Background>
         <ImageBrush/>
     </Window.Background>
     <Grid Background="#FF151515">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="59*"/>
+            <RowDefinition Height="454*"/>
+            <RowDefinition Height="58*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="272*"/>
-            <ColumnDefinition Width="283*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="455*"/>
+            <ColumnDefinition Width="34*"/>
+            <ColumnDefinition Width="291*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="lbl_nomesfidante" Content="Sfidante" HorizontalAlignment="Left" Margin="73,24,0,0" VerticalAlignment="Top" Width="199" Foreground="White"/>
-        <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="400" Margin="130,82,0,0" VerticalAlignment="Top" Width="226" Background="#FF1B1B1B">
-            <TabItem Header="Partita">
-                <Grid Background="#FF1B1919">
+        <Label x:Name="lbl_nomesfidante" Content="Sfidante" HorizontalAlignment="Left" Margin="2,24,0,0" VerticalAlignment="Top" Width="199" Foreground="White" Height="26" Grid.Column="1"/>
+        <TabControl Grid.Column="3" HorizontalAlignment="Left" Height="448" Margin="0,5,0,0" VerticalAlignment="Top" Width="253" Background="#FF1B1B1B" Grid.Row="1">
+            <TabItem Header="Nuova Partita">
+                <Grid Background="#FF1B1919" Margin="0,0,-5,-1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="91*"/>
+                        <RowDefinition Height="90*"/>
+                        <RowDefinition Height="84*"/>
+                        <RowDefinition Height="60*"/>
+                        <RowDefinition Height="96*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="107*"/>
-                        <ColumnDefinition Width="79*"/>
-                        <ColumnDefinition Width="34*"/>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="105*"/>
+                        <ColumnDefinition Width="121*"/>
+                        <ColumnDefinition Width="13*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="Mosse" Content="Mosse:&#xD;&#xA;1-&gt;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.158,-0.346" Height="328" Width="166" Foreground="White" Grid.ColumnSpan="2"/>
+                    <Label Content="Ip Avversario:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="81" Grid.Column="1"/>
+                    <Label Content="Scelta Colore:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="82" Grid.Row="1" Grid.Column="1"/>
+                    <TextBox x:Name="TXT_IP_1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" Foreground="White" Background="#FF6E6E6E" Grid.Column="1"/>
+                    <Button x:Name="BBTN_Connessione" Content="Connessione" HorizontalAlignment="Left" Margin="2,53,0,0" VerticalAlignment="Top" Width="224" Grid.ColumnSpan="2" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BBTN_Connessione_Click" Grid.Column="1"/>
+                    <Label Content="Regole:" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="49" Grid.Row="2" Grid.Column="1"/>
+                    <RadioButton x:Name="RD_bianco" Content="Bianco" Grid.Column="2" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Colore" IsChecked="True" IsEnabled="False" Height="15" Width="54" Grid.Row="1"/>
+                    <RadioButton x:Name="RD_nero" Content="Nero" Grid.Column="2" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Colore" IsChecked="True" IsEnabled="False" Height="15" Width="45" Grid.Row="1"/>
+                    <Button x:Name="BTTN_inviaSC" Content="Invia" HorizontalAlignment="Left" Margin="2,51,0,0" VerticalAlignment="Top" Width="224" Grid.ColumnSpan="2" Background="#FF6E6E6E" IsEnabled="False" BorderBrush="#FF8D8C8C" Foreground="#FF939393" Height="20" Click="BTTN_inviaSC_Click" Grid.Row="1" Grid.Column="1"/>
+                    <RadioButton x:Name="RD_Amichevole" Content="Amichevole" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="114" Click="ControlliPartita" Height="15" Grid.Row="2" Grid.Column="2"/>
+                    <RadioButton x:Name="RD_Personalizzata" Content="Personalizzata" HorizontalAlignment="Left" Margin="0,50,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="114" Click="ControlliPartita" Height="15" Grid.Row="2" Grid.Column="2"/>
+                    <RadioButton x:Name="RD_Competitiva" Content="Competitiva" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="114" Click="ControlliPartita" Height="15" Grid.Row="2" Grid.Column="2"/>
+                    <Label Content="Tempo:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="48" Grid.Row="3" Grid.Column="1"/>
+                    <Label Content="Permettere Aiuti:" HorizontalAlignment="Left" Margin="0,22,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="98" Grid.Row="3" Grid.Column="1"/>
+                    <Label Content="Tipo Di Scacchi:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="93" Grid.Row="4" Grid.Column="1"/>
+                    <RadioButton x:Name="RD_helps" Content="Si" HorizontalAlignment="Left" Margin="0,28,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Aiuti" IsChecked="True" IsEnabled="False" Width="27" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="3"/>
+                    <RadioButton x:Name="RD_helpn" Content="No" HorizontalAlignment="Left" Margin="48,28,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Aiuti" IsChecked="True" IsEnabled="False" Width="41" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="3"/>
+                    <RadioButton x:Name="RD_standard" Content="standard" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsChecked="True" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="4"/>
+                    <RadioButton x:Name="RD_Scacchi960" Content="Scacchi960" HorizontalAlignment="Left" Margin="0,19,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsChecked="True" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="4"/>
+                    <Button x:Name="BTTN_inviaR" Content="Invia" HorizontalAlignment="Left" Margin="0,51,0,0" VerticalAlignment="Top" Width="224" Grid.ColumnSpan="2" Background="#FF6E6E6E" IsEnabled="False" BorderBrush="#FF8D8C8C" Foreground="#FF939393" Height="20" Click="BTTN_inviaR_Click" Grid.Row="4" Grid.Column="1"/>
+                    <TextBox x:Name="TXT_Tempo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="16" Margin="82,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Foreground="White" Background="#FF6E6E6E" Grid.Row="3" IsEnabled="False" MaxLength="5" MaxLines="1" CharacterCasing="Lower" Grid.Column="1"/>
+                    <TextBox x:Name="TXT_IP_2" HorizontalAlignment="Left" Height="23" Margin="16,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="29" Foreground="White" Background="#FF6E6E6E" Grid.Column="2"/>
+                    <TextBox x:Name="TXT_IP_3" HorizontalAlignment="Left" Height="23" Margin="52,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" Foreground="White" Background="#FF6E6E6E" Grid.Column="2"/>
+                    <TextBox x:Name="TXT_IP_4" HorizontalAlignment="Left" Height="23" Margin="85,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="29" Foreground="White" Background="#FF6E6E6E" Grid.Column="2"/>
+                    <Label Content="." HorizontalAlignment="Left" Margin="4,18,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="12" Grid.Column="2"/>
+                    <Label Content="." HorizontalAlignment="Left" Margin="75,18,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="12" Grid.Column="2"/>
+                    <Label Content="." HorizontalAlignment="Left" Margin="42,18,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="12" Grid.Column="2"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Nuova Partita">
-                <Grid Background="#FF1B1B1B"/>
+            <TabItem Header="Partita Corrente" IsEnabled="False">
+                <Grid Background="#FF1B1B1B">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37*"/>
+                        <RowDefinition Height="383*"/>
+                    </Grid.RowDefinitions>
+                    <ListBox x:Name="ListBianco" HorizontalAlignment="Left" Height="362" Margin="13,0,0,0" VerticalAlignment="Top" Width="99" Background="#FF1B1B1B" Foreground="White" Grid.Row="1"/>
+                    <ListBox x:Name="ListNero" HorizontalAlignment="Left" Height="362" Margin="134,0,0,0" VerticalAlignment="Top" Width="91" Background="#FF1B1B1B" Foreground="White" Grid.Row="1"/>
+                    <Label Content="Mosse-&gt;" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="81"/>
+                </Grid>
             </TabItem>
         </TabControl>
-        <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="400" Margin="56,82,0,0" VerticalAlignment="Top" Width="400" Grid.ColumnSpan="2" MouseLeftButtonDown="Click">
+        <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="450" Margin="4,5,0,0" VerticalAlignment="Top" Width="450" MouseLeftButtonDown="Click" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
             <Canvas.Background>
                 <ImageBrush ImageSource="Standard.png"/>
             </Canvas.Background>
