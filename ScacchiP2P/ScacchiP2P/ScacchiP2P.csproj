@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Listener.cs" />
     <Compile Include="Scacchiera.cs" />
+    <Compile Include="ThreadGrafico.cs" />
     <Compile Include="WorkListener.cs" />
     <Compile Include="Writer.cs" />
     <Page Include="MainWindow.xaml">

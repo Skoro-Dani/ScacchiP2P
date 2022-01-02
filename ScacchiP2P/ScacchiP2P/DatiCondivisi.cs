@@ -140,21 +140,21 @@ namespace ScacchiP2P
                 DatiDI_.RemoveAt(pos);
             }
         }
-        public int GetLengthRWL(int pos)
+        public int GetLengthRWL()
         {
             lock (LockDatiRWL)
             {
                 return DatiRWL_.Count;
             }
         }
-        public int GetLengthRL(int pos)
+        public int GetLengthRL()
         {
             lock (LockDatiRL)
             {
                 return DatiRL_.Count;
             }
         }
-        public int GetLengthDI(int pos)
+        public int GetLengthDI()
         {
             lock (LockDatiDI)
             {
@@ -163,8 +163,6 @@ namespace ScacchiP2P
         }
         public void AzzeraDati()
         {
-            DatiRL.Clear();
-            DatiDI.Clear();
             Connesso_ = false;
             ARConnessione = false;
             VConnesione = false;

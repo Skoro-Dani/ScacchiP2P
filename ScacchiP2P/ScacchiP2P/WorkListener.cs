@@ -18,7 +18,7 @@ namespace ScacchiP2P
             string[] s;
             while (!Dati.Flag)
             {
-                if (Dati.DatiRL.Count() > count)
+                if (Dati.GetLengthRL() > count)
                 {
                     s = Dati.DatiRL[count].Split(';');
                     switch (s[0])
@@ -127,6 +127,14 @@ namespace ScacchiP2P
                             break;
                     }
                     count++;
+
+                    //Pulico il buffer di dati per alleggerire il programma
+                    if (Dati.GetLengthRL() > 10)
+                    {
+                        for (int i = 0; i < 10; i++)
+                            Dati.DeletePosRL(0);
+                        count -= 10;
+                    }
                 }
             }
         }

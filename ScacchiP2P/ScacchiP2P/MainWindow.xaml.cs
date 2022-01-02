@@ -26,7 +26,6 @@ namespace ScacchiP2P
         public MainWindow()
         {
             InitializeComponent();
-            Dati.ColoreGiocante = "bianco";
             w = this;
             Dati = DatiCondivisi.Istanza;
             sc = Scacchiera.Istanza;
@@ -39,7 +38,7 @@ namespace ScacchiP2P
             int x = (int)e.GetPosition((IInputElement)sender).X / (int)(ScacchieraRet.Width/8);
             int y = (int)e.GetPosition((IInputElement)sender).Y/ (int)(ScacchieraRet.Height/8);
 
-            if (Dati.ColoreGiocante.Equals("bianco"))
+            if (sc.Colore=="bianco")
             {
                 y -= 7;
                 if (y < 0)

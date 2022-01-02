@@ -34,7 +34,6 @@
             <Canvas.Background>
                 <ImageBrush ImageSource="Standard.png"/>
             </Canvas.Background>
-            <Image Height="50" Canvas.Left="152" Canvas.Top="350" Width="50" Source="PNGPezzi/ReBiancoS.jpg"/>
         </Canvas>
     </Grid>
 </Window>

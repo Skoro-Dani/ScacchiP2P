@@ -1,35 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ScacchiP2P
 {
-    public class Writer
+    class ThreadGrafico
     {
-        private DatiCondivisi Dati = DatiCondivisi.Istanza;
-        UdpClient client = new UdpClient();
-        private byte[] data;
-        public Writer() { }
+        private Scacchiera sc = Scacchiera.Istanza;
+        DatiCondivisi Dati = DatiCondivisi.Istanza;
+        MainWindow w;
+        public ThreadGrafico() { }
 
 
         public void ProcThread()
         {
             int count = 0;
+            w = Dati.w;
             while (!Dati.Flag)
             {
-                if (Dati.GetLengthDI() > count)
+                if(Dati.GetLengthRWL() > count)
                 {
-                    data = Encoding.ASCII.GetBytes(Dati.DatiDI[count]);
-                    client.Send(data, data.Length, Dati.IP, 12345);
-                    count++;
+                    switch(Dati.GetRWLpos(count))
+                    {
+                        case "c":
+                            break;
+                    }
                     //Pulico il buffer di dati per alleggerire il programma
-                    if (Dati.GetLengthDI() > 10)
+                    if (Dati.GetLengthRWL() > 10)
                     {
                         for (int i = 0; i < 10; i++)
-                            Dati.DeletePosDI(0);
+                            Dati.DeletePosRWL(0);
                         count -= 10;
                     }
                 }
@@ -37,4 +39,3 @@ namespace ScacchiP2P
         }
     }
 }
-
