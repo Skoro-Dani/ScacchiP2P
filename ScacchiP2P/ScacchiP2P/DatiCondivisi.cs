@@ -13,20 +13,7 @@ namespace ScacchiP2P
         private static object LockIstanza = new object();
 
         //attributi classe
-        //Colore che si sta giocanto in questo momento
-        private static object LockIColoreGiocante = new object();
-        private string ColoreGiocante_;
-        public string ColoreGiocante
-        {
-            get { lock (LockIColoreGiocante) { return ColoreGiocante_; } }
-            set
-            {
-                lock (LockIColoreGiocante)
-                {
-                    ColoreGiocante_ = value;
-                }
-            }
-        }
+
         //lista Dati ricevuti dal listener
         private static object LockDatiRL = new object();
         private List<string> DatiRL_;
@@ -47,11 +34,35 @@ namespace ScacchiP2P
         private static object LockIP = new object();
         private string IP_;
         public string IP { get { lock (LockIP) { return IP_; } } set { lock (LockIP) { IP_ = value; } } }
+        //Connesso-> booleano che indica se sono connesso
+        private static object LockConnesso = new object();
+        private bool Connesso_;
+        public bool Connesso { get { lock (LockConnesso) { return Connesso_; } } set { lock (LockConnesso) { Connesso_ = value; } } }
+        //ARConnessione -> Asppetto la risposta dalla richiesta di connessio booleano che indica se si sta aspettanto una risposta alla nostra connessione
+        private bool ARConnessione_;
+        public bool ARConnessione { get { return ARConnessione_; } set { ARConnessione_ = value; } }
+        //VConnesione -> vuole connetersi booleano che indica se qualcuno sta richiedendo una connessione
+        private bool VConnesione_;
+        public bool VConnesione { get { return VConnesione_; } set { VConnesione_ = value; } }
+        //IpVConnesione-> indica l'IP di chi sta cercando la connessione
+        private string IPVC_;
+        public string IPVC { get { return IPVC_; } set { IPVC_ = value; } }
+        //Mi salvo mainwindow cosi che tutti ne possano usufruire
+        private static object LockWindow = new object();
+        private MainWindow w_;
+        public MainWindow w { get { lock (LockWindow) { return w_; } } set { lock (LockWindow) { w_ = value; } } }
+        //PartitaStart -> Booleano che indica se la partita puo partire
+        private static object LockPartitaStart = new object();
+        private bool PartitaStart_;
+        public bool PartitaStart { get { lock (LockPartitaStart) { return PartitaStart_; } } set { lock (LockPartitaStart) { PartitaStart_ = value; } } }
+
+
+
 
 
         private DatiCondivisi()
         {
-            ColoreGiocante = "bianco";
+            AzzeraDati();
         }
 
         public static DatiCondivisi Istanza
@@ -86,6 +97,82 @@ namespace ScacchiP2P
             {
                 DatiRWL_.Add(s);
             }
+        }
+        public string GetRWLpos(int pos)
+        {
+            lock (LockDatiRWL)
+            {
+                return DatiRWL_[pos];
+            }
+        }
+        public string GetRLpos(int pos)
+        {
+            lock (LockDatiRL)
+            {
+                return DatiRL_[pos];
+            }
+        }
+        public string GetDIpos(int pos)
+        {
+            lock (LockDatiDI)
+            {
+                return DatiDI_[pos];
+            }
+        }
+        public void DeletePosRWL(int pos)
+        {
+            lock (LockDatiRWL)
+            {
+                DatiRWL_.RemoveAt(pos);
+            }
+        }
+        public void DeletePosRL(int pos)
+        {
+            lock (LockDatiRL)
+            {
+                DatiRL_.RemoveAt(pos);
+            }
+        }
+        public void DeletePosDI(int pos)
+        {
+            lock (LockDatiDI)
+            {
+                DatiDI_.RemoveAt(pos);
+            }
+        }
+        public int GetLengthRWL(int pos)
+        {
+            lock (LockDatiRWL)
+            {
+                return DatiRWL_.Count;
+            }
+        }
+        public int GetLengthRL(int pos)
+        {
+            lock (LockDatiRL)
+            {
+                return DatiRL_.Count;
+            }
+        }
+        public int GetLengthDI(int pos)
+        {
+            lock (LockDatiDI)
+            {
+                return DatiDI.Count;
+            }
+        }
+        public void AzzeraDati()
+        {
+            DatiRL.Clear();
+            DatiDI.Clear();
+            Connesso_ = false;
+            ARConnessione = false;
+            VConnesione = false;
+            IP = "";
+            IPVC = "";
+            Flag = false;
+            w = MainWindow.GetMainWindow();
+            PartitaStart = false;
         }
     }
 }

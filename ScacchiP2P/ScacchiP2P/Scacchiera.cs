@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace ScacchiP2P
 {
@@ -17,9 +18,27 @@ namespace ScacchiP2P
         public string TipoGioco { get { lock (LockTipo) { return TipoGioco_; } } set { lock (LockTipo) { TipoGioco_ = value; } } }
         //Matrice che replica la scacchiera
         private Pezzo[,] ScacchieraPezzi = new Pezzo[9, 9];
+        //Colore->Colore che si sta giocando
+        private static object LockColore = new object();
+        private string Colore_;
+        public string Colore { get { lock (LockColore) { return Colore_; } } set { lock (LockColore) { Colore_ = value; } } }
+        //Tempo -> timer 
+        private static object Locktempo = new object();
+        private int tempo;
+        //help-> booleano che indica se gli aiuti sono permessi
+        private static object LockHelp = new object();
+        private bool Help_;
+        public bool Help { get { lock (LockHelp) { return Help_; } } set { lock (LockHelp) { Help_ = value; } } }
+        //Punti-> booleano che indica se valgono i punti
+        private static object LockPunti = new object();
+        private bool Punti_;
+        public bool Punti { get { lock (LockPunti) { return Punti_; } } set { lock (LockPunti) { Punti_ = value; } } }
+
         private Scacchiera()
         {
+            Colore = "";
             TipoGioco = "standard";
+            tempo = 0;
             GeneraScacchiera();
         }
 
@@ -88,5 +107,35 @@ namespace ScacchiP2P
         {
             return ScacchieraPezzi[x, y];
         }
+        public void setTimer(int minTempo)
+        {
+            lock (Locktempo)
+            {
+                tempo = minTempo;
+            }
+        }
+        public int getTimer()
+        {
+            lock (Locktempo)
+            {
+                return tempo;
+            }
+        }
+        public bool ControlloVittoria()
+        {
+            return false;
+        }
+        public void resetScacchiera()
+        {
+            GeneraScacchiera();
+        }
+        public void InvertiColore()
+        {
+            if (Colore == "bianco")
+                Colore = "nero";
+            else
+                Colore = "bianco";
+        }
+
     }
 }
