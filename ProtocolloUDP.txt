@@ -13,53 +13,51 @@ Scelta colore:
 	(giocatore1):*
 	sc;colore
 	string colore -> bianco o nero //esempio
-	
-	(giocatore2):
-	y;sc
-	n;sc;l(rilancia colore*) o d(si disconnette)
+	//Verrà Accettato in automatico
 	
 Regole:
 	
-	(giocatore1):*
-	
-	//count è un contatore che parte da 0 e quando arriva a 5 si chiude la connessione
-	
+	(giocatore1):
+		
 	//amichevole=0 -> no tempo, si aiuti, no punteggio
-	r;count;0
+	r;0
 	
 	//competitiva=1 -> tempo=10 minuti, no aiuti, vinci=+100punti, perdi=-100punti 
-	r;count;1
+	r;1
 	
 	//personalizzata=2 -> no punteggio, tiposcacchi: è la disposizione della scacchiera(standard,Scacchi960)
-	r;count;2;tempo;aiuti;tipoScacchi
+	r;2;tempo;aiuti;tipoScacchi
 	
 	(giocatore2):
 	
 	y;r;
-	n;r;l(lancia) o d(disconnette)
+	n;r;d(disconnette)
 	
-	//se giocatore2 rifiuta può lanciare una proposta seguendo lo schema sopra* o disconnettersi
+	//se giocatore2 rifiuta si disconnette
 
 Avvio gioco:
-
-	(chi ha il bianco):
-	m;daPos;aPos;inizialeStandardEnglish;arresa;patta	
-	m;a1;a2;R;false;false //esempio
 	
-	(patta):
+	(chi ha il bianco invia)
+	ms;//messagio che indicherà l'inizio della partita(avvio timer)
+
+	m;daPos;aPos;inizialeStandardEnglish;patta	
+	m;a1;a2;R;false //esempio
+	
+	(se patta = true):
 	y;m;->finisce la partita in parità
 	n;m;->si continua la partita
 	
-	(vittoria/sconfitta)
+	// in caso di arresa si invia un pacchetto che indica la resa(s=surrender)
+	s;
+	
+	(Pacchetto che indica la fine della partita)
 	fp; //controllo automatico vittoria o sconfitta	
 	
 Rivincita:
 	
+	//se entrambi inviano questo pacchetto, allora la partita rinizierà invertendo i colori
 	a;->voglio rigiocare
 	
-	y;a-->il colore si inverte e si riavvia la partita
-	n;a-->chiusura partita	
-
 Chiusura:
 
 	d;
