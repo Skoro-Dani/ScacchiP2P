@@ -12,7 +12,7 @@ namespace ScacchiP2P
         UdpClient Server = new UdpClient();
         IPEndPoint riceveEP = new IPEndPoint(IPAddress.Any, 42069);
         private byte[] dataReceived;
-        Listener() { }
+        public Listener() { }
 
         public void ProcThread()
         {

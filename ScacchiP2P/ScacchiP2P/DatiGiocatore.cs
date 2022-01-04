@@ -9,9 +9,6 @@
         private static object LockNome = new object();
         private string Nome_;
         public string Nome { get { lock (LockNome) { return Nome_; } } set { lock (LockNome) { Nome_ = value; } } }
-        private static object LockPassword = new object();
-        private string Password_;
-        public string Password { get { lock (LockPassword) { return Password_; } } set { lock (LockPassword) { Password_ = value; } } }
         private static object LockPunti = new object();
         private int Punti_;
         public int Punti { get { lock (LockPunti) { return Punti_; } } set { lock (LockPunti) { Punti_ = value; } } }
@@ -36,7 +33,6 @@
         public void AzzeraDati()
         {
             Nome = "";
-            Password = "";
             Punti = 0;
         }
     }

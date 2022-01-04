@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDgProv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <dgProv>
+    <Nome>skoro</Nome>
+    <Password>BA03D2941F393B696DD50212456B0093</Password>
+    <Punti>0</Punti>
+  </dgProv>
+  <dgProv>
+    <Nome>spine</Nome>
+    <Password>A35ECF344C66770B2BA0F0E913747072</Password>
+    <Punti>0</Punti>
+  </dgProv>
+</ArrayOfDgProv>

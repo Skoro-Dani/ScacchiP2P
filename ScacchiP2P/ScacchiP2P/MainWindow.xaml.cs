@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Threading;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ScacchiP2P
@@ -12,13 +14,33 @@ namespace ScacchiP2P
         Scacchiera sc;
         private static MainWindow w;
         DatiGiocatore dg;
+        Thread LT;
+        Thread WLT;
+        Thread WT;
+        private Listener L;
+        private WorkListener WL;
+        private Writer W;
+        Login login;
         public MainWindow()
         {
             InitializeComponent();
             w = this;
             Dati = DatiCondivisi.Istanza;
-            sc = Scacchiera.Istanza;
             dg = DatiGiocatore.Istanza;
+            sc = Scacchiera.Istanza;
+
+            login = new Login();
+            bool ris = (bool)login.ShowDialog();
+            if (ris == false)
+                this.Close();
+            LBL_Nome.Content = dg.Nome+"->"+dg.Punti;
+
+            L = new Listener();
+            WL = new WorkListener();
+            W = new Writer();
+            LT = new Thread(new ThreadStart(L.ProcThread));
+            WLT = new Thread(new ThreadStart(WL.ProcThread));
+            WT = new Thread(new ThreadStart(W.ProcThread));
 
         }
 
@@ -78,18 +100,18 @@ namespace ScacchiP2P
         {
             if (RD_Amichevole.IsChecked == true)
             {
-                Dati.AddStringDI("r;" + Dati.Count + ";0");
+                Dati.AddStringDI("r;0");
             }
             else if (RD_Competitiva.IsChecked == true)
             {
-                Dati.AddStringDI("r;" + Dati.Count + ";1");
+                Dati.AddStringDI("r;1");
             }
             else
             {
                 int tempo = -1;
                 if (TXT_Tempo.Text != "")
                     int.TryParse(TXT_Tempo.Text, out tempo);
-                string s = "r;" + Dati.Count + ";2;";
+                string s = "r;2;";
                 if (tempo != -1)
                     s += tempo + ";";
                 else
@@ -134,9 +156,6 @@ namespace ScacchiP2P
             {
                 Dati.IP = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
                 Dati.AddStringDI("c;" + dg.Nome);
-                RD_bianco.IsEnabled = true;
-                RD_nero.IsEnabled = true;
-                BTTN_inviaSC.IsEnabled = true;
                 BBTN_Connessione.IsEnabled = false;
                 Dati.ARConnessione = true;
             }
@@ -220,12 +239,22 @@ namespace ScacchiP2P
                 {
                     Dati.Connesso = true;
                     Dati.ARConnessione = false;
+                    RD_bianco.IsEnabled = true;
+                    RD_nero.IsEnabled = true;
+                    BTTN_inviaSC.IsEnabled = true;
                     MessageBox.Show("L'avversario si è Connesso", "Connesione", MessageBoxButton.OK);
                 }
                 else
                 {
                     Dati.AzzeraDati();
                     MessageBox.Show("L'avversario ha rifiutato la connesione", "Connesione", MessageBoxButton.OK);
+                    TXT_IP_1.Text = "";
+                    TXT_IP_2.Text = "";
+                    TXT_IP_3.Text = "";
+                    TXT_IP_4.Text = "";
+                    RD_bianco.IsEnabled = false;
+                    RD_nero.IsEnabled = false;
+                    BTTN_inviaSC.IsEnabled = false;
                 }
 
             });
@@ -238,6 +267,9 @@ namespace ScacchiP2P
                 if (a)
                 {
                     MessageBox.Show("L'avversario Ha Acccettato le regole", "Regole", MessageBoxButton.OK);
+                    TAB_partita.IsEnabled=true;
+                    TAB_partita.IsSelected = true;
+
                 }
                 else
                 {
@@ -245,6 +277,41 @@ namespace ScacchiP2P
                     MessageBox.Show("L'avversario ha rifiutato la connesione e di coneseguenza si sta disconnentendo", "Regole", MessageBoxButton.OK);
                 }
             });
+        }
+
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            Dati.Flag = true;
+        }
+
+        private void BTTN_Disconnetiti_Click(object sender, RoutedEventArgs e)
+        {
+            Dati.AddStringDI("d;");
+            Dati.AzzeraDati();
+            disableAll();
+        }
+        private void disableAll()
+        {
+            RD_Amichevole.IsEnabled = false;
+            TAB_partita.IsEnabled = false;
+            TAB_partita.IsSelected = false;
+            TXT_IP_1.Text = "";
+            TXT_IP_2.Text = "";
+            TXT_IP_3.Text = "";
+            TXT_IP_4.Text = "";
+            RD_bianco.IsEnabled = false;
+            RD_nero.IsEnabled = false;
+            BTTN_inviaSC.IsEnabled = false;
+            RD_bianco.IsEnabled = false;
+            RD_nero.IsEnabled = false;
+            BTTN_inviaSC.IsEnabled = false;
+            BTTN_inviaR.IsEnabled = false;
+            BBTN_Connessione.IsEnabled = true;
+        }
+
+        public void RefreshScacchiera()
+        {
+            /*In Corso*/
         }
     }
 }

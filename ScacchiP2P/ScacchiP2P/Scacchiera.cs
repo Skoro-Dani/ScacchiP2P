@@ -25,7 +25,7 @@ namespace ScacchiP2P
 
         private static object Locktimer = new object();
         private bool Timer_;
-        public bool Timer { get { lock (LockColore) { return Timer_; } } set { lock (LockColore) { Timer_ = value; } } }
+        public bool Timer { get { lock (Locktimer) { return Timer_; } } set { lock (Locktimer) { Timer_ = value; } } }
         //help-> booleano che indica se gli aiuti sono permessi
         private static object LockHelp = new object();
         private bool Help_;
@@ -41,7 +41,7 @@ namespace ScacchiP2P
         private static object LockMossaNero = new object();
         private List<string> MosseNero;
         private char[] alfabeto = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
-        private int[] alfabetorevers;
+        private IDictionary<char,int> alfabetorevers;
         //turno -> stringa che indica di chi è il turno
         private static object Lockturno = new object();
         private string Turno_;
@@ -54,7 +54,7 @@ namespace ScacchiP2P
             GeneraScacchiera();
             MosseBianco = new List<string>();
             MosseNero = new List<string>();
-            alfabetorevers = new int[8];
+            alfabetorevers = new Dictionary<char, int>();
             for (int i = 0; i < 8; i++)
             {
                 alfabetorevers[alfabeto[i]] = i;
@@ -69,6 +69,7 @@ namespace ScacchiP2P
                 lock (LockIstanza)
                 {
                     if (istanza == null) istanza = new Scacchiera();
+
                     return istanza;
                 }
             }
