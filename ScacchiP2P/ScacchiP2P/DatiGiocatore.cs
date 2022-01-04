@@ -1,4 +1,8 @@
-﻿namespace ScacchiP2P
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
+
+namespace ScacchiP2P
 {
     class DatiGiocatore
     {
@@ -12,6 +16,8 @@
         private static object LockPunti = new object();
         private int Punti_;
         public int Punti { get { lock (LockPunti) { return Punti_; } } set { lock (LockPunti) { Punti_ = value; } } }
+        //seralizzazione
+        public List<dgProv> lista = null;
 
         private DatiGiocatore()
         {
@@ -34,6 +40,21 @@
         {
             Nome = "";
             Punti = 0;
+        }
+
+        public void deserialize()
+        {
+            XmlSerializer myXML = new XmlSerializer(typeof(List<dgProv>));
+            StreamReader fIN = new StreamReader("utente.xml");
+            lista = (List<dgProv>)myXML.Deserialize(fIN);
+            fIN.Close();
+        }
+        public void serialize()
+        {
+            XmlSerializer myXML = new XmlSerializer(typeof(List<dgProv>));
+            StreamWriter fOUT = new StreamWriter("utente.xml");
+            myXML.Serialize(fOUT, lista);
+            fOUT.Close();
         }
     }
 }

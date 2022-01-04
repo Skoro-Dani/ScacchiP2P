@@ -23,17 +23,16 @@ namespace ScacchiP2P
     public partial class Login : Window
     {
         DatiGiocatore dg;
-        List<dgProv> lista = null;
         MD5 md5;
         public Login()
         {
             InitializeComponent();
             dg = DatiGiocatore.Istanza;
-            deserialize();
+            dg.deserialize();
             md5 = System.Security.Cryptography.MD5.Create();
         }
 
-        private void deserialize()
+        /*private void deserialize()
         {
             XmlSerializer myXML = new XmlSerializer(typeof(List<dgProv>));
             StreamReader fIN = new StreamReader("utente.xml");
@@ -46,16 +45,16 @@ namespace ScacchiP2P
             StreamWriter fOUT = new StreamWriter("utente.xml");
             myXML.Serialize(fOUT, lista);
             fOUT.Close();
-        }
+        }*/
 
         private void bttn_login_Click(object sender, RoutedEventArgs e)
         {
             int pos=-1;
             bool ris = false;
-            for (int i = 0; i < lista.Count; i++)
+            for (int i = 0; i < dg.lista.Count; i++)
             {
-                if (lista[i].Nome == TXT_username.Text)
-                    if (lista[i].Password == CreateMD5Hash(TXT_password.Password))
+                if (dg.lista[i].Nome == TXT_username.Text)
+                    if (dg.lista[i].Password == CreateMD5Hash(TXT_password.Password))
                     {
                         pos = i;
                         ris = true;
@@ -65,8 +64,8 @@ namespace ScacchiP2P
             {
                 dg.Nome = TXT_username.Text;
                 if(pos!=-1)
-                dg.Punti = lista[pos].Punti;
-                serialize();
+                dg.Punti = dg.lista[pos].Punti;
+                dg.serialize();
                 this.DialogResult = true;
                 this.Close();
             }
@@ -82,9 +81,9 @@ namespace ScacchiP2P
             if (TXT_username.Text.Length > 0 && TXT_password.Password.Length > 0)
             {
                 bool ris = false;
-                for (int i = 0; i < lista.Count; i++)
+                for (int i = 0; i < dg.lista.Count; i++)
                 {
-                    if (lista[i].Nome == TXT_username.Text) { ris = true; }
+                    if (dg.lista[i].Nome == TXT_username.Text) { ris = true; }
                 }
                 if (ris)
                 {
@@ -92,7 +91,7 @@ namespace ScacchiP2P
                 }
                 else
                 {
-                    lista.Add(new dgProv(TXT_username.Text, CreateMD5Hash(TXT_password.Password)));
+                    dg.lista.Add(new dgProv(TXT_username.Text, CreateMD5Hash(TXT_password.Password)));
                     MessageBox.Show("ti sei registrato, prova il login", "affermativo");
                 }
             }

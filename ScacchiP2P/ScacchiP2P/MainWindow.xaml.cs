@@ -282,6 +282,13 @@ namespace ScacchiP2P
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             Dati.Flag = true;
+            dg.deserialize();
+            for(int i=0;i<dg.lista.Count;i++)
+                if(dg.lista[i].Nome==dg.Nome)
+                {
+                    dg.lista[i].Punti = dg.Punti;
+                }
+            dg.serialize();
         }
 
         private void BTTN_Disconnetiti_Click(object sender, RoutedEventArgs e)
@@ -289,6 +296,7 @@ namespace ScacchiP2P
             Dati.AddStringDI("d;");
             Dati.AzzeraDati();
             disableAll();
+            
         }
         private void disableAll()
         {
