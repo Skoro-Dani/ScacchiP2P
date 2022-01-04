@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DatiGiocatore.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="Scacchiera.cs" />
     <Compile Include="ThreadGrafico.cs" />

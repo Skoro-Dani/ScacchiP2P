@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ScacchiP2P
 {
@@ -23,12 +11,15 @@ namespace ScacchiP2P
         DatiCondivisi Dati;
         Scacchiera sc;
         private static MainWindow w;
+        DatiGiocatore dg;
         public MainWindow()
         {
             InitializeComponent();
             w = this;
             Dati = DatiCondivisi.Istanza;
             sc = Scacchiera.Istanza;
+            dg = DatiGiocatore.Istanza;
+
         }
 
         private void Click(object sender, MouseButtonEventArgs e)
@@ -64,7 +55,6 @@ namespace ScacchiP2P
         {
             return w;
         }
-
         private void ControlliPartita(object sender, RoutedEventArgs e)
         {
             if (RD_Amichevole.IsChecked == true || RD_Competitiva.IsChecked == true)
@@ -84,7 +74,6 @@ namespace ScacchiP2P
                 RD_Scacchi960.IsEnabled = true;
             }
         }
-
         private void BTTN_inviaR_Click(object sender, RoutedEventArgs e)
         {
             if (RD_Amichevole.IsChecked == true)
@@ -118,7 +107,6 @@ namespace ScacchiP2P
                     s += "scacchi960;";
             }
         }
-
         private void BTTN_inviaSC_Click(object sender, RoutedEventArgs e)
         {
             if (RD_bianco.IsChecked == true)
@@ -135,7 +123,6 @@ namespace ScacchiP2P
             BTTN_inviaSC.IsEnabled = false;
             BTTN_inviaR.IsEnabled = true;
         }
-
         private void BBTN_Connessione_Click(object sender, RoutedEventArgs e)
         {
             int ip1 = -1, ip2 = -1, ip3 = -1, ip4 = -1;
@@ -146,11 +133,12 @@ namespace ScacchiP2P
             if (ip1 != -1 && ip2 != -1 && ip3 != -1 && ip4 != -1)
             {
                 Dati.IP = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
-                Dati.AddStringDI("c;" + Dati.Nome);
+                Dati.AddStringDI("c;" + dg.Nome);
                 RD_bianco.IsEnabled = true;
                 RD_nero.IsEnabled = true;
                 BTTN_inviaSC.IsEnabled = true;
                 BBTN_Connessione.IsEnabled = false;
+                Dati.ARConnessione = true;
             }
             else
             {
@@ -161,6 +149,102 @@ namespace ScacchiP2P
                 TXT_IP_4.Text = "";
             }
         }
+        public void RichiediConnessione(string s)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                MessageBoxResult result = MessageBox.Show(s + " vuole connettersi.", "Richiesta Connessione", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Dati.Connesso = true;
+                    Dati.IP = Dati.IPVC;
+                    Dati.IPVC = "";
+                    Dati.VConnesione = false;
+                    Dati.ARConnessione = false;
+                    Dati.AddStringDI("y;" + dg.Nome);
+                }
+                else
+                {
+                    Dati.AddStringDI("n;");
+                }
+            });
+        }
+        public void PartitaStart()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (Dati.PartitaStart == true)
+                {
+                    MessageBox.Show("La partita è iniziata", "Start", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            });
+        }
+        public void SurrenderDellavversario()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show("L'avversario si è arreso", "Vittoria", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            });
+        }
+        public void Patta()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                MessageBoxResult result = MessageBox.Show("L'avversario vuole patteggiare", "Patta", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    sc.Patta();
+                    Dati.AddStringDI("y;m;");
+                }
+                else
+                {
+                    Dati.AddStringDI("n;m;");
+                }
+            });
+        }
+        public void Disconnessione()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Dati.AzzeraDati();
+                MessageBox.Show("L'avversario si è disconnesso", "Disconnesione", MessageBoxButton.OK);
 
+            });
+        }
+
+        public void ConnesioneA(bool a)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (a)
+                {
+                    Dati.Connesso = true;
+                    Dati.ARConnessione = false;
+                    MessageBox.Show("L'avversario si è Connesso", "Connesione", MessageBoxButton.OK);
+                }
+                else
+                {
+                    Dati.AzzeraDati();
+                    MessageBox.Show("L'avversario ha rifiutato la connesione", "Connesione", MessageBoxButton.OK);
+                }
+
+            });
+        }
+
+        public void RegoleA(bool a)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (a)
+                {
+                    MessageBox.Show("L'avversario Ha Acccettato le regole", "Regole", MessageBoxButton.OK);
+                }
+                else
+                {
+                    Dati.AzzeraDati();
+                    MessageBox.Show("L'avversario ha rifiutato la connesione e di coneseguenza si sta disconnentendo", "Regole", MessageBoxButton.OK);
+                }
+            });
+        }
     }
 }

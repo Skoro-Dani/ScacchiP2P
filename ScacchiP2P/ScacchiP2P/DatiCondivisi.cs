@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ScacchiP2P
 {
@@ -29,7 +25,7 @@ namespace ScacchiP2P
         //Flag programma finito
         private static object LockFlag = new object();
         private bool Flag_;
-        public bool Flag { get { lock (LockFlag) { return Flag_; } }set { lock (LockFlag) { Flag_ = value; } } }
+        public bool Flag { get { lock (LockFlag) { return Flag_; } } set { lock (LockFlag) { Flag_ = value; } } }
         //IpDestinatario
         private static object LockIP = new object();
         private string IP_;
@@ -39,36 +35,42 @@ namespace ScacchiP2P
         private bool Connesso_;
         public bool Connesso { get { lock (LockConnesso) { return Connesso_; } } set { lock (LockConnesso) { Connesso_ = value; } } }
         //ARConnessione -> Asppetto la risposta dalla richiesta di connessio booleano che indica se si sta aspettanto una risposta alla nostra connessione
+        private static object LockARConnesione = new object();
         private bool ARConnessione_;
-        public bool ARConnessione { get { return ARConnessione_; } set { ARConnessione_ = value; } }
+        public bool ARConnessione { get { lock (LockARConnesione) { return ARConnessione_; } } set { lock (LockARConnesione) { ARConnessione_ = value; } } }
         //VConnesione -> vuole connetersi booleano che indica se qualcuno sta richiedendo una connessione
+        private static object LockVConnesione = new object();
         private bool VConnesione_;
-        public bool VConnesione { get { return VConnesione_; } set { VConnesione_ = value; } }
+        public bool VConnesione { get { lock (LockVConnesione) { return VConnesione_; } } set { lock (LockVConnesione) { VConnesione_ = value; } } }
         //IpVConnesione-> indica l'IP di chi sta cercando la connessione
+        private static object LockIPVC = new object();
         private string IPVC_;
-        public string IPVC { get { return IPVC_; } set { IPVC_ = value; } }
+        public string IPVC { get { lock (LockIPVC) { return IPVC_; } } set { lock (LockIPVC) { IPVC_ = value; } } }
+
         //Mi salvo mainwindow cosi che tutti ne possano usufruire
         private static object LockWindow = new object();
         private MainWindow w_;
         public MainWindow w { get { lock (LockWindow) { return w_; } } set { lock (LockWindow) { w_ = value; } } }
+
         //PartitaStart -> Booleano che indica se la partita puo partire
         private static object LockPartitaStart = new object();
         private bool PartitaStart_;
         public bool PartitaStart { get { lock (LockPartitaStart) { return PartitaStart_; } } set { lock (LockPartitaStart) { PartitaStart_ = value; } } }
-        //Nome Del giocatore che gioca
-        private static object LockNome = new object();
-        private string Nome_;
-        public string Nome { get { lock (LockNome) { return Nome_; } } set { lock (LockNome) { Nome_ = value; } } }
-        //Count contatore delle regole
-        private static object LockCount = new object();
-        private int Count_;
-        public int Count { get { lock (LockCount) { return Count_; } } set { lock (LockCount) { Count_ = value; } } }
-
-
+        //ResaA -> Booleano che indica se l'avversario vuole arrendersi
+        private static object LockResaA = new object();
+        private bool ResaA_;
+        public bool ResaA { get { lock (LockResaA) { return ResaA_; } } set { lock (LockResaA) { ResaA_ = value; } } }
+        //ResaG -> Booleano che indica se l'avversario vuole arrendersi
+        private static object LockResaG = new object();
+        private bool ResaG_;
+        public bool ResaG { get { lock (LockResaG) { return ResaG_; } } set { lock (LockResaG) { ResaG_ = value; } } }
 
 
         private DatiCondivisi()
         {
+            DatiDI_ = new List<string>();
+            DatiRWL_ = new List<string>();
+            DatiRL_ = new List<string>();
             AzzeraDati();
         }
 
@@ -178,7 +180,6 @@ namespace ScacchiP2P
             Flag = false;
             w = MainWindow.GetMainWindow();
             PartitaStart = false;
-            Count = 0;
         }
     }
 }

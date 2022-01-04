@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Collections.Generic;
 
 namespace ScacchiP2P
 {
@@ -41,20 +36,6 @@ namespace ScacchiP2P
             this.Nome = Nome;
             this.Colore = Colore;
             img = "component/PNGPezzi/ReBiancoS.jpg";
-            //img = Image.FromFile("D:\\GitHub\\ScacchiP2P\\ScacchiP2P\\ScacchiP2P\\PNGPezzi\\ReBiancoS.jpg");
-            /*switch(Nome)
-            {
-                case InizialePezzo.Pedone:
-                    if(Colore==inColore.Bianco)
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-                    break;
-            }*/
         }
         public enum InizialePezzo
         {
@@ -64,7 +45,7 @@ namespace ScacchiP2P
             Torre = 'R',
             Regina = 'Q',
             Re = 'K',
-            Vuoto= ' ',
+            Vuoto = ' ',
         }
         public enum inColore
         {
@@ -118,7 +99,7 @@ namespace ScacchiP2P
                     //punti alfiere
                     ix = x;
                     iy = y;
-                    while (ix < 8 && iy<8)
+                    while (ix < 8 && iy < 8)
                     {
 
                         ix++;
@@ -127,7 +108,7 @@ namespace ScacchiP2P
                     }
                     ix = x;
                     iy = y;
-                    while (ix >-1 && iy >-1)
+                    while (ix > -1 && iy > -1)
                     {
 
                         ix--;
@@ -136,7 +117,7 @@ namespace ScacchiP2P
                     }
                     ix = x;
                     iy = y;
-                    while (ix > -1 && iy <8)
+                    while (ix > -1 && iy < 8)
                     {
 
                         ix--;
@@ -145,7 +126,7 @@ namespace ScacchiP2P
                     }
                     ix = x;
                     iy = y;
-                    while (ix <8 && iy >-1)
+                    while (ix < 8 && iy > -1)
                     {
 
                         ix++;

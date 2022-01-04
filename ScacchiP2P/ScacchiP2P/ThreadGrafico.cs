@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ScacchiP2P
+﻿namespace ScacchiP2P
 {
     class ThreadGrafico
     {
@@ -20,9 +14,9 @@ namespace ScacchiP2P
             w = Dati.w;
             while (!Dati.Flag)
             {
-                if(Dati.GetLengthRWL() > count)
+                if (Dati.GetLengthRWL() > count)
                 {
-                    switch(Dati.GetRWLpos(count))
+                    switch (Dati.GetRWLpos(count))
                     {
                         case "c":
                             break;

@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ScacchiP2P
+﻿namespace ScacchiP2P
 {
     class WorkListener
     {
-        DatiCondivisi Dati=DatiCondivisi.Istanza;
+        DatiCondivisi Dati = DatiCondivisi.Istanza;
         Scacchiera sc = Scacchiera.Istanza;
-        public WorkListener() { }
+        MainWindow w;
+        public WorkListener()
+        {
+            w = Dati.w;
+        }
 
         public void ProcThread()
         {
@@ -24,28 +22,48 @@ namespace ScacchiP2P
                     switch (s[0])
                     {
                         case "c":
-                            if(!Dati.Connesso)
-                                if(!Dati.ARConnessione)
+                            if (!Dati.Connesso)
+                                if (!Dati.ARConnessione)
                                 {
                                     Dati.VConnesione = true;
                                     Dati.IPVC = s[2];
-                                    Dati.AddStringRWL("c;" + s[1]);
+                                    w.RichiediConnessione(s[1]);
                                 }
                             break;
                         case "m":
                             if (Dati.Connesso)
                             {
-                                Dati.AddStringRWL(Dati.DatiRL[count]);
+                                if (s[4] == "true")
+                                {
+                                    w.Patta();
+                                }
+                                else
+                                {
+                                    sc.Mossa(s[1], s[2]);
+                                }
+                            }
+                            break;
+                        case "ms":
+                            if (Dati.Connesso)
+                            {
+                                Dati.PartitaStart = true;
+                                w.PartitaStart();
+                            }
+                            break;
+                        case "s":
+                            if (Dati.Connesso)
+                            {
+                                w.SurrenderDellavversario();
                             }
                             break;
                         case "d":
                             if (Dati.Connesso)
                             {
-                                Dati.AzzeraDati();
+                                w.Disconnessione();
                             }
                             break;
                         case "sc":
-                            if(Dati.Connesso)
+                            if (Dati.Connesso)
                             {
                                 if (s[1] == "bianco")
                                     sc.Colore = "nero";
@@ -56,52 +74,53 @@ namespace ScacchiP2P
                         case "r":
                             if (Dati.Connesso)
                             {
-                                if (int.Parse(s[1]) < 5)
+                                switch (s[2])
                                 {
-                                    switch (s[2])
-                                    {
-                                        case "0":
-                                            Dati.AddStringRWL("r;" + s[1] + ";0;");
-                                            break;
-                                        case "1":
-                                            Dati.AddStringRWL("r;" + s[1] + ";1;");
-                                            break;
-                                        case "2":
-                                            Dati.AddStringRWL("r;" + s[1] + ";2;"+s[3]+";"+s[4]+";"+s[5]);
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    Dati.AddStringDI("d;");
-                                    Dati.AddStringRWL("d;La Connessione verrà chiusa perchè i due partecipanti non riuscivano a mettersi d'accordo sulle regole");
+                                    case "0":
+                                        sc.Help = true;
+                                        sc.Timer = false;
+                                        sc.Punti = false;
+                                        break;
+                                    case "1":
+                                        sc.Help = false;
+                                        sc.Timer = true;
+                                        sc.Punti = true;
+                                        sc.setTimer(10000);
+                                        break;
+                                    case "2":
+                                        sc.Punti = false;
+                                        int tempo = 0;
+                                        int.TryParse(s[2], out tempo);
+                                        if (tempo != 0) { sc.setTimer(tempo); sc.Timer = true; }
+                                        else sc.Timer = false;
+                                        if (s[3] == "true") sc.Help = true;
+                                        else sc.Help = false;
+                                        if (s[4] == "standard") sc.TipoGioco = "standard";
+                                        else sc.TipoGioco = "scacchi960";
+                                        break;
                                 }
                             }
                             break;
                         case "fp":
-                            Dati.AddStringRWL("fp");
+                            if (Dati.Connesso)
+                            {
+                                sc.ControlloVittoria();
+                            }
                             break;
                         case "a":
-                            Dati.AddStringRWL("a");
+                            if (Dati.Connesso)
+                            {
+                                Dati.ResaA = true;
+                            }
                             break;
                         case "y":
-                            switch(s[1])
+                            switch (s[1])
                             {
                                 case "c":
-                                    Dati.IP = Dati.IPVC;
-                                    Dati.Connesso = true;
-                                    Dati.ARConnessione = false;
-                                    Dati.IPVC = "";
-                                    Dati.VConnesione = false;
-                                    Dati.AddStringRWL("c;" + s[2] + ";Ha accettato la tua partita");
+                                    w.ConnesioneA(true);
                                     break;
                                 case "r":
-                                    Dati.AddStringRWL("r;y;Le regole sono state accettate");
-                                    break;
-                                case "a":
-                                    sc.InvertiColore();
-                                    sc.resetScacchiera();
-                                    Dati.PartitaStart = true;
+                                    w.RegoleA(true);
                                     break;
                             }
                             break;
@@ -109,19 +128,10 @@ namespace ScacchiP2P
                             switch (s[1])
                             {
                                 case "c":
-                                    Dati.AzzeraDati();
-                                    Dati.AddStringRWL("c;Ha Rifiutato la tua partita");
+                                    w.ConnesioneA(false);
                                     break;
                                 case "r":
-                                    if (s[2] == "l")
-                                    {
-                                        //???? da chiarire
-                                    }
-                                    else if (s[2] == "d")
-                                        Dati.AddStringRL("d;" + Dati.IP);
-                                    break;
-                                case "a":
-                                    Dati.AddStringRL("d;" + Dati.IP);
+                                    w.RegoleA(false);
                                     break;
                             }
                             break;
