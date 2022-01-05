@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 
 namespace ScacchiP2P
 {
     public class Scacchiera
     {
+        ThreadTimer T = new ThreadTimer();
+        Thread Ttimer;
+
         //istanza singleton
         private static Scacchiera istanza = null;
         private static object LockIstanza = new object();
@@ -22,7 +26,6 @@ namespace ScacchiP2P
         //Tempo -> timer 
         private static object Locktempo = new object();
         private int tempo;
-
         private static object Locktimer = new object();
         private bool Timer_;
         public bool Timer { get { lock (Locktimer) { return Timer_; } } set { lock (Locktimer) { Timer_ = value; } } }
@@ -46,6 +49,7 @@ namespace ScacchiP2P
         private static object Lockturno = new object();
         private string Turno_;
         public string Turno { get { lock (Lockturno) { return Turno_; } } set { lock (Lockturno) { Turno_ = value; } } }
+        private static object LockMossa = new object();
         private Scacchiera()
         {
             Colore = "";
@@ -132,6 +136,7 @@ namespace ScacchiP2P
         {
             lock (Locktempo)
             {
+                T.setTimer(minTempo);
                 tempo = minTempo;
             }
         }
@@ -185,49 +190,69 @@ namespace ScacchiP2P
 
         public void Mossa(string pos1, string pos2)
         {
-            char[] s1 = new char[2];
-            s1 = pos1.ToCharArray();
-            Pezzo p1 = ScacchieraPezzi[alfabetorevers[s1[0]], s1[1]];
-            char[] s2 = new char[2];
-            s2 = pos1.ToCharArray();
-            Pezzo p2 = ScacchieraPezzi[alfabetorevers[s1[0]], s1[1]];
-            CPunto c1 = new CPunto(alfabetorevers[s1[0]], s1[1]);
-            CPunto c2 = new CPunto(alfabetorevers[s2[0]], s2[1]);
-            if (Turno == "bianco")
+            lock (Lockturno)
             {
-                if (p1.Colore == Pezzo.inColore.Bianco)
+                char[] s1 = new char[2];
+                s1 = pos1.ToCharArray();
+                Pezzo p1 = ScacchieraPezzi[alfabetorevers[s1[0]], s1[1]];
+                char[] s2 = new char[2];
+                s2 = pos1.ToCharArray();
+                Pezzo p2 = ScacchieraPezzi[alfabetorevers[s1[0]], s1[1]];
+                CPunto c1 = new CPunto(alfabetorevers[s1[0]], s1[1]);
+                CPunto c2 = new CPunto(alfabetorevers[s2[0]], s2[1]);
+                if (Turno == "bianco")
                 {
-                    List<CPunto> posti = p1.DovePuoAndare(c1);
-                    for (int i = 0; i < posti.Count; i++)
+                    if (p1.Colore == Pezzo.inColore.Bianco)
                     {
-                        if (c2 == c1)
+                        List<CPunto> posti = p1.DovePuoAndare(c1);
+                        for (int i = 0; i < posti.Count; i++)
                         {
-                            ScacchieraPezzi[alfabetorevers[s1[0]], s1[1]] = null;
-                            ScacchieraPezzi[alfabetorevers[s2[0]], s2[1]] = p1;
-                            if (Colore == Turno) AddMosseU(pos1 + "->" + pos2);
-                            else AddMosseA(pos1 + "->" + pos2);
+                            if (c2 == c1)
+                            {
+                                ScacchieraPezzi[alfabetorevers[s1[0]], s1[1]] = null;
+                                ScacchieraPezzi[alfabetorevers[s2[0]], s2[1]] = p1;
+                                if (Colore == Turno) AddMosseU(pos1 + "->" + pos2);
+                                else AddMosseA(pos1 + "->" + pos2);
+                            }
                         }
                     }
                 }
-            }
-            else if (Turno == "nero")
-            {
-                if (p1.Colore == Pezzo.inColore.Nero)
+                else if (Turno == "nero")
                 {
-                    List<CPunto> posti = p1.DovePuoAndare(c1);
-                    for (int i = 0; i < posti.Count; i++)
+                    if (p1.Colore == Pezzo.inColore.Nero)
                     {
-                        if (c2 == c1)
+                        List<CPunto> posti = p1.DovePuoAndare(c1);
+                        for (int i = 0; i < posti.Count; i++)
                         {
-                            ScacchieraPezzi[alfabetorevers[s1[0]], s1[1]] = null;
-                            ScacchieraPezzi[alfabetorevers[s2[0]], s2[1]] = p1;
-                            if (Colore == Turno) AddMosseU(pos1 + "->" + pos2);
-                            else AddMosseA(pos1 + "->" + pos2);
+                            if (c2 == c1)
+                            {
+                                ScacchieraPezzi[alfabetorevers[s1[0]], s1[1]] = null;
+                                ScacchieraPezzi[alfabetorevers[s2[0]], s2[1]] = p1;
+                                if (Colore == Turno) AddMosseU(pos1 + "->" + pos2);
+                                else AddMosseA(pos1 + "->" + pos2);
+                            }
                         }
                     }
                 }
             }
             ControlloVittoria();
+        }
+        public void PartitaStart()
+        {
+            if(Timer==true)
+            {
+                if (Colore == "bianco")
+                {
+                    if (Turno == "bianco") T.startTU();
+                    else T.startTA();
+                }
+                else
+                {
+                    if (Turno == "nero") T.startTA();
+                    else T.startTU();
+                }
+
+            }
         }
         public void ControlloVittoria()
         {

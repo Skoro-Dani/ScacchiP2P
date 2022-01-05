@@ -88,6 +88,8 @@
         </Canvas>
         <Label x:Name="LBL_Nome" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="61" Foreground="White"/>
         <Button x:Name="BTTN_Disconnetiti" Content="Disconnetiti" Grid.Column="3" HorizontalAlignment="Left" Margin="10,16,0,0" Grid.Row="2" VerticalAlignment="Top" Width="243" Height="32" Background="#FF6E6E6E" Foreground="White" Click="BTTN_Disconnetiti_Click"/>
+        <Label x:Name="LBL_TimerA" Content="Timer-&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="338,23,0,0" VerticalAlignment="Top" Width="107" Foreground="White"/>
+        <Label x:Name="LBL_TimerU" Content="Timer-&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="338,16,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Grid.Row="2"/>
 
     </Grid>
 </Window>

@@ -33,7 +33,7 @@ namespace ScacchiP2P
             bool ris = (bool)login.ShowDialog();
             if (ris == false)
                 this.Close();
-            LBL_Nome.Content = dg.Nome+"->"+dg.Punti;
+            LBL_Nome.Content = dg.Nome + "->" + dg.Punti;
 
             L = new Listener();
             WL = new WorkListener();
@@ -267,7 +267,7 @@ namespace ScacchiP2P
                 if (a)
                 {
                     MessageBox.Show("L'avversario Ha Acccettato le regole", "Regole", MessageBoxButton.OK);
-                    TAB_partita.IsEnabled=true;
+                    TAB_partita.IsEnabled = true;
                     TAB_partita.IsSelected = true;
 
                 }
@@ -283,8 +283,8 @@ namespace ScacchiP2P
         {
             Dati.Flag = true;
             dg.deserialize();
-            for(int i=0;i<dg.lista.Count;i++)
-                if(dg.lista[i].Nome==dg.Nome)
+            for (int i = 0; i < dg.lista.Count; i++)
+                if (dg.lista[i].Nome == dg.Nome)
                 {
                     dg.lista[i].Punti = dg.Punti;
                 }
@@ -296,7 +296,7 @@ namespace ScacchiP2P
             Dati.AddStringDI("d;");
             Dati.AzzeraDati();
             disableAll();
-            
+
         }
         private void disableAll()
         {
@@ -320,6 +320,15 @@ namespace ScacchiP2P
         public void RefreshScacchiera()
         {
             /*In Corso*/
+        }
+
+        public void RefreshTimer(string ValoreA, string ValoreU)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                LBL_TimerA.Content = "Timer-> " + ValoreA;
+                LBL_TimerU.Content = "Timer-> " + ValoreU;
+            });
         }
     }
 }

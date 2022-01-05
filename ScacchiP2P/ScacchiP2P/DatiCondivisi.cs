@@ -56,6 +56,9 @@ namespace ScacchiP2P
         private static object LockPartitaStart = new object();
         private bool PartitaStart_;
         public bool PartitaStart { get { lock (LockPartitaStart) { return PartitaStart_; } } set { lock (LockPartitaStart) { PartitaStart_ = value; } } }
+        private static object LockPartitaFinita= new object();
+        private bool PartitaF_;
+        public bool PartitaF { get { lock (LockPartitaFinita) { return PartitaF_; } } set { lock (LockPartitaFinita) { PartitaF_ = value; } } }
         //ResaA -> Booleano che indica se l'avversario vuole arrendersi
         private static object LockResaA = new object();
         private bool ResaA_;
@@ -180,6 +183,7 @@ namespace ScacchiP2P
             Flag = false;
             w = MainWindow.GetMainWindow();
             PartitaStart = false;
+            PartitaF = false;
         }
     }
 }
