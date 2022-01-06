@@ -7,7 +7,6 @@ namespace ScacchiP2P
         //istanza singleton
         private static DatiCondivisi istanza = null;
         private static object LockIstanza = new object();
-
         //attributi classe
 
         //lista Dati ricevuti dal listener
@@ -67,7 +66,6 @@ namespace ScacchiP2P
         private static object LockResaG = new object();
         private bool ResaG_;
         public bool ResaG { get { lock (LockResaG) { return ResaG_; } } set { lock (LockResaG) { ResaG_ = value; } } }
-
 
         private DatiCondivisi()
         {

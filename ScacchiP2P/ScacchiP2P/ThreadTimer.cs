@@ -10,21 +10,22 @@ namespace ScacchiP2P
 {
     public class ThreadTimer
     {
-        DatiCondivisi Dati = DatiCondivisi.Istanza;
-        Scacchiera sc = Scacchiera.Istanza;
+        DatiCondivisi Dati;
         MainWindow w;
         System.Timers.Timer TimerA;
         System.Timers.Timer TimerU;
+        public bool Timer { get; set; }
         public ThreadTimer()
         {
+            Dati = DatiCondivisi.Istanza;
             w = Dati.w;
         }
         
         public void ProcThread()
         {
-            while (Dati.PartitaF == false && Dati.PartitaStart == true)
+            while (!Dati.Flag)
             {
-                if(sc.Timer==true)
+                if(Timer==true)
                 w.RefreshTimer(TimerA.ToString(), TimerU.ToString()); ;
                 Thread.Sleep(1000);
             }

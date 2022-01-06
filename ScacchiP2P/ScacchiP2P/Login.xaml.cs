@@ -32,21 +32,6 @@ namespace ScacchiP2P
             md5 = System.Security.Cryptography.MD5.Create();
         }
 
-        /*private void deserialize()
-        {
-            XmlSerializer myXML = new XmlSerializer(typeof(List<dgProv>));
-            StreamReader fIN = new StreamReader("utente.xml");
-            lista = (List<dgProv>)myXML.Deserialize(fIN);
-            fIN.Close();
-        }
-        private void serialize()
-        {
-            XmlSerializer myXML = new XmlSerializer(typeof(List<dgProv>));
-            StreamWriter fOUT = new StreamWriter("utente.xml");
-            myXML.Serialize(fOUT, lista);
-            fOUT.Close();
-        }*/
-
         private void bttn_login_Click(object sender, RoutedEventArgs e)
         {
             int pos=-1;

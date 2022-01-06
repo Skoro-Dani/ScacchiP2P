@@ -10,4 +10,9 @@
     <Password>A35ECF344C66770B2BA0F0E913747072</Password>
     <Punti>0</Punti>
   </dgProv>
+  <dgProv>
+    <Nome>OdePower</Nome>
+    <Password>0CC175B9C0F1B6A831C399E269772661</Password>
+    <Punti>0</Punti>
+  </dgProv>
 </ArrayOfDgProv>

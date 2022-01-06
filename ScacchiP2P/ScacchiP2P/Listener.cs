@@ -7,12 +7,15 @@ namespace ScacchiP2P
 {
     public class Listener
     {
-        DatiCondivisi Dati = DatiCondivisi.Istanza;
+        DatiCondivisi Dati;
 
         UdpClient Server = new UdpClient();
         IPEndPoint riceveEP = new IPEndPoint(IPAddress.Any, 42069);
         private byte[] dataReceived;
-        public Listener() { }
+        public Listener()
+        {
+            Dati = DatiCondivisi.Istanza;
+        }
 
         public void ProcThread()
         {

@@ -69,31 +69,31 @@ namespace ScacchiP2P
                     //punti pedone
                     if (Colore == inColore.Bianco)
                     {
-                        ris.Add(new CPunto(x, y + 1));
+                        ris.Add(new CPunto(x, y + 1, false, true));
                         if (y == 2)
-                        { ris.Add(new CPunto(x, y + 2)); }
-                        ris.Add(new CPunto(x + 1, y + 1));
-                        ris.Add(new CPunto(x - 1, y + 1));
+                        { ris.Add(new CPunto(x, y + 2, false, true)); }
+                        ris.Add(new CPunto(x + 1, y + 1, true, false));
+                        ris.Add(new CPunto(x - 1, y + 1, true, false));
                     }
                     if (Colore == inColore.Nero)
                     {
-                        ris.Add(new CPunto(x, y - 1));
+                        ris.Add(new CPunto(x, y - 1, false, true));
                         if (y == 7)
-                        { ris.Add(new CPunto(x, y - 1)); }
-                        ris.Add(new CPunto(x + 1, y - 1));
-                        ris.Add(new CPunto(x - 1, y - 1));
+                        { ris.Add(new CPunto(x, y - 1, false, true)); }
+                        ris.Add(new CPunto(x + 1, y - 1, true, false));
+                        ris.Add(new CPunto(x - 1, y - 1, true, false));
                     }
                     break;
                 case InizialePezzo.Cavallo:
                     //punti cavallo
-                    ris.Add(new CPunto(x + 2, y + 1));
-                    ris.Add(new CPunto(x + 2, y - 1));
-                    ris.Add(new CPunto(x - 2, y + 1));
-                    ris.Add(new CPunto(x - 2, y - 1));
-                    ris.Add(new CPunto(x + 1, y + 2));
-                    ris.Add(new CPunto(x - 1, y + 2));
-                    ris.Add(new CPunto(x + 1, y - 2));
-                    ris.Add(new CPunto(x - 1, y - 2));
+                    ris.Add(new CPunto(x + 2, y + 1, true, true));
+                    ris.Add(new CPunto(x + 2, y - 1, true, true));
+                    ris.Add(new CPunto(x - 2, y + 1, true, true));
+                    ris.Add(new CPunto(x - 2, y - 1, true, true));
+                    ris.Add(new CPunto(x + 1, y + 2, true, true));
+                    ris.Add(new CPunto(x - 1, y + 2, true, true));
+                    ris.Add(new CPunto(x + 1, y - 2, true, true));
+                    ris.Add(new CPunto(x - 1, y - 2, true, true));
                     break;
                 case InizialePezzo.Alfiere:
                     //punti alfiere
@@ -104,7 +104,7 @@ namespace ScacchiP2P
 
                         ix++;
                         iy++;
-                        ris.Add(new CPunto(ix, iy));
+                        ris.Add(new CPunto(ix, iy, true, true));
                     }
                     ix = x;
                     iy = y;
@@ -113,7 +113,7 @@ namespace ScacchiP2P
 
                         ix--;
                         iy--;
-                        ris.Add(new CPunto(ix, iy));
+                        ris.Add(new CPunto(ix, iy, true, true));
                     }
                     ix = x;
                     iy = y;
@@ -122,7 +122,7 @@ namespace ScacchiP2P
 
                         ix--;
                         iy++;
-                        ris.Add(new CPunto(ix, iy));
+                        ris.Add(new CPunto(ix, iy, true, true));
                     }
                     ix = x;
                     iy = y;
@@ -131,7 +131,7 @@ namespace ScacchiP2P
 
                         ix++;
                         iy--;
-                        ris.Add(new CPunto(ix, iy));
+                        ris.Add(new CPunto(ix, iy, true, true));
                     }
                     break;
                 case InizialePezzo.Torre:
@@ -139,9 +139,9 @@ namespace ScacchiP2P
                     for (int i = 0; i < 8; i++)
                     {
                         if (i != x)
-                            ris.Add(new CPunto(i, y));
+                            ris.Add(new CPunto(i, y, true, true));
                         if (i != y)
-                            ris.Add(new CPunto(x, i));
+                            ris.Add(new CPunto(x, i, true, true));
                     }
                     break;
                 case InizialePezzo.Regina:
@@ -149,9 +149,9 @@ namespace ScacchiP2P
                     for (int i = 0; i < 8; i++)
                     {
                         if (i != x)
-                            ris.Add(new CPunto(i, y));
+                            ris.Add(new CPunto(i, y, true, true));
                         if (i != y)
-                            ris.Add(new CPunto(x, i));
+                            ris.Add(new CPunto(x, i, true, true));
                     }
                     ix = x;
                     iy = y;
@@ -161,7 +161,7 @@ namespace ScacchiP2P
 
                         ix++;
                         iy++;
-                        ris.Add(new CPunto(ix, iy));
+                        ris.Add(new CPunto(ix, iy, true, true));
                     }
                     ix = x;
                     iy = y;
@@ -170,7 +170,7 @@ namespace ScacchiP2P
 
                         ix--;
                         iy--;
-                        ris.Add(new CPunto(ix, iy));
+                        ris.Add(new CPunto(ix, iy, true, true));
                     }
                     ix = x;
                     iy = y;
@@ -179,7 +179,7 @@ namespace ScacchiP2P
 
                         ix--;
                         iy++;
-                        ris.Add(new CPunto(ix, iy));
+                        ris.Add(new CPunto(ix, iy, true, true));
                     }
                     ix = x;
                     iy = y;
@@ -188,19 +188,19 @@ namespace ScacchiP2P
 
                         ix++;
                         iy--;
-                        ris.Add(new CPunto(ix, iy));
+                        ris.Add(new CPunto(ix, iy, true, true));
                     }
                     break;
                 case InizialePezzo.Re:
                     //Punti re
-                    ris.Add(new CPunto(x, y + 1));
-                    ris.Add(new CPunto(x + 1, y + 1));
-                    ris.Add(new CPunto(x + 1, y));
-                    ris.Add(new CPunto(x + 1, y - 1));
-                    ris.Add(new CPunto(x, y - 1));
-                    ris.Add(new CPunto(x - 1, y - 1));
-                    ris.Add(new CPunto(x - 1, y));
-                    ris.Add(new CPunto(x - 1, y + 1));
+                    ris.Add(new CPunto(x, y + 1, true, true));
+                    ris.Add(new CPunto(x + 1, y + 1, true, true));
+                    ris.Add(new CPunto(x + 1, y, true, true));
+                    ris.Add(new CPunto(x + 1, y - 1, true, true));
+                    ris.Add(new CPunto(x, y - 1, true, true));
+                    ris.Add(new CPunto(x - 1, y - 1, true, true));
+                    ris.Add(new CPunto(x - 1, y, true, true));
+                    ris.Add(new CPunto(x - 1, y + 1, true, true));
                     break;
             }
 

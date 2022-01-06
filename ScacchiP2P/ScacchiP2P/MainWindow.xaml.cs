@@ -10,17 +10,18 @@ namespace ScacchiP2P
     /// </summary>
     public partial class MainWindow : Window
     {
-        DatiCondivisi Dati;
-        Scacchiera sc;
+        private DatiCondivisi Dati;
+        private Scacchiera sc;
         private static MainWindow w;
-        DatiGiocatore dg;
-        Thread LT;
-        Thread WLT;
-        Thread WT;
+        private DatiGiocatore dg;
+        private Thread LT;
+        private Thread WLT;
+        private Thread WT;
         private Listener L;
         private WorkListener WL;
         private Writer W;
-        Login login;
+        private Login login;
+        //costruttore
         public MainWindow()
         {
             InitializeComponent();
@@ -41,9 +42,12 @@ namespace ScacchiP2P
             LT = new Thread(new ThreadStart(L.ProcThread));
             WLT = new Thread(new ThreadStart(WL.ProcThread));
             WT = new Thread(new ThreadStart(W.ProcThread));
-
+            LT.Start();
+            WLT.Start();
+            WT.Start();
         }
 
+        //metodo che serve a riconoscere dove clicca l'utente
         private void Click(object sender, MouseButtonEventArgs e)
         {
             //e.GetPosition((IInputElement)sender)
@@ -73,10 +77,13 @@ namespace ScacchiP2P
             MessageBox.Show(a[x] + "" + y);
         }
 
+        //get this
         public static MainWindow GetMainWindow()
         {
             return w;
         }
+
+        //Metodo controllo che l'utente non faccia cose strane con le regole
         private void ControlliPartita(object sender, RoutedEventArgs e)
         {
             if (RD_Amichevole.IsChecked == true || RD_Competitiva.IsChecked == true)
@@ -96,6 +103,7 @@ namespace ScacchiP2P
                 RD_Scacchi960.IsEnabled = true;
             }
         }
+        //invio Regole
         private void BTTN_inviaR_Click(object sender, RoutedEventArgs e)
         {
             if (RD_Amichevole.IsChecked == true)
@@ -129,6 +137,7 @@ namespace ScacchiP2P
                     s += "scacchi960;";
             }
         }
+        //invio Colore
         private void BTTN_inviaSC_Click(object sender, RoutedEventArgs e)
         {
             if (RD_bianco.IsChecked == true)
@@ -145,6 +154,7 @@ namespace ScacchiP2P
             BTTN_inviaSC.IsEnabled = false;
             BTTN_inviaR.IsEnabled = true;
         }
+        //richiesta Connesione
         private void BBTN_Connessione_Click(object sender, RoutedEventArgs e)
         {
             int ip1 = -1, ip2 = -1, ip3 = -1, ip4 = -1;
@@ -168,6 +178,7 @@ namespace ScacchiP2P
                 TXT_IP_4.Text = "";
             }
         }
+        //Metodo si e no per accettare una connesione
         public void RichiediConnessione(string s)
         {
             Dispatcher.Invoke(() =>
@@ -188,6 +199,7 @@ namespace ScacchiP2P
                 }
             });
         }
+        //avviso inizio Partita
         public void PartitaStart()
         {
             Dispatcher.Invoke(() =>
@@ -198,6 +210,7 @@ namespace ScacchiP2P
                 }
             });
         }
+        //arresa dell'avversario
         public void SurrenderDellavversario()
         {
             Dispatcher.Invoke(() =>
@@ -205,6 +218,7 @@ namespace ScacchiP2P
                 MessageBox.Show("L'avversario si è arreso", "Vittoria", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             });
         }
+        //patta richiesta patta da parte dell'avversario
         public void Patta()
         {
             Dispatcher.Invoke(() =>
@@ -221,6 +235,7 @@ namespace ScacchiP2P
                 }
             });
         }
+        //disconnesione dell'avversario
         public void Disconnessione()
         {
             Dispatcher.Invoke(() =>
@@ -231,6 +246,7 @@ namespace ScacchiP2P
             });
         }
 
+        //controllo della conessione da parte dell'utente
         public void ConnesioneA(bool a)
         {
             Dispatcher.Invoke(() =>
@@ -259,7 +275,7 @@ namespace ScacchiP2P
 
             });
         }
-
+        //controllo delle regole da parte dell'utente
         public void RegoleA(bool a)
         {
             Dispatcher.Invoke(() =>
@@ -278,7 +294,7 @@ namespace ScacchiP2P
                 }
             });
         }
-
+        //metodo chiusura della finestra
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             Dati.Flag = true;
@@ -290,14 +306,15 @@ namespace ScacchiP2P
                 }
             dg.serialize();
         }
-
+        //disconnesione da parte dell'utente
         private void BTTN_Disconnetiti_Click(object sender, RoutedEventArgs e)
         {
             Dati.AddStringDI("d;");
             Dati.AzzeraDati();
             disableAll();
-
+            MessageBox.Show("Ti sei Disconessio", "Disconnesione", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
+        //disabilita tutti i controlli
         private void disableAll()
         {
             RD_Amichevole.IsEnabled = false;
@@ -317,11 +334,13 @@ namespace ScacchiP2P
             BBTN_Connessione.IsEnabled = true;
         }
 
+        //aggiorna la grafica della scacchiera
         public void RefreshScacchiera()
         {
             /*In Corso*/
         }
 
+        //aggiorna il timer
         public void RefreshTimer(string ValoreA, string ValoreU)
         {
             Dispatcher.Invoke(() =>
@@ -329,6 +348,13 @@ namespace ScacchiP2P
                 LBL_TimerA.Content = "Timer-> " + ValoreA;
                 LBL_TimerU.Content = "Timer-> " + ValoreU;
             });
+        }
+
+        //metodo per evitare che l'utente faccia più mosse
+        public void DisOAblSC(bool DisOAbl)
+        {
+            if (DisOAbl) ScacchieraRet.IsEnabled = true;
+            else ScacchieraRet.IsEnabled = false;
         }
     }
 }

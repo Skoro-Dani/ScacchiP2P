@@ -2,11 +2,13 @@
 {
     class WorkListener
     {
-        DatiCondivisi Dati = DatiCondivisi.Istanza;
-        Scacchiera sc = Scacchiera.Istanza;
+        DatiCondivisi Dati;
+        Scacchiera sc;
         MainWindow w;
         public WorkListener()
         {
+            Dati = DatiCondivisi.Istanza;
+            sc = Scacchiera.Istanza;
             w = Dati.w;
         }
 
@@ -24,11 +26,11 @@
                         case "c":
                             if (!Dati.Connesso)
                                 if (!Dati.ARConnessione)
-                                {
+                               {
                                     Dati.VConnesione = true;
                                     Dati.IPVC = s[2];
                                     w.RichiediConnessione(s[1]);
-                                }
+                               }
                             break;
                         case "m":
                             if (Dati.Connesso)
