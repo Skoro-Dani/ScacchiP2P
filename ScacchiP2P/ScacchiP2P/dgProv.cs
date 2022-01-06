@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScacchiP2P
 {
@@ -11,8 +7,8 @@ namespace ScacchiP2P
     {
         //Dati Giocatore
         public string Nome { get; set; }
-        public string Password { get; set; } 
-        public int Punti { get; set; } 
+        public string Password { get; set; }
+        public int Punti { get; set; }
 
         public dgProv(string nome, string pass)
         {

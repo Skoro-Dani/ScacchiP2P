@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using System.Threading;
 
 namespace ScacchiP2P
 {
@@ -20,13 +14,13 @@ namespace ScacchiP2P
             Dati = DatiCondivisi.Istanza;
             w = Dati.w;
         }
-        
+
         public void ProcThread()
         {
             while (!Dati.Flag)
             {
-                if(Timer==true)
-                w.RefreshTimer(TimerA.ToString(), TimerU.ToString()); ;
+                if (Timer == true)
+                    w.RefreshTimer(TimerA.ToString(), TimerU.ToString()); ;
                 Thread.Sleep(1000);
             }
         }

@@ -76,8 +76,8 @@
                     <ListBox x:Name="ListBianco" HorizontalAlignment="Left" Height="318" Margin="13,0,0,0" VerticalAlignment="Top" Width="99" Background="#FF1B1B1B" Foreground="White" Grid.Row="1"/>
                     <ListBox x:Name="ListNero" HorizontalAlignment="Left" Height="318" Margin="134,0,0,0" VerticalAlignment="Top" Width="91" Background="#FF1B1B1B" Foreground="White" Grid.Row="1"/>
                     <Label Content="Mosse-&gt;" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="81"/>
-                    <Button x:Name="BBTN_Arrenditi" Content="Arrenditi" HorizontalAlignment="Left" Margin="13,335,0,0" VerticalAlignment="Top" Width="99" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BBTN_Connessione_Click" Grid.Row="1"/>
-                    <Button x:Name="BBTN_Patta" Content="Patta" HorizontalAlignment="Left" Margin="134,335,0,0" VerticalAlignment="Top" Width="91" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BBTN_Connessione_Click" Grid.Row="1"/>
+                    <Button x:Name="BBTN_Arrenditi" Content="Arrenditi" HorizontalAlignment="Left" Margin="13,335,0,0" VerticalAlignment="Top" Width="99" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Arresa" Grid.Row="1"/>
+                    <Button x:Name="BBTN_Patta" Content="Patta" HorizontalAlignment="Left" Margin="134,335,0,0" VerticalAlignment="Top" Width="91" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Patta" Grid.Row="1"/>
                 </Grid>
             </TabItem>
         </TabControl>

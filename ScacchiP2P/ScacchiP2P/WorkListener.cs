@@ -26,11 +26,11 @@
                         case "c":
                             if (!Dati.Connesso)
                                 if (!Dati.ARConnessione)
-                               {
+                                {
                                     Dati.VConnesione = true;
                                     Dati.IPVC = s[2];
                                     w.RichiediConnessione(s[1]);
-                               }
+                                }
                             break;
                         case "m":
                             if (Dati.Connesso)
@@ -48,7 +48,7 @@
                         case "ms":
                             if (Dati.Connesso)
                             {
-                                Dati.PartitaStart = true;
+                                sc.PartitaStart();
                                 w.PartitaStart();
                             }
                             break;
@@ -112,7 +112,7 @@
                         case "a":
                             if (Dati.Connesso)
                             {
-                                Dati.ResaA = true;
+                                /* IN Corso*/
                             }
                             break;
                         case "y":
@@ -124,6 +124,9 @@
                                 case "r":
                                     w.RegoleA(true);
                                     break;
+                                case "m":
+                                    sc.Patta();
+                                    break;
                             }
                             break;
                         case "n":
@@ -134,6 +137,9 @@
                                     break;
                                 case "r":
                                     w.RegoleA(false);
+                                    break;
+                                case "m":
+                                    w.PattaRifutata();
                                     break;
                             }
                             break;

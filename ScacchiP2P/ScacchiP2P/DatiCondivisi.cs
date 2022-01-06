@@ -51,21 +51,8 @@ namespace ScacchiP2P
         private MainWindow w_;
         public MainWindow w { get { lock (LockWindow) { return w_; } } set { lock (LockWindow) { w_ = value; } } }
 
-        //PartitaStart -> Booleano che indica se la partita puo partire
-        private static object LockPartitaStart = new object();
-        private bool PartitaStart_;
-        public bool PartitaStart { get { lock (LockPartitaStart) { return PartitaStart_; } } set { lock (LockPartitaStart) { PartitaStart_ = value; } } }
-        private static object LockPartitaFinita= new object();
-        private bool PartitaF_;
-        public bool PartitaF { get { lock (LockPartitaFinita) { return PartitaF_; } } set { lock (LockPartitaFinita) { PartitaF_ = value; } } }
-        //ResaA -> Booleano che indica se l'avversario vuole arrendersi
-        private static object LockResaA = new object();
-        private bool ResaA_;
-        public bool ResaA { get { lock (LockResaA) { return ResaA_; } } set { lock (LockResaA) { ResaA_ = value; } } }
-        //ResaG -> Booleano che indica se l'avversario vuole arrendersi
-        private static object LockResaG = new object();
-        private bool ResaG_;
-        public bool ResaG { get { lock (LockResaG) { return ResaG_; } } set { lock (LockResaG) { ResaG_ = value; } } }
+
+
 
         private DatiCondivisi()
         {
@@ -180,8 +167,7 @@ namespace ScacchiP2P
             IPVC = "";
             Flag = false;
             w = MainWindow.GetMainWindow();
-            PartitaStart = false;
-            PartitaF = false;
+
         }
     }
 }

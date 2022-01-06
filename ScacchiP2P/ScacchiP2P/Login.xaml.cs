@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
 
 namespace ScacchiP2P
 {
@@ -34,7 +21,7 @@ namespace ScacchiP2P
 
         private void bttn_login_Click(object sender, RoutedEventArgs e)
         {
-            int pos=-1;
+            int pos = -1;
             bool ris = false;
             for (int i = 0; i < dg.lista.Count; i++)
             {
@@ -48,8 +35,8 @@ namespace ScacchiP2P
             if (ris)
             {
                 dg.Nome = TXT_username.Text;
-                if(pos!=-1)
-                dg.Punti = dg.lista[pos].Punti;
+                if (pos != -1)
+                    dg.Punti = dg.lista[pos].Punti;
                 dg.serialize();
                 this.DialogResult = true;
                 this.Close();

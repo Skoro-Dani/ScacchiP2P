@@ -13,7 +13,7 @@
         public bool PosInCuiMangia { get { return _PosInCuiMangia; } set { _PosInCuiMangia = value; } }
         public bool PosInCuiMuove { get { return _PosInCuiMuove; } set { _PosInCuiMuove = value; } }
 
-        public CPunto(int x, int y,bool PosInCuiMangia, bool PosInCuiMuove)
+        public CPunto(int x, int y, bool PosInCuiMangia, bool PosInCuiMuove)
         {
             this.x = x;
             this.y = y;
@@ -23,6 +23,6 @@
             x = 0;
             y = 0;
         }
-        
+
     }
 }

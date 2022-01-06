@@ -75,7 +75,7 @@ namespace ScacchiP2P
             }
             y += 1;
             MessageBox.Show(a[x] + "" + y);
-            ScacchieraRet.
+
         }
 
         //get this
@@ -179,6 +179,15 @@ namespace ScacchiP2P
                 TXT_IP_4.Text = "";
             }
         }
+
+        public void PattaRifutata()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show("L'avversario ha rifiutato la Patta", "Patta", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            });
+        }
+
         //Metodo si e no per accettare una connesione
         public void RichiediConnessione(string s)
         {
@@ -205,10 +214,9 @@ namespace ScacchiP2P
         {
             Dispatcher.Invoke(() =>
             {
-                if (Dati.PartitaStart == true)
-                {
-                    MessageBox.Show("La partita è iniziata", "Start", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                }
+
+                MessageBox.Show("La partita è iniziata", "Start", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
             });
         }
         //arresa dell'avversario
@@ -216,6 +224,7 @@ namespace ScacchiP2P
         {
             Dispatcher.Invoke(() =>
             {
+                sc.ArresaMet(true);
                 MessageBox.Show("L'avversario si è arreso", "Vittoria", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             });
         }
@@ -356,6 +365,31 @@ namespace ScacchiP2P
         {
             if (DisOAbl) ScacchieraRet.IsEnabled = true;
             else ScacchieraRet.IsEnabled = false;
+        }
+
+        public void Rivincita()
+        {
+            /* IN CORSO*/
+        }
+
+        private void Arresa(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Sicuro di voler Arrenderti", "Resa", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                sc.ArresaMet(false);
+                Dati.AddStringDI("s;");
+            }
+
+        }
+
+        private void Patta(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Sicuro di voler Patteggiare", "Patta", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                Dati.AddStringDI("m;A0;A0;true;");
+            }
         }
     }
 }

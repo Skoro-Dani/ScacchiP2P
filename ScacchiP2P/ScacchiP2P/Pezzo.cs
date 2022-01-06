@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ScacchiP2P
+﻿namespace ScacchiP2P
 {
     public class Pezzo
     {
@@ -55,7 +53,7 @@ namespace ScacchiP2P
         }
 
 
-        public List<CPunto> DovePuoAndare(CPunto P)
+        /*public List<CPunto> DovePuoAndare(CPunto P)
         {
             int ix = 0;
             int iy = 0;
@@ -205,7 +203,7 @@ namespace ScacchiP2P
             }
 
             return ris;
-        }
+        }*/
 
     }
 }
