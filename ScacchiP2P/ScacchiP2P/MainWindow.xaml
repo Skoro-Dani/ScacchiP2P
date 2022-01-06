@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScacchiP2P"
         mc:Ignorable="d"
-        Title="MainWindow" Height="601.501" Width="837.723"
+        Title="ScachiP2P" Height="601.501" Width="837.723"
         Closing="DataWindow_Closing">
     <Window.Background>
         <ImageBrush/>

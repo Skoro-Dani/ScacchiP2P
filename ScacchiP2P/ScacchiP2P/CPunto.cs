@@ -23,13 +23,6 @@
             x = 0;
             y = 0;
         }
-        /*public void addx(int i)
-        {
-            this.x += i;
-        }
-        public void addy(int i)
-        {
-            this.y += i;
-        }*/
+        
     }
 }

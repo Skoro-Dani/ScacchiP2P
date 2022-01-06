@@ -206,5 +206,6 @@ namespace ScacchiP2P
 
             return ris;
         }
+
     }
 }

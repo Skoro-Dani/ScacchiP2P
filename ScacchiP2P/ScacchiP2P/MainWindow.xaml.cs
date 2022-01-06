@@ -75,6 +75,7 @@ namespace ScacchiP2P
             }
             y += 1;
             MessageBox.Show(a[x] + "" + y);
+            ScacchieraRet.
         }
 
         //get this

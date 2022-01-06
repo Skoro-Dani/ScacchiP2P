@@ -329,6 +329,8 @@ namespace ScacchiP2P
             int count = 0;
             int ix = 0;
             int iy = 0;
+            List<CPunto> InCuiMangiaLavv = PosInCuiSiMangia();
+
             switch (P.Nome)
             {
                 case Pezzo.InizialePezzo.Cavallo:
@@ -773,24 +775,216 @@ namespace ScacchiP2P
                     break;
                 case Pezzo.InizialePezzo.Re:
                     //Punti re
-                    Pos.Add(new CPunto(Punto.x, Punto.y + 1, true, true));
-                    Pos.Add(new CPunto(Punto.x + 1, Punto.y + 1, true, true));
-                    Pos.Add(new CPunto(Punto.x + 1, Punto.y, true, true));
-                    Pos.Add(new CPunto(Punto.x + 1, Punto.y - 1, true, true));
-                    Pos.Add(new CPunto(Punto.x, Punto.y - 1, true, true));
-                    Pos.Add(new CPunto(Punto.x - 1, Punto.y - 1, true, true));
-                    Pos.Add(new CPunto(Punto.x - 1, Punto.y, true, true));
-                    Pos.Add(new CPunto(Punto.x - 1, Punto.y + 1, true, true));
+                    //controllo che non viene mangiato
+                    /*
+                     * in alto
+                     */
+                    bool mangia = false;
+                    for (int i = 0; i < InCuiMangiaLavv.Count; i++)
+                    {
+                        if (new CPunto(Punto.x, Punto.y + 1, true, true) == InCuiMangiaLavv[i])
+                            mangia = true;
+
+                    }
+                    if (mangia == false)
+                    {
+                        if (ScacchieraPezzi[Punto.x, Punto.y + 1] == null)
+                        {
+                            Pos.Add(new CPunto(Punto.x, Punto.y + 1, true, true));
+                        }
+                        else if (ScacchieraPezzi[Punto.x, Punto.y + 1].Colore != P.Colore)
+                        {
+                            Pos.Add(new CPunto(Punto.x, Punto.y + 1, true, true));
+                        }
+                    }
+                    /*
+                     * diagonale in alto a destra
+                     */
+                    mangia = false;
+                    for (int i = 0; i < InCuiMangiaLavv.Count; i++)
+                    {
+                        if (new CPunto(Punto.x + 1, Punto.y + 1, true, true) == InCuiMangiaLavv[i])
+                            mangia = true;
+
+                    }
+                    if (mangia == false)
+                    {
+                        if (ScacchieraPezzi[Punto.x + 1, Punto.y + 1] == null)
+                        {
+                            Pos.Add(new CPunto(Punto.x + 1, Punto.y + 1, true, true));
+                        }
+                        else if (ScacchieraPezzi[Punto.x + 1, Punto.y + 1].Colore != P.Colore)
+                        {
+                            Pos.Add(new CPunto(Punto.x + 1, Punto.y + 1, true, true));
+                        }
+                    }
+                    /*
+                     * a destra
+                     */
+                    mangia = false;
+                    for (int i = 0; i < InCuiMangiaLavv.Count; i++)
+                    {
+                        if (new CPunto(Punto.x + 1, Punto.y, true, true) == InCuiMangiaLavv[i])
+                            mangia = true;
+
+                    }
+                    if (mangia == false)
+                    {
+                        if (ScacchieraPezzi[Punto.x + 1, Punto.y] == null)
+                        {
+                            Pos.Add(new CPunto(Punto.x + 1, Punto.y, true, true));
+                        }
+                        else if (ScacchieraPezzi[Punto.x + 1, Punto.y].Colore != P.Colore)
+                        {
+                            Pos.Add(new CPunto(Punto.x + 1, Punto.y, true, true));
+                        }
+                    }
+                    /*
+                     * diagonale in basso a destra
+                     */
+                    mangia = false;
+                    for (int i = 0; i < InCuiMangiaLavv.Count; i++)
+                    {
+                        if (new CPunto(Punto.x + 1, Punto.y - 1, true, true) == InCuiMangiaLavv[i])
+                            mangia = true;
+
+                    }
+                    if (mangia == false)
+                    {
+                        if (ScacchieraPezzi[Punto.x+1, Punto.y - 1] == null)
+                        {
+                            Pos.Add(new CPunto(Punto.x + 1, Punto.y - 1, true, true));
+                        }
+                        else if (ScacchieraPezzi[Punto.x+1, Punto.y - 1].Colore != P.Colore)
+                        {
+                            Pos.Add(new CPunto(Punto.x + 1, Punto.y - 1, true, true));
+                        }
+                    }
+                    /*
+                     * in basso
+                     */
+                    mangia = false;
+                    for (int i = 0; i < InCuiMangiaLavv.Count; i++)
+                    {
+                        if (new CPunto(Punto.x, Punto.y - 1, true, true) == InCuiMangiaLavv[i])
+                            mangia = true;
+
+                    }
+                    if (mangia == false)
+                    {
+                        if (ScacchieraPezzi[Punto.x, Punto.y - 1] == null)
+                        {
+                            Pos.Add(new CPunto(Punto.x, Punto.y - 1, true, true));
+                        }
+                        else if (ScacchieraPezzi[Punto.x, Punto.y - 1].Colore != P.Colore)
+                        {
+                            Pos.Add(new CPunto(Punto.x, Punto.y - 1, true, true));
+                        }
+
+                    }
+                    /*
+                     * diagonale in basso a sinistra
+                     */
+                    mangia = false;
+                    for (int i = 0; i < InCuiMangiaLavv.Count; i++)
+                    {
+                        if (new CPunto(Punto.x - 1, Punto.y - 1, true, true) == InCuiMangiaLavv[i])
+                            mangia = true;
+
+                    }
+                    if (mangia == false)
+                    {
+                        if (ScacchieraPezzi[Punto.x - 1, Punto.y - 1] == null)
+                        {
+                            Pos.Add(new CPunto(Punto.x - 1, Punto.y - 1, true, true));
+                        }
+                        else if (ScacchieraPezzi[Punto.x - 1, Punto.y - 1].Colore != P.Colore)
+                        {
+                            Pos.Add(new CPunto(Punto.x - 1, Punto.y - 1, true, true));
+                        }
+
+                    }
+                    /*
+                     * a sinistra
+                     */
+                    mangia = false;
+                    for (int i = 0; i < InCuiMangiaLavv.Count; i++)
+                    {
+                        if (new CPunto(Punto.x - 1, Punto.y, true, true) == InCuiMangiaLavv[i])
+                            mangia = true;
+
+                    }
+                    if (mangia == false)
+                    {
+                        if (ScacchieraPezzi[Punto.x - 1, Punto.y] == null)
+                        {
+                            Pos.Add(new CPunto(Punto.x - 1, Punto.y, true, true));
+                        }
+                        else if (ScacchieraPezzi[Punto.x - 1, Punto.y].Colore != P.Colore)
+                        {
+                            Pos.Add(new CPunto(Punto.x - 1, Punto.y, true, true));
+                        }
+
+                    }
+                    /*
+                     * diagonale in alto a sinistra
+                     */
+                    mangia = false;
+                    for (int i = 0; i < InCuiMangiaLavv.Count; i++)
+                    {
+                        if (new CPunto(Punto.x - 1, Punto.y + 1, true, true) == InCuiMangiaLavv[i])
+                            mangia = true;
+
+                    }
+                    if (mangia == false)
+                    {
+                        if (ScacchieraPezzi[Punto.x - 1, Punto.y + 1] == null)
+                        {
+                            Pos.Add(new CPunto(Punto.x - 1, Punto.y + 1, true, true));
+                        }
+                        else if (ScacchieraPezzi[Punto.x - 1, Punto.y + 1].Colore != P.Colore)
+                        {
+                            Pos.Add(new CPunto(Punto.x - 1, Punto.y + 1, true, true));
+                        }
+
+                    }
+
                     break;
             }
 
             return Pos;
         }
-
         public List<CPunto> PosInCuiSiMangia()
         {
             List<CPunto> pos = new List<CPunto>();
-
+            List<CPunto> posProv = new List<CPunto>();
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+                    if (ScacchieraPezzi[x, y] != null)
+                    {
+                        if (Colore == "bianco")
+                        {
+                            if (ScacchieraPezzi[x, y].Colore == Pezzo.inColore.Nero)
+                            {
+                                posProv = GetPosizioneEffetive(new CPunto(x, y, true, true), ScacchieraPezzi[x, y]);
+                                for (int i = 0; i < posProv.Count; i++)
+                                    pos.Add(posProv[i]);
+                            }
+                        }
+                        else
+                        {
+                            if (ScacchieraPezzi[x, y].Colore == Pezzo.inColore.Bianco)
+                            {
+                                posProv = GetPosizioneEffetive(new CPunto(x, y, true, true), ScacchieraPezzi[x, y]);
+                                for (int i = 0; i < posProv.Count; i++)
+                                    pos.Add(posProv[i]);
+                            }
+                        }
+                    }
+                }
+            }
             return pos;
         }
         public void PartitaStart()
