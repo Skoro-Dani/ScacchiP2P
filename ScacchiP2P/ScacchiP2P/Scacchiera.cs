@@ -22,7 +22,7 @@ namespace ScacchiP2P
          * 
          */
         //Matrice che replica la scacchiera
-        public Pezzo[,] ScacchieraPezzi = new Pezzo[9, 9];
+        public Pezzo[,] ScacchieraPezzi = new Pezzo[8, 8];
         /*
          * 
          */
@@ -135,9 +135,9 @@ namespace ScacchiP2P
 
         public void GeneraScacchiera()
         {
-            for (int y = 0; y < 9; y++)
+            for (int y = 0; y < 8; y++)
             {
-                for (int x = 0; x < 9; x++)
+                for (int x = 0; x < 8; x++)
                 {
                     ScacchieraPezzi[x, y] = null;
                 }
@@ -342,432 +342,16 @@ namespace ScacchiP2P
             switch (P.Nome)
             {
                 case Pezzo.InizialePezzo.Cavallo:
-                    /*
-                     * A destra in alto
-                     */
-                    try
-                    {
-                        if (ScacchieraPezzi[Punto.x + 2, Punto.y + 1] != null)
-                        {
-                            if (ScacchieraPezzi[Punto.x + 2, Punto.y + 1].Colore == P.Colore)
-                                Pos.Add(new CPunto(Punto.x + 2, Punto.y + 1, true, true));
-                        }
-                        else Pos.Add(new CPunto(Punto.x + 2, Punto.y + 1, true, true));
-                    }
-                    catch (Exception e)
-                    { }
-                    /*
-                     * a destra in basso
-                     */
-                    try
-                    {
-                        if (ScacchieraPezzi[Punto.x + 2, Punto.y - 1] != null)
-                        {
-                            if (ScacchieraPezzi[Punto.x + 2, Punto.y - 1].Colore == P.Colore)
-                                Pos.Add(new CPunto(Punto.x + 2, Punto.y - 1, true, true));
-                        }
-                        else Pos.Add(new CPunto(Punto.x + 2, Punto.y - 1, true, true));
-                    }
-                    catch (Exception e)
-                    { }
-                    /*
-                     * a sinistra in alto
-                     */
-                    try
-                    {
-                        if (ScacchieraPezzi[Punto.x - 2, Punto.y + 1] != null)
-                        {
-                            if (ScacchieraPezzi[Punto.x - 2, Punto.y + 1].Colore == P.Colore)
-                                Pos.Add(new CPunto(Punto.x - 2, Punto.y + 1, true, true));
-                        }
-                        else Pos.Add(new CPunto(Punto.x - 2, Punto.y + 1, true, true));
-                    }
-                    catch (Exception e)
-                    { }
-                    /*
-                     * a sinistra in basso
-                     */
-                    try
-                    {
-                        if (ScacchieraPezzi[Punto.x - 2, Punto.y - 1] != null)
-                        {
-                            if (ScacchieraPezzi[Punto.x - 2, Punto.y - 1].Colore == P.Colore)
-                                Pos.Add(new CPunto(Punto.x - 2, Punto.y - 1, true, true));
-                        }
-                        else Pos.Add(new CPunto(Punto.x - 2, Punto.y - 1, true, true));
-                    }
-                    catch (Exception e)
-                    { }
-                    /*
-                     * in alto a destra
-                     */
-                    try
-                    {
-                        if (ScacchieraPezzi[Punto.x + 1, Punto.y + 2] != null)
-                        {
-                            if (ScacchieraPezzi[Punto.x + 1, Punto.y + 2].Colore == P.Colore)
-                                Pos.Add(new CPunto(Punto.x + 1, Punto.y + 2, true, true));
-                        }
-                        else Pos.Add(new CPunto(Punto.x + 1, Punto.y + 2, true, true));
-                    }
-                    catch (Exception e)
-                    { }
-                    /*
-                     * in alto a sinistra
-                    */
-                    try
-                    {
-                        if (ScacchieraPezzi[Punto.x - 1, Punto.y + 2] != null)
-                        {
-                            if (ScacchieraPezzi[Punto.x - 1, Punto.y + 2].Colore == P.Colore)
-                                Pos.Add(new CPunto(Punto.x - 1, Punto.y + 2, true, true));
-                        }
-                        else Pos.Add(new CPunto(Punto.x - 1, Punto.y + 2, true, true));
-                    }
-                    catch (Exception e)
-                    { }
-                    /*
-                     * in basso a destra
-                    */
-                    try
-                    {
-                        if (ScacchieraPezzi[Punto.x + 1, Punto.y - 2] != null)
-                        {
-                            if (ScacchieraPezzi[Punto.x + 1, Punto.y - 2].Colore == P.Colore)
-                                Pos.Add(new CPunto(Punto.x + 1, Punto.y - 2, true, true));
-                        }
-                        else Pos.Add(new CPunto(Punto.x + 1, Punto.y - 2, true, true));
-                    }
-                    catch (Exception e)
-                    { }
-                    /*
-                     * in basso a sinitra
-                    */
-                    try
-                    {
-                        if (ScacchieraPezzi[Punto.x - 1, Punto.y - 2] != null)
-                        {
-                            if (ScacchieraPezzi[Punto.x - 1, Punto.y - 2].Colore == P.Colore)
-                                Pos.Add(new CPunto(Punto.x - 1, Punto.y - 2, true, true));
-                        }
-                        else Pos.Add(new CPunto(Punto.x - 1, Punto.y - 2, true, true));
-                    }
-                    catch (Exception e)
-                    { }
-                    /*
-                     */
+                    Pos = GetPosCavallo(Punto, P);
                     break;
                 case Pezzo.InizialePezzo.Torre:
-                    //Controllo della torre a destra
-                    count = 0;
-                    for (int x = Punto.x + 1; x < 8; x++)
-                    {
-                        try
-                        {
-                            if (ScacchieraPezzi[x, Punto.y] != null)
-                            {
-                                if (count == 0)
-                                {
-                                    if (ScacchieraPezzi[x, Punto.y].Colore != P.Colore)
-                                        Pos.Add(new CPunto(x, Punto.y, true, true));
-                                    count++;
-                                }
-                            }
-                            else
-                            {
-                                if (count == 0)
-                                    Pos.Add(new CPunto(x, Punto.y, true, true));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-
-                    }
-                    //Controllo della torre a Sinistra
-                    count = 0;
-                    for (int x = Punto.x - 1; x > 0; x--)
-                    {
-                        try
-                        {
-                            if (x > 0)
-                            {
-                                if (ScacchieraPezzi[x, Punto.y] != null)
-                                {
-                                    if (count == 0)
-                                    {
-                                        if (ScacchieraPezzi[x, Punto.y].Colore != P.Colore)
-                                            Pos.Add(new CPunto(x, Punto.y, true, true));
-                                        count++;
-                                    }
-                                }
-                                else
-                                {
-                                    if (count == 0)
-                                        Pos.Add(new CPunto(x, Punto.y, true, true));
-                                }
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                    }
-                    //Controllo della torre in alto
-                    count = 0;
-                    for (int y = Punto.y + 1; y < 8; y++)
-                    {
-                        try
-                        {
-                            if (ScacchieraPezzi[Punto.x, y] != null)
-                            {
-                                if (count == 0)
-                                {
-                                    if (ScacchieraPezzi[Punto.x, y].Colore != P.Colore)
-                                        Pos.Add(new CPunto(Punto.x, y, true, true));
-                                    count++;
-                                }
-                            }
-                            else
-                            {
-                                if (count == 0)
-                                    Pos.Add(new CPunto(Punto.x, y, true, true));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-
-                    }
-                    //controllo della torre in basso
-                    count = 0;
-                    for (int y = Punto.y - 1; y > 0; y--)
-                    {
-                        try
-                        {
-                            if (ScacchieraPezzi[Punto.x, y] != null)
-                            {
-                                if (count == 0)
-                                {
-                                    if (ScacchieraPezzi[Punto.x, y].Colore != P.Colore)
-                                        Pos.Add(new CPunto(Punto.x, y, true, true));
-                                    count++;
-                                }
-                            }
-                            else
-                            {
-                                if (count == 0)
-                                    Pos.Add(new CPunto(Punto.x, y, true, true));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-
-                    }
+                    Pos = GetPosTorre(Punto, P);
                     break;
                 case Pezzo.InizialePezzo.Pedone:
-                    //Se bianco il pedone si muove in un modo
-                    if (P.Colore == Pezzo.inColore.Bianco)
-                    {
-                        //avanti con il pedone
-                        try
-                        {
-                            if (ScacchieraPezzi[Punto.x, Punto.y + 1] == null)
-                            {
-                                Pos.Add(new CPunto(Punto.x, Punto.y + 1, false, true));
-                                if ((ScacchieraPezzi[Punto.x, Punto.y + 2] == null))
-                                {
-                                    Pos.Add(new CPunto(Punto.x, Punto.y + 2, false, true));
-                                }
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                        //dove mangia il pedone
-                        try
-                        {
-                            if (ScacchieraPezzi[Punto.x + 1, Punto.y + 1] != null)
-                            {
-                                if (P.Colore != ScacchieraPezzi[Punto.x + 1, Punto.y + 1].Colore)
-                                    Pos.Add(new CPunto(Punto.x + 1, Punto.y + 1, true, false));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                        try
-                        {
-                            if (ScacchieraPezzi[Punto.x - 1, Punto.y + 1] != null)
-                            {
-                                if (P.Colore != ScacchieraPezzi[Punto.x - 1, Punto.y + 1].Colore)
-                                    Pos.Add(new CPunto(Punto.x - 1, Punto.y + 1, true, false));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                    }
-                    else
-                    //Se nero il pedone si muove in un modo
-                    {
-                        try
-                        {
-                            if (ScacchieraPezzi[Punto.x, Punto.y - 1] == null)
-                            {
-                                //avanti con il pedone
-                                Pos.Add(new CPunto(Punto.x, Punto.y - 1, false, true));
-                                if ((ScacchieraPezzi[Punto.x, Punto.y - 2] == null))
-                                    Pos.Add(new CPunto(Punto.x, Punto.y - 2, false, true));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                        //dove mangia il pedone
-                        try
-                        {
-                            if (ScacchieraPezzi[Punto.x - 1, Punto.y - 1] != null)
-                            {
-                                if (P.Colore != ScacchieraPezzi[Punto.x - 1, Punto.y - 1].Colore)
-                                    Pos.Add(new CPunto(Punto.x - 1, Punto.y - 1, true, false));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                        try
-                        {
-                            if (ScacchieraPezzi[Punto.x + 1, Punto.y - 1] != null)
-                            {
-                                if (P.Colore != ScacchieraPezzi[Punto.x + 1, Punto.y - 1].Colore)
-                                    Pos.Add(new CPunto(Punto.x + 1, Punto.y - 1, true, false));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                    }
+                    Pos = GetPosPedone(Punto, P);
                     break;
                 case Pezzo.InizialePezzo.Alfiere:
-                    //punti alfiere alto a destra
-                    ix = Punto.x;
-                    iy = Punto.y;
-                    count = 0;
-                    while (ix < 8 && iy < 8)
-                    {
-                        try
-                        {
-                            ix++;
-                            iy++;
-                            if (ScacchieraPezzi[ix, iy] != null)
-                            {
-                                if (P.Colore != ScacchieraPezzi[ix, iy].Colore)
-                                {
-                                    if (count == 0)
-                                    {
-                                        Pos.Add(new CPunto(ix, iy, true, true));
-                                        count++;
-                                    }
-                                }
-                                else
-                                    count++;
-
-                            }
-                            else if (count == 0)
-                            {
-                                Pos.Add(new CPunto(ix, iy, true, true));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                    }
-                    //punti alfiere in basso a sinistra
-                    ix = Punto.x;
-                    iy = Punto.y;
-                    count = 0;
-                    while (ix > -2 && iy > -2)
-                    {
-                        try
-                        {
-                            ix--;
-                            iy--;
-                            if (ScacchieraPezzi[ix, iy] != null)
-                            {
-                                if (P.Colore != ScacchieraPezzi[ix, iy].Colore)
-                                {
-                                    if (count == 0)
-                                    {
-                                        Pos.Add(new CPunto(ix, iy, true, true));
-                                        count++;
-                                    }
-                                }
-                                else
-                                    count++;
-
-                            }
-                            else if (count == 0)
-                            {
-                                Pos.Add(new CPunto(ix, iy, true, true));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                    }
-                    //punti alfiere in alto a sinistra
-                    ix = Punto.x;
-                    iy = Punto.y;
-                    count = 0;
-                    while (ix > -2 && iy < 8)
-                    {
-                        try
-                        {
-                            ix--;
-                            iy++;
-                            if (ScacchieraPezzi[ix, iy] != null)
-                            {
-                                if (P.Colore != ScacchieraPezzi[ix, iy].Colore)
-                                {
-                                    if (count == 0)
-                                    {
-                                        Pos.Add(new CPunto(ix, iy, true, true));
-                                        count++;
-                                    }
-                                }
-                                else
-                                    count++;
-
-                            }
-                            else if (count == 0)
-                            {
-                                Pos.Add(new CPunto(ix, iy, true, true));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                    }
-                    //punti alfiere in basso a destra
-                    ix = Punto.x;
-                    iy = Punto.y;
-                    count = 0;
-                    while (ix < 8 && iy > -2)
-                    {
-                        try
-                        {
-                            ix++;
-                            iy--;
-                            if (ScacchieraPezzi[ix, iy] != null)
-                            {
-                                if (P.Colore != ScacchieraPezzi[ix, iy].Colore)
-                                {
-                                    if (count == 0)
-                                    {
-                                        Pos.Add(new CPunto(ix, iy, true, true));
-                                        count++;
-                                    }
-                                }
-                                else
-                                    count++;
-
-                            }
-                            else if (count == 0)
-                            {
-                                Pos.Add(new CPunto(ix, iy, true, true));
-                            }
-                        }
-                        catch (Exception e)
-                        { }
-                    }
+                    
                     break;
                 case Pezzo.InizialePezzo.Regina:
                     //la regina si puo muovere come la torre e come l'alfiere
@@ -1351,6 +935,408 @@ namespace ScacchiP2P
             }
         }
 
+        private List<CPunto> GetPosCavallo(CPunto Punto, Pezzo P)
+        {
+            List<CPunto> Pos = new List<CPunto>();
 
+            //A destra in alto
+            try
+            {
+                if (ScacchieraPezzi[Punto.x + 2, Punto.y + 1] != null)
+                {
+                    if (ScacchieraPezzi[Punto.x + 2, Punto.y + 1].Colore == P.Colore)
+                        Pos.Add(new CPunto(Punto.x + 2, Punto.y + 1, true, true));
+                }
+                else Pos.Add(new CPunto(Punto.x + 2, Punto.y + 1, true, true));
+            }
+            catch (Exception e) { Console.WriteLine("Pos Non Valida in Cavallo (A destra in alto)"); }
+            //A destra in basso
+            try
+            {
+                if (ScacchieraPezzi[Punto.x + 2, Punto.y - 1] != null)
+                {
+                    if (ScacchieraPezzi[Punto.x + 2, Punto.y - 1].Colore == P.Colore)
+                        Pos.Add(new CPunto(Punto.x + 2, Punto.y - 1, true, true));
+                }
+                else Pos.Add(new CPunto(Punto.x + 2, Punto.y - 1, true, true));
+            }
+            catch (Exception e) { Console.WriteLine("Pos Non Valida in Cavallo (A destra in basso)"); }
+            //A sinistra in Alto
+            try
+            {
+                if (ScacchieraPezzi[Punto.x - 2, Punto.y + 1] != null)
+                {
+                    if (ScacchieraPezzi[Punto.x - 2, Punto.y + 1].Colore == P.Colore)
+                        Pos.Add(new CPunto(Punto.x - 2, Punto.y + 1, true, true));
+                }
+                else Pos.Add(new CPunto(Punto.x - 2, Punto.y + 1, true, true));
+            }
+            catch (Exception e) { Console.WriteLine("Pos Non Valida in Cavallo (A sinistra in alto)"); }
+            //A sinistra in basso
+            try
+            {
+                if (ScacchieraPezzi[Punto.x - 2, Punto.y - 1] != null)
+                {
+                    if (ScacchieraPezzi[Punto.x - 2, Punto.y - 1].Colore == P.Colore)
+                        Pos.Add(new CPunto(Punto.x - 2, Punto.y - 1, true, true));
+                }
+                else Pos.Add(new CPunto(Punto.x - 2, Punto.y - 1, true, true));
+            }
+            catch (Exception e) { Console.WriteLine("Pos Non Valida in Cavallo (A destra in basso)"); }
+            //In alto a destra
+            try
+            {
+                if (ScacchieraPezzi[Punto.x + 1, Punto.y + 2] != null)
+                {
+                    if (ScacchieraPezzi[Punto.x + 1, Punto.y + 2].Colore == P.Colore)
+                        Pos.Add(new CPunto(Punto.x + 1, Punto.y + 2, true, true));
+                }
+                else Pos.Add(new CPunto(Punto.x + 1, Punto.y + 2, true, true));
+            }
+            catch (Exception e) { Console.WriteLine("Pos Non Valida in Cavallo (In Alto a destra)"); }
+            { }
+            //In alto a sinistra
+            try
+            {
+                if (ScacchieraPezzi[Punto.x - 1, Punto.y + 2] != null)
+                {
+                    if (ScacchieraPezzi[Punto.x - 1, Punto.y + 2].Colore == P.Colore)
+                        Pos.Add(new CPunto(Punto.x - 1, Punto.y + 2, true, true));
+                }
+                else Pos.Add(new CPunto(Punto.x - 1, Punto.y + 2, true, true));
+            }
+            catch (Exception e) { Console.WriteLine("Pos Non Valida in Cavallo (In Alto a sinistra)"); }
+            //In basso a destra
+            try
+            {
+                if (ScacchieraPezzi[Punto.x + 1, Punto.y - 2] != null)
+                {
+                    if (ScacchieraPezzi[Punto.x + 1, Punto.y - 2].Colore == P.Colore)
+                        Pos.Add(new CPunto(Punto.x + 1, Punto.y - 2, true, true));
+                }
+                else Pos.Add(new CPunto(Punto.x + 1, Punto.y - 2, true, true));
+            }
+            catch (Exception e) { Console.WriteLine("Pos Non Valida in Cavallo (In basso a destra)"); }
+            //In basso a sinistra
+            try
+            {
+                if (ScacchieraPezzi[Punto.x - 1, Punto.y - 2] != null)
+                {
+                    if (ScacchieraPezzi[Punto.x - 1, Punto.y - 2].Colore == P.Colore)
+                        Pos.Add(new CPunto(Punto.x - 1, Punto.y - 2, true, true));
+                }
+                else Pos.Add(new CPunto(Punto.x - 1, Punto.y - 2, true, true));
+            }
+            catch (Exception e) { Console.WriteLine("Pos Non Valida in Cavallo (In basso a sinistra)"); }
+
+
+            return Pos;
+        }
+        private List<CPunto> GetPosTorre(CPunto Punto, Pezzo P)
+        {
+            int count = 0;
+            List<CPunto> Pos = new List<CPunto>();
+            //Controllo Torre a destra
+            count = 0;
+            for (int x = Punto.x + 1; x < 8; x++)
+            {
+                try
+                {
+                    if (ScacchieraPezzi[x, Punto.y] != null)
+                    {
+                        if (count == 0)
+                        {
+                            if (ScacchieraPezzi[x, Punto.y].Colore != P.Colore)
+                                Pos.Add(new CPunto(x, Punto.y, true, true));
+                            count++;
+                        }
+                    }
+                    else
+                    {
+                        if (count == 0)
+                            Pos.Add(new CPunto(x, Punto.y, true, true));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in Torre (A destra)"); }
+            }
+            //Controllo della torre a Sinistra
+            count = 0;
+            for (int x = Punto.x - 1; x > 0; x--)
+            {
+                try
+                {
+                    if (ScacchieraPezzi[x, Punto.y] != null)
+                    {
+                        if (count == 0)
+                        {
+                            if (ScacchieraPezzi[x, Punto.y].Colore != P.Colore)
+                                Pos.Add(new CPunto(x, Punto.y, true, true));
+                            count++;
+                        }
+                    }
+                    else
+                    {
+                        if (count == 0)
+                            Pos.Add(new CPunto(x, Punto.y, true, true));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in Torre (A sinistra)"); }
+            }
+            //Controllo della torre in alto
+            count = 0;
+            for (int y = Punto.y + 1; y < 8; y++)
+            {
+                try
+                {
+                    if (ScacchieraPezzi[Punto.x, y] != null)
+                    {
+                        if (count == 0)
+                        {
+                            if (ScacchieraPezzi[Punto.x, y].Colore != P.Colore)
+                                Pos.Add(new CPunto(Punto.x, y, true, true));
+                            count++;
+                        }
+                    }
+                    else
+                    {
+                        if (count == 0)
+                            Pos.Add(new CPunto(Punto.x, y, true, true));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in Torre (In alto)"); }
+            }
+            //controllo della torre in basso
+            count = 0;
+            for (int y = Punto.y - 1; y > 0; y--)
+            {
+                try
+                {
+                    if (ScacchieraPezzi[Punto.x, y] != null)
+                    {
+                        if (count == 0)
+                        {
+                            if (ScacchieraPezzi[Punto.x, y].Colore != P.Colore)
+                                Pos.Add(new CPunto(Punto.x, y, true, true));
+                            count++;
+                        }
+                    }
+                    else
+                    {
+                        if (count == 0)
+                            Pos.Add(new CPunto(Punto.x, y, true, true));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in Torre (In basso)"); }
+            }
+            return Pos;
+        }
+        private List<CPunto> GetPosPedone(CPunto Punto,Pezzo P)
+        {
+            List<CPunto> Pos = new List<CPunto>();
+            //Se bianco il pedone si muove in un modo
+            if (P.Colore == Pezzo.inColore.Bianco)
+            {
+                //avanti con il pedone
+                try
+                {
+                    if (ScacchieraPezzi[Punto.x, Punto.y + 1] == null)
+                    {
+                        Pos.Add(new CPunto(Punto.x, Punto.y + 1, false, true));
+                        if (ScacchieraPezzi[Punto.x, Punto.y + 2] == null)
+                            Pos.Add(new CPunto(Punto.x, Punto.y + 2, false, true));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in pedone (Avanti Bianco)"); }
+                //dove mangia il pedone
+                try
+                {
+                    if (ScacchieraPezzi[Punto.x + 1, Punto.y + 1] != null)
+                    {
+                        if (P.Colore != ScacchieraPezzi[Punto.x + 1, Punto.y + 1].Colore)
+                            Pos.Add(new CPunto(Punto.x + 1, Punto.y + 1, true, false));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in pedone (Mangia Destra Bianco)"); }
+                try
+                {
+                    if (ScacchieraPezzi[Punto.x - 1, Punto.y + 1] != null)
+                    {
+                        if (P.Colore != ScacchieraPezzi[Punto.x - 1, Punto.y + 1].Colore)
+                            Pos.Add(new CPunto(Punto.x - 1, Punto.y + 1, true, false));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in pedone (Mangia Sinistra Bianco)"); }
+            }
+            //Se nero il pedone si muove in un modo
+            else
+            {
+                try
+                {
+                    if (ScacchieraPezzi[Punto.x, Punto.y - 1] == null)
+                    {
+                        //avanti con il pedone
+                        Pos.Add(new CPunto(Punto.x, Punto.y - 1, false, true));
+                        if ((ScacchieraPezzi[Punto.x, Punto.y - 2] == null))
+                            Pos.Add(new CPunto(Punto.x, Punto.y - 2, false, true));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in pedone (Avanti Nero)"); }
+                //dove mangia il pedone
+                try
+                {
+                    if (ScacchieraPezzi[Punto.x - 1, Punto.y - 1] != null)
+                    {
+                        if (P.Colore != ScacchieraPezzi[Punto.x - 1, Punto.y - 1].Colore)
+                            Pos.Add(new CPunto(Punto.x - 1, Punto.y - 1, true, false));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in pedone (Mangia Destro Nero)"); }
+                try
+                {
+                    if (ScacchieraPezzi[Punto.x + 1, Punto.y - 1] != null)
+                    {
+                        if (P.Colore != ScacchieraPezzi[Punto.x + 1, Punto.y - 1].Colore)
+                            Pos.Add(new CPunto(Punto.x + 1, Punto.y - 1, true, false));
+                    }
+                }
+                catch (Exception e) { Console.WriteLine("Pos Non Valida in pedone (Mangia Sinistro Nero)"); }
+            }
+            return Pos;
+        }
+        private List<CPunto> GetPosAlfiere(CPunto Punto,Pezzo P)
+        {
+            List<CPunto> Pos = new List<CPunto>();
+            int ix = 0, iy = 0;
+            int count = 0;
+            //punti alfiere alto a destra
+            ix = Punto.x;
+            iy = Punto.y;
+            count = 0;
+            while (ix < 8 && iy < 8)
+            {
+                try
+                {
+                    ix++;
+                    iy++;
+                    if (ScacchieraPezzi[ix, iy] != null)
+                    {
+                        if (P.Colore != ScacchieraPezzi[ix, iy].Colore)
+                        {
+                            if (count == 0)
+                            {
+                                Pos.Add(new CPunto(ix, iy, true, true));
+                                count++;
+                            }
+                        }
+                        else
+                            count++;
+
+                    }
+                    else if (count == 0)
+                    {
+                        Pos.Add(new CPunto(ix, iy, true, true));
+                    }
+                }
+                catch (Exception e)
+                { }
+            }
+            //punti alfiere in basso a sinistra
+            ix = Punto.x;
+            iy = Punto.y;
+            count = 0;
+            while (ix > -2 && iy > -2)
+            {
+                try
+                {
+                    ix--;
+                    iy--;
+                    if (ScacchieraPezzi[ix, iy] != null)
+                    {
+                        if (P.Colore != ScacchieraPezzi[ix, iy].Colore)
+                        {
+                            if (count == 0)
+                            {
+                                Pos.Add(new CPunto(ix, iy, true, true));
+                                count++;
+                            }
+                        }
+                        else
+                            count++;
+
+                    }
+                    else if (count == 0)
+                    {
+                        Pos.Add(new CPunto(ix, iy, true, true));
+                    }
+                }
+                catch (Exception e)
+                { }
+            }
+            //punti alfiere in alto a sinistra
+            ix = Punto.x;
+            iy = Punto.y;
+            count = 0;
+            while (ix > -2 && iy < 8)
+            {
+                try
+                {
+                    ix--;
+                    iy++;
+                    if (ScacchieraPezzi[ix, iy] != null)
+                    {
+                        if (P.Colore != ScacchieraPezzi[ix, iy].Colore)
+                        {
+                            if (count == 0)
+                            {
+                                Pos.Add(new CPunto(ix, iy, true, true));
+                                count++;
+                            }
+                        }
+                        else
+                            count++;
+
+                    }
+                    else if (count == 0)
+                    {
+                        Pos.Add(new CPunto(ix, iy, true, true));
+                    }
+                }
+                catch (Exception e)
+                { }
+            }
+            //punti alfiere in basso a destra
+            ix = Punto.x;
+            iy = Punto.y;
+            count = 0;
+            while (ix < 8 && iy > -2)
+            {
+                try
+                {
+                    ix++;
+                    iy--;
+                    if (ScacchieraPezzi[ix, iy] != null)
+                    {
+                        if (P.Colore != ScacchieraPezzi[ix, iy].Colore)
+                        {
+                            if (count == 0)
+                            {
+                                Pos.Add(new CPunto(ix, iy, true, true));
+                                count++;
+                            }
+                        }
+                        else
+                            count++;
+
+                    }
+                    else if (count == 0)
+                    {
+                        Pos.Add(new CPunto(ix, iy, true, true));
+                    }
+                }
+                catch (Exception e)
+                { }
+            }
+            return Pos;
+        }
     }
 }
