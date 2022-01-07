@@ -112,9 +112,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PNGScacchiera\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Standard.png" />
   </ItemGroup>
@@ -134,6 +132,10 @@
     <Resource Include="PNGPezzi\ReNero.png" />
     <Resource Include="PNGPezzi\TorreBianco.png" />
     <Resource Include="PNGPezzi\TorreNero.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PNGScacchiera\Bite.png" />
+    <Resource Include="PNGScacchiera\dot.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

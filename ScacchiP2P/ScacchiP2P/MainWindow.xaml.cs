@@ -30,13 +30,13 @@ namespace ScacchiP2P
         private List<Image> PosImg;
         private List<Image> PosDot;
         private List<CPunto> posdotP;
-        private bool Selezionato=false;
+        private bool Selezionato = false;
         //costruttore
         public MainWindow()
         {
             InitializeComponent();
             w = this;
-           // Dati = DatiCondivisi.Istanza;
+            // Dati = DatiCondivisi.Istanza;
             //dg = DatiGiocatore.Istanza;
             //sc = Scacchiera.Istanza;
             PosImg = new List<Image>();
@@ -88,10 +88,9 @@ namespace ScacchiP2P
 
                 }
             }
-            y += 1;
-            if(sc.getPezzo(x,y-1)!=null)
+            if (sc.getPezzo(x, y) != null)
             {
-                posdotP=sc.GetPosizioni(new CPunto(x, y - 1,true,true), sc.getPezzo(x, y - 1));
+                posdotP = sc.GetPosizioni(new CPunto(x, y, true, true), sc.getPezzo(x, y));
                 Selezionato = true;
             }
             RefreshScacchiera();
@@ -100,44 +99,94 @@ namespace ScacchiP2P
         //aggiorna la grafica della scacchiera
         public void RefreshScacchiera()
         {
-            if(PosImg!=null) PosImg.Clear();
-            
+            if (PosImg != null) PosImg.Clear();
+
             ScacchieraRet.Children.Clear();
             string image = "";
             int count = 0;
-            for(int x=0;x<8;x++)
+            int ix = 0, iy = 0;
+            for (int x = 0; x < 8; x++)
             {
-                for(int y=0;y<8;y++)
+                for (int y = 0; y < 8; y++)
                 {
-                    if(sc.getPezzo(x,y)!=null)
+                    if (sc.getPezzo(x, y) != null)
                     {
+
                         PosImg.Add(new Image());
                         count = PosImg.Count - 1;
                         image = "/ScacchiP2P;" + sc.getPezzo(x, y).img;
                         PosImg[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
+
                         PosImg[count].Width = ScacchieraRet.Width / 8;
                         PosImg[count].Height = ScacchieraRet.Height / 8;
-                        Canvas.SetLeft(PosImg[count], x * ScacchieraRet.Width / 8);
-                        Canvas.SetTop(PosImg[count], y * ScacchieraRet.Height / 8);
+                        if (sc.Colore == "bianco")
+                        {
+                            ix = x;
+                            iy = y - 7;
+                            if (iy < 0)
+                            {
+                                iy *= -1;
+
+
+                            }
+                        }
+                        else
+                        {
+                            iy = y;
+                            ix = x - 7;
+                            if (ix < 0)
+                            {
+                                ix *= -1;
+
+                            }
+
+                        }
+
+                        Canvas.SetLeft(PosImg[count], ix * ScacchieraRet.Width / 8);
+                        Canvas.SetTop(PosImg[count], iy * ScacchieraRet.Height / 8);
                         ScacchieraRet.Children.Add(PosImg[count]);
                     }
                 }
             }
-            if(Selezionato==true)
+            if (Selezionato == true)
             {
-                for(int i=0;i<posdotP.Count;i++)
+                for (int i = 0; i < posdotP.Count; i++)
                 {
                     PosDot.Add(new Image());
-                    count=PosDot.Count;
+                    count = PosDot.Count - 1;
                     image = "/ScacchiP2P;" + "component/PNGScacchiera/Dot.png";
-                    PosImg[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
-                    PosImg[count].Width = ScacchieraRet.Width / 8;
-                    PosImg[count].Height = ScacchieraRet.Height / 8;
-                    Canvas.SetLeft(PosImg[count], posdotP[i].x * ScacchieraRet.Width / 8);
-                    Canvas.SetTop(PosImg[count], posdotP[i].y * ScacchieraRet.Height / 8);
-                    ScacchieraRet.Children.Add(PosImg[count]);
+                    PosDot[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
+                    PosDot[count].Width = ScacchieraRet.Width / 8;
+                    PosDot[count].Height = ScacchieraRet.Height / 8;
+                    if (sc.Colore == "bianco")
+                    {
+                        ix = posdotP[i].x;
+                        iy = posdotP[i].y - 7;
+                        if (iy < 0)
+                        {
+                            iy *= -1;
+
+
+                        }
+                    }
+                    else
+                    {
+                        iy = posdotP[i].y;
+                        ix = posdotP[i].x - 7;
+                        if (ix < 0)
+                        {
+                            ix *= -1;
+
+                        }
+
+                    }
+                    Canvas.SetLeft(PosDot[count], ix * ScacchieraRet.Width / 8);
+                    Canvas.SetTop(PosDot[count], iy * ScacchieraRet.Height / 8);
+                    ScacchieraRet.Children.Add(PosDot[count]);
                 }
+                Selezionato = false;
             }
+
         }
 
         //get this
@@ -222,11 +271,11 @@ namespace ScacchiP2P
         {
             RefreshScacchiera();
             int ip1 = -1, ip2 = -1, ip3 = -1, ip4 = -1;
-            bool i1=int.TryParse(TXT_IP_1.Text, out ip1);
+            bool i1 = int.TryParse(TXT_IP_1.Text, out ip1);
             bool i2 = int.TryParse(TXT_IP_2.Text, out ip2);
             bool i3 = int.TryParse(TXT_IP_3.Text, out ip3);
             bool i4 = int.TryParse(TXT_IP_4.Text, out ip4);
-            if (i1==true&&i2==true&i3==true&&i4==true)
+            if (i1 == true && i2 == true & i3 == true && i4 == true)
             {
                 Dati.IP = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
                 Dati.AddStringDI("c;" + dg.Nome);
@@ -407,8 +456,8 @@ namespace ScacchiP2P
             BBTN_Connessione.IsEnabled = true;
         }
 
-        
-        
+
+
 
         //aggiorna il timer
         public void RefreshTimer(string ValoreA, string ValoreU)
