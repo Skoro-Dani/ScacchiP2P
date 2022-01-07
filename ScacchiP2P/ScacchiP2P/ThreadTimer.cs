@@ -17,11 +17,13 @@ namespace ScacchiP2P
 
         public void ProcThread()
         {
-            while (!Dati.Flag)
+            while (Dati.Flag == false)
             {
                 if (Timer == true)
+                {
                     w.RefreshTimer(TimerA.ToString(), TimerU.ToString()); ;
-                Thread.Sleep(1000);
+                    Thread.Sleep(1000);
+                }
             }
         }
 

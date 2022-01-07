@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -118,7 +119,21 @@
     <Resource Include="Standard.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="PNGPezzi\ReBiancoS.jpg" />
+    <Resource Include="PNGPezzi\150.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PNGPezzi\AlfiereBianco.png" />
+    <Resource Include="PNGPezzi\AlfiereNero.png" />
+    <Resource Include="PNGPezzi\CavalloBianco.png" />
+    <Resource Include="PNGPezzi\CavalloNero.png" />
+    <Resource Include="PNGPezzi\PedoneBianco.png" />
+    <Resource Include="PNGPezzi\PedoneNero.png" />
+    <Resource Include="PNGPezzi\ReBianco.png" />
+    <Resource Include="PNGPezzi\ReginaBianco.png" />
+    <Resource Include="PNGPezzi\ReginaNero.png" />
+    <Resource Include="PNGPezzi\ReNero.png" />
+    <Resource Include="PNGPezzi\TorreBianco.png" />
+    <Resource Include="PNGPezzi\TorreNero.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

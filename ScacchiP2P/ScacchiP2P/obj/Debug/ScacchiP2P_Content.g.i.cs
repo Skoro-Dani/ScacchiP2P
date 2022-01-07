@@ -8,6 +8,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/rebiancos.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/alfierebianco.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/alfierenero.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/cavallobianco.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/cavallonero.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/pedonebianco.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/pedonenero.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/rebianco.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/reginabianco.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/reginanero.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/renero.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/torrebianco.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngpezzi/torrenero.png")]
 
 

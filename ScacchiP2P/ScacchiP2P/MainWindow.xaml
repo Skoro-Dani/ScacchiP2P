@@ -81,7 +81,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="450" Margin="4,5,0,0" VerticalAlignment="Top" Width="450" MouseLeftButtonDown="Click" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" IsEnabled="False">
+        <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="450" Margin="4,5,0,0" VerticalAlignment="Top" Width="450" MouseLeftButtonDown="Click" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
             <Canvas.Background>
                 <ImageBrush ImageSource="Standard.png"/>
             </Canvas.Background>

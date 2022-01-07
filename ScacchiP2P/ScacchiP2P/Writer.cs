@@ -17,7 +17,7 @@ namespace ScacchiP2P
         public void ProcThread()
         {
             int count = 0;
-            while (!Dati.Flag)
+            while (Dati.Flag==false)
             {
                 if (Dati.GetLengthDI() > count)
                 {

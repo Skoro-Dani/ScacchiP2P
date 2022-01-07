@@ -1,7 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+//using System.Drawing;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace ScacchiP2P
 {
@@ -10,10 +15,10 @@ namespace ScacchiP2P
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DatiCondivisi Dati;
-        private Scacchiera sc;
+        private DatiCondivisi Dati = DatiCondivisi.Istanza;
+        private Scacchiera sc = Scacchiera.Istanza;
         private static MainWindow w;
-        private DatiGiocatore dg;
+        private DatiGiocatore dg = DatiGiocatore.Istanza;
         private Thread LT;
         private Thread WLT;
         private Thread WT;
@@ -21,15 +26,22 @@ namespace ScacchiP2P
         private WorkListener WL;
         private Writer W;
         private Login login;
+
+        private List<Image> PosImg;
+        private List<Image> PosDot;
+        private List<CPunto> posdotP;
+        private bool Selezionato=false;
         //costruttore
         public MainWindow()
         {
             InitializeComponent();
             w = this;
-            Dati = DatiCondivisi.Istanza;
-            dg = DatiGiocatore.Istanza;
-            sc = Scacchiera.Istanza;
-
+           // Dati = DatiCondivisi.Istanza;
+            //dg = DatiGiocatore.Istanza;
+            //sc = Scacchiera.Istanza;
+            PosImg = new List<Image>();
+            PosDot = new List<Image>();
+            posdotP = new List<CPunto>();
             login = new Login();
             bool ris = (bool)login.ShowDialog();
             if (ris == false)
@@ -39,12 +51,15 @@ namespace ScacchiP2P
             L = new Listener();
             WL = new WorkListener();
             W = new Writer();
+
             LT = new Thread(new ThreadStart(L.ProcThread));
             WLT = new Thread(new ThreadStart(WL.ProcThread));
             WT = new Thread(new ThreadStart(W.ProcThread));
+
             LT.Start();
             WLT.Start();
             WT.Start();
+            RefreshScacchiera();
         }
 
         //metodo che serve a riconoscere dove clicca l'utente
@@ -74,8 +89,55 @@ namespace ScacchiP2P
                 }
             }
             y += 1;
-            MessageBox.Show(a[x] + "" + y);
+            if(sc.getPezzo(x,y-1)!=null)
+            {
+                posdotP=sc.GetPosizioni(new CPunto(x, y - 1,true,true), sc.getPezzo(x, y - 1));
+                Selezionato = true;
+            }
+            RefreshScacchiera();
+        }
 
+        //aggiorna la grafica della scacchiera
+        public void RefreshScacchiera()
+        {
+            if(PosImg!=null) PosImg.Clear();
+            
+            ScacchieraRet.Children.Clear();
+            string image = "";
+            int count = 0;
+            for(int x=0;x<8;x++)
+            {
+                for(int y=0;y<8;y++)
+                {
+                    if(sc.getPezzo(x,y)!=null)
+                    {
+                        PosImg.Add(new Image());
+                        count = PosImg.Count - 1;
+                        image = "/ScacchiP2P;" + sc.getPezzo(x, y).img;
+                        PosImg[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
+                        PosImg[count].Width = ScacchieraRet.Width / 8;
+                        PosImg[count].Height = ScacchieraRet.Height / 8;
+                        Canvas.SetLeft(PosImg[count], x * ScacchieraRet.Width / 8);
+                        Canvas.SetTop(PosImg[count], y * ScacchieraRet.Height / 8);
+                        ScacchieraRet.Children.Add(PosImg[count]);
+                    }
+                }
+            }
+            if(Selezionato==true)
+            {
+                for(int i=0;i<posdotP.Count;i++)
+                {
+                    PosDot.Add(new Image());
+                    count=PosDot.Count;
+                    image = "/ScacchiP2P;" + "component/PNGScacchiera/Dot.png";
+                    PosImg[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
+                    PosImg[count].Width = ScacchieraRet.Width / 8;
+                    PosImg[count].Height = ScacchieraRet.Height / 8;
+                    Canvas.SetLeft(PosImg[count], posdotP[i].x * ScacchieraRet.Width / 8);
+                    Canvas.SetTop(PosImg[count], posdotP[i].y * ScacchieraRet.Height / 8);
+                    ScacchieraRet.Children.Add(PosImg[count]);
+                }
+            }
         }
 
         //get this
@@ -158,12 +220,13 @@ namespace ScacchiP2P
         //richiesta Connesione
         private void BBTN_Connessione_Click(object sender, RoutedEventArgs e)
         {
+            RefreshScacchiera();
             int ip1 = -1, ip2 = -1, ip3 = -1, ip4 = -1;
-            int.TryParse(TXT_IP_1.Text, out ip1);
-            int.TryParse(TXT_IP_2.Text, out ip2);
-            int.TryParse(TXT_IP_3.Text, out ip3);
-            int.TryParse(TXT_IP_4.Text, out ip4);
-            if (ip1 != -1 && ip2 != -1 && ip3 != -1 && ip4 != -1)
+            bool i1=int.TryParse(TXT_IP_1.Text, out ip1);
+            bool i2 = int.TryParse(TXT_IP_2.Text, out ip2);
+            bool i3 = int.TryParse(TXT_IP_3.Text, out ip3);
+            bool i4 = int.TryParse(TXT_IP_4.Text, out ip4);
+            if (i1==true&&i2==true&i3==true&&i4==true)
             {
                 Dati.IP = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
                 Dati.AddStringDI("c;" + dg.Nome);
@@ -344,11 +407,8 @@ namespace ScacchiP2P
             BBTN_Connessione.IsEnabled = true;
         }
 
-        //aggiorna la grafica della scacchiera
-        public void RefreshScacchiera()
-        {
-            /*In Corso*/
-        }
+        
+        
 
         //aggiorna il timer
         public void RefreshTimer(string ValoreA, string ValoreU)
@@ -391,5 +451,6 @@ namespace ScacchiP2P
                 Dati.AddStringDI("m;A0;A0;true;");
             }
         }
+
     }
 }

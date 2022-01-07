@@ -16,7 +16,7 @@
         {
             int count = 0;
             string[] s;
-            while (!Dati.Flag)
+            while (Dati.Flag == false)
             {
                 if (Dati.GetLengthRL() > count)
                 {

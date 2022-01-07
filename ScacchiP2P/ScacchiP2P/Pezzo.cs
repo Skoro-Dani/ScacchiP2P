@@ -33,7 +33,8 @@
         {
             this.Nome = Nome;
             this.Colore = Colore;
-            img = "component/PNGPezzi/ReBiancoS.jpg";
+            img = "component/PNGPezzi/";
+            img += Nome.ToString() + Colore.ToString()+".png";
         }
         public enum InizialePezzo
         {
