@@ -101,10 +101,13 @@ namespace ScacchiP2P
             {
                 if (sc.getPezzo(x, y) != null)
                 {
-                    punto1 = new CPunto(x, y, true, true);
-                    p = sc.getPezzo(x, y);
-                    posdotP = sc.GetPosizioni(new CPunto(x, y, true, true), sc.getPezzo(x, y));
-                    Selezionato = true;
+                    if (sc.getPezzo(x, y).Colore.ToString().ToLower() == sc.Colore.ToLower())
+                    {
+                        punto1 = new CPunto(x, y, true, true);
+                        p = sc.getPezzo(x, y);
+                        posdotP = sc.GetPosizioni(new CPunto(x, y, true, true), sc.getPezzo(x, y));
+                        Selezionato = true;
+                    }
                 }
             }
             else
@@ -150,28 +153,67 @@ namespace ScacchiP2P
             {
                 if (PosImg != null) PosImg.Clear();
 
-            ScacchieraRet.Children.Clear();
-            string image = "";
-            int count = 0;
-            int ix = 0, iy = 0;
-            for (int x = 0; x < 8; x++)
-            {
-                for (int y = 0; y < 8; y++)
+                ScacchieraRet.Children.Clear();
+                string image = "";
+                int count = 0;
+                int ix = 0, iy = 0;
+                for (int x = 0; x < 8; x++)
                 {
-                    if (sc.getPezzo(x, y) != null)
+                    for (int y = 0; y < 8; y++)
                     {
+                        if (sc.getPezzo(x, y) != null)
+                        {
 
-                        PosImg.Add(new Image());
-                        count = PosImg.Count - 1;
-                        image = "/ScacchiP2P;" + sc.getPezzo(x, y).img;
-                        PosImg[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
+                            PosImg.Add(new Image());
+                            count = PosImg.Count - 1;
+                            image = "/ScacchiP2P;" + sc.getPezzo(x, y).img;
+                            PosImg[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
 
-                        PosImg[count].Width = ScacchieraRet.Width / 8;
-                        PosImg[count].Height = ScacchieraRet.Height / 8;
+                            PosImg[count].Width = ScacchieraRet.Width / 8;
+                            PosImg[count].Height = ScacchieraRet.Height / 8;
+                            if (sc.Colore == "bianco")
+                            {
+                                ix = x;
+                                iy = y - 7;
+                                if (iy < 0)
+                                {
+                                    iy *= -1;
+
+
+                                }
+                            }
+                            else
+                            {
+                                iy = y;
+                                ix = x - 7;
+                                if (ix < 0)
+                                {
+                                    ix *= -1;
+
+                                }
+
+                            }
+
+                            Canvas.SetLeft(PosImg[count], ix * ScacchieraRet.Width / 8);
+                            Canvas.SetTop(PosImg[count], iy * ScacchieraRet.Height / 8);
+                            ScacchieraRet.Children.Add(PosImg[count]);
+                        }
+                    }
+                }
+                if (Selezionato == true)
+                {
+                    for (int i = 0; i < posdotP.Count; i++)
+                    {
+                        PosDot.Add(new Image());
+                        count = PosDot.Count - 1;
+                        image = "/ScacchiP2P;" + "component/PNGScacchiera/Dot.png";
+                        PosDot[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
+                        PosDot[count].Width = ScacchieraRet.Width / 8;
+                        PosDot[count].Height = ScacchieraRet.Height / 8;
                         if (sc.Colore == "bianco")
                         {
-                            ix = x;
-                            iy = y - 7;
+                            ix = posdotP[i].x;
+                            iy = posdotP[i].y - 7;
                             if (iy < 0)
                             {
                                 iy *= -1;
@@ -181,8 +223,8 @@ namespace ScacchiP2P
                         }
                         else
                         {
-                            iy = y;
-                            ix = x - 7;
+                            iy = posdotP[i].y;
+                            ix = posdotP[i].x - 7;
                             if (ix < 0)
                             {
                                 ix *= -1;
@@ -190,52 +232,13 @@ namespace ScacchiP2P
                             }
 
                         }
-
-                        Canvas.SetLeft(PosImg[count], ix * ScacchieraRet.Width / 8);
-                        Canvas.SetTop(PosImg[count], iy * ScacchieraRet.Height / 8);
-                        ScacchieraRet.Children.Add(PosImg[count]);
+                        Canvas.SetLeft(PosDot[count], ix * ScacchieraRet.Width / 8);
+                        Canvas.SetTop(PosDot[count], iy * ScacchieraRet.Height / 8);
+                        ScacchieraRet.Children.Add(PosDot[count]);
                     }
                 }
-            }
-            if (Selezionato == true)
-            {
-                for (int i = 0; i < posdotP.Count; i++)
-                {
-                    PosDot.Add(new Image());
-                    count = PosDot.Count - 1;
-                    image = "/ScacchiP2P;" + "component/PNGScacchiera/Dot.png";
-                    PosDot[count].Source = new BitmapImage(new Uri(image, UriKind.Relative));
-                    PosDot[count].Width = ScacchieraRet.Width / 8;
-                    PosDot[count].Height = ScacchieraRet.Height / 8;
-                    if (sc.Colore == "bianco")
-                    {
-                        ix = posdotP[i].x;
-                        iy = posdotP[i].y - 7;
-                        if (iy < 0)
-                        {
-                            iy *= -1;
-
-
-                        }
-                    }
-                    else
-                    {
-                        iy = posdotP[i].y;
-                        ix = posdotP[i].x - 7;
-                        if (ix < 0)
-                        {
-                            ix *= -1;
-
-                        }
-
-                    }
-                    Canvas.SetLeft(PosDot[count], ix * ScacchieraRet.Width / 8);
-                    Canvas.SetTop(PosDot[count], iy * ScacchieraRet.Height / 8);
-                    ScacchieraRet.Children.Add(PosDot[count]);
-                }
-            }
-            if (sc.TurnoAvv == false) ScacchieraRet.IsEnabled = true;
-            else ScacchieraRet.IsEnabled = false;
+                if (sc.TurnoAvv == false) ScacchieraRet.IsEnabled = true;
+                else ScacchieraRet.IsEnabled = false;
             });
         }
 
@@ -556,8 +559,14 @@ namespace ScacchiP2P
             });
         }
 
-        public void Rivincita()
+        public void Rivincita(bool vittoriaAvversario)
         {
+            string mess="";
+            if (vittoriaAvversario)
+                mess = "Ha vinto l'avversario";
+            else
+                mess = "Hai vinto";
+            MessageBox.Show(mess, "Fine Partita", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             /* IN CORSO*/
         }
 

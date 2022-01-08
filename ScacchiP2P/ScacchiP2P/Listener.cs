@@ -34,7 +34,7 @@ namespace ScacchiP2P
                     Dati.AddStringRL(risposta + ";" + riceveEP.Address);
                     Console.WriteLine(risposta);
                 }
-                catch (Exception e) { }
+                catch (Exception) { }
             }
         }
     }
