@@ -17,12 +17,13 @@ namespace ScacchiP2P
         {
             porta = porta1;
             riceveEP = new IPEndPoint(IPAddress.Any, porta);
+            Server.Client.Bind(riceveEP);
             Dati = DatiCondivisi.Istanza;
         }
 
         public void ProcThread()
         {
-            Server.Client.Bind(riceveEP);
+            
             Server.Client.ReceiveTimeout = 5000;
             while (!Dati.Flag)
             {

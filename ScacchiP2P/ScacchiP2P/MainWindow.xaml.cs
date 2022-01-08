@@ -22,16 +22,18 @@ namespace ScacchiP2P
         private Thread LT;
         private Thread WLT;
         private Thread WT;
+        private Thread CVT;
         private Listener L;
         private WorkListener WL;
         private Writer W;
+        private ControllaVittoria CV;
         private Login login;
 
         private List<Image> PosImg;
         private List<Image> PosDot;
         private List<CPunto> posdotP;
 
-        private CPunto punto = new CPunto(0, 0, true, true);
+        private CPunto punto1 = new CPunto(0, 0, true, true);
         private Pezzo p;
         private bool Selezionato = false;
         //costruttore
@@ -54,10 +56,12 @@ namespace ScacchiP2P
             /*L = new Listener();
             WL = new WorkListener();
             W = new Writer();
+            CV = new ControllaVittoria();
 
             LT = new Thread(new ThreadStart(L.ProcThread));
             WLT = new Thread(new ThreadStart(WL.ProcThread));
             WT = new Thread(new ThreadStart(W.ProcThread));
+            CVT = new Thread(new ThreadStart(CVT.ProcThread));
 
             LT.Start();
             WLT.Start();
@@ -74,6 +78,7 @@ namespace ScacchiP2P
             int y = (int)e.GetPosition((IInputElement)sender).Y / (int)(ScacchieraRet.Height / 8);
             string pos1, pos2;
             bool trovato = false;
+            CPunto punto2 = new CPunto(-1, -1, true, true);
             if (sc.Colore == "bianco")
             {
                 y -= 7;
@@ -96,7 +101,7 @@ namespace ScacchiP2P
             {
                 if (sc.getPezzo(x, y) != null)
                 {
-                    punto = new CPunto(x, y, true, true);
+                    punto1 = new CPunto(x, y, true, true);
                     p = sc.getPezzo(x, y);
                     posdotP = sc.GetPosizioni(new CPunto(x, y, true, true), sc.getPezzo(x, y));
                     Selezionato = true;
@@ -109,35 +114,41 @@ namespace ScacchiP2P
                     if (x == posdotP[i].x && y == posdotP[i].y)
                     {
                         trovato = true;
-                        punto = posdotP[i];
+                        punto2 = posdotP[i];
                     }
                 }
                 if (trovato == true)
                 {
-                    pos1 = a[punto.x] + punto.y.ToString();
-                    pos2 = a[x] + y.ToString();
+                    pos1 = a[punto1.x] + punto1.y.ToString();
+                    pos2 = a[punto2.x] + punto2.y.ToString();
                     sc.Mossa(pos1, pos2);
                     Selezionato = false;
+                    Dati.AddStringDI("m;" + a[punto1.x] + punto1.y + ";" + a[punto2.x] + punto2.y + ";" + "false");
                 }
                 else
                 {
                     Selezionato = false;
                     p = null;
-                    punto = null;
+                    punto1 = null;
                 }
             }
             RefreshScacchiera();
         }
         public void DisOrAnb(bool DisOrAbl)
         {
-            if (DisOrAbl == true) ScacchieraRet.IsEnabled = true;
-            else ScacchieraRet.IsEnabled = false;
+            Dispatcher.Invoke(() =>
+            {
+                if (DisOrAbl == true) ScacchieraRet.IsEnabled = true;
+                else ScacchieraRet.IsEnabled = false;
+            });
         }
 
         //aggiorna la grafica della scacchiera
         public void RefreshScacchiera()
         {
-            if (PosImg != null) PosImg.Clear();
+            Dispatcher.Invoke(() =>
+            {
+                if (PosImg != null) PosImg.Clear();
 
             ScacchieraRet.Children.Clear();
             string image = "";
@@ -225,6 +236,7 @@ namespace ScacchiP2P
             }
             if (sc.TurnoAvv == false) ScacchieraRet.IsEnabled = true;
             else ScacchieraRet.IsEnabled = false;
+            });
         }
 
         //get this
@@ -575,14 +587,17 @@ namespace ScacchiP2P
             L = new Listener(int.Parse(TXT_portaascolto.Text));
             WL = new WorkListener();
             W = new Writer(int.Parse(TXT_portascrittura.Text));
+            CV = new ControllaVittoria();
 
+            CVT = new Thread(new ThreadStart(L.ProcThread));
             LT = new Thread(new ThreadStart(L.ProcThread));
             WLT = new Thread(new ThreadStart(WL.ProcThread));
             WT = new Thread(new ThreadStart(W.ProcThread));
-
+            sc.setWindow(this);
             LT.Start();
             WLT.Start();
             WT.Start();
+            CVT.Start();
         }
     }
 }

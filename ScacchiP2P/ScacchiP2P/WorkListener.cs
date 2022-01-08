@@ -107,7 +107,7 @@
                         case "fp":
                             if (Dati.Connesso)
                             {
-                                sc.ControlloVittoria();
+                                //sc.ControlloVittoria();
                             }
                             break;
                         case "a":

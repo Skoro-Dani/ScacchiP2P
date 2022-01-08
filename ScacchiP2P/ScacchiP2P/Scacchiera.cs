@@ -22,7 +22,9 @@ namespace ScacchiP2P
          * 
          */
         //Matrice che replica la scacchiera
-        public Pezzo[,] ScacchieraPezzi = new Pezzo[8, 8];
+        private static object Locksc = new object();
+        private Pezzo[,] sc_;
+        public Pezzo[,] ScacchieraPezzi { get { lock (Locksc) { return sc_; } } set { lock (Locksc) { sc_ = value; } } }
         /*
          * 
          */
@@ -92,13 +94,19 @@ namespace ScacchiP2P
         * Arresa->Indica se si vuole la resa
         */
         private bool Arresa { get; set; }
+        /*
+        * Pstart->Indica se la partita è iniziata
+        */
+        private static object LockPstart = new object();
+        private bool Pstart_;
+        public bool Pstart { get { lock (LockPstart) { return Pstart_; } } set { lock (LockPstart) { Pstart_ = value; } } }
 
         private Scacchiera()
         {
             T = new ThreadTimer();
             TimerT = new Thread(new ThreadStart(T.ProcThread));
             TimerT.Start();
-
+            sc_ = new Pezzo[8, 8];
             Arresa = false;
             APatta = false;
             Colore = "bianco";
@@ -117,9 +125,12 @@ namespace ScacchiP2P
 
             Dati = DatiCondivisi.Istanza;
             w = Dati.w;
-
+            w = MainWindow.GetMainWindow();
         }
-
+        public void setWindow(MainWindow w)
+        {
+            this.w = w;
+        }
         public static Scacchiera Istanza
         {
             get
@@ -320,7 +331,7 @@ namespace ScacchiP2P
                 {
                     if (p2 == null)
                     {
-                        if (c2.equal(posti[i]) && posti[i].PosInCuiMuove == true)
+                        if (c2.equal(posti[i])==true && posti[i].PosInCuiMuove == true)
                         {
                             ScacchieraPezzi[po1,po2] = null;
                             ScacchieraPezzi[pob1, pob2] = p1;
@@ -339,7 +350,6 @@ namespace ScacchiP2P
                 }
 
             }
-            ControlloVittoria();
         }
 
         //metodo che restituisce tutte le posizioni in cui puo andare un pezzo
@@ -476,8 +486,9 @@ namespace ScacchiP2P
             }
             else T.Timer = false;
             GeneraScacchiera();
+            Pstart = true;
         }
-        public void ControlloVittoria()
+        public void ControlloVittoria(Pezzo[,] sc)
         {
             bool risControlloScaccoN = true;
             bool risControlloScaccoB = true;
@@ -488,19 +499,19 @@ namespace ScacchiP2P
             {
                 for (int y = 0; y < 8; y++)
                 {
-                    if (ScacchieraPezzi[x, y] != null)
+                    if (sc[x, y] != null)
                     {
                         //controllo per i neri
-                        if (ScacchieraPezzi[x, y].Colore == Pezzo.inColore.Nero)
+                        if (sc[x, y].Colore == Pezzo.inColore.Nero)
                         {
-                            pos = GetPosizioni(new CPunto(x, y, true, true), ScacchieraPezzi[x, y]);
+                            pos = GetPosizioni(new CPunto(x, y, true, true), sc[x, y]);
                             if (pos.Count > 0)
                                 risControlloScaccoN = false;
                             //controllo per i Bianchi
                         }
-                        else if (ScacchieraPezzi[x, y].Colore == Pezzo.inColore.Bianco)
+                        else if (sc[x, y].Colore == Pezzo.inColore.Bianco)
                         {
-                            pos = GetPosizioni(new CPunto(x, y, true, true), ScacchieraPezzi[x, y]);
+                            pos = GetPosizioni(new CPunto(x, y, true, true), sc[x, y]);
                             if (pos.Count > 0)
                                 risControlloScaccoB = false;
                         }
@@ -553,6 +564,7 @@ namespace ScacchiP2P
             GeneraScacchiera();
             APatta = false;
             Arresa = false;
+            Pstart = false;
             w.Rivincita();
         }
 
@@ -880,10 +892,8 @@ namespace ScacchiP2P
                             if (count == 0)
                             {
                                 Pos.Add(new CPunto(ix, iy, true, true));
-                                count++;
                             }
                         }
-                        else
                             count++;
 
                     }
@@ -899,7 +909,7 @@ namespace ScacchiP2P
             ix = Punto.x;
             iy = Punto.y;
             count = 0;
-            while (ix > -2 && iy > -2)
+            while (ix > -1 && iy > -1)
             {
                 try
                 {
@@ -912,10 +922,8 @@ namespace ScacchiP2P
                             if (count == 0)
                             {
                                 Pos.Add(new CPunto(ix, iy, true, true));
-                                count++;
                             }
                         }
-                        else
                             count++;
 
                     }
@@ -931,7 +939,7 @@ namespace ScacchiP2P
             ix = Punto.x;
             iy = Punto.y;
             count = 0;
-            while (ix > -2 && iy < 8)
+            while (ix > -1 && iy < 8)
             {
                 try
                 {
@@ -944,10 +952,8 @@ namespace ScacchiP2P
                             if (count == 0)
                             {
                                 Pos.Add(new CPunto(ix, iy, true, true));
-                                count++;
                             }
                         }
-                        else
                             count++;
 
                     }
@@ -963,7 +969,7 @@ namespace ScacchiP2P
             ix = Punto.x;
             iy = Punto.y;
             count = 0;
-            while (ix < 8 && iy > -2)
+            while (ix < 8 && iy > -1)
             {
                 try
                 {
@@ -976,10 +982,8 @@ namespace ScacchiP2P
                             if (count == 0)
                             {
                                 Pos.Add(new CPunto(ix, iy, true, true));
-                                count++;
                             }
                         }
-                        else
                             count++;
 
                     }

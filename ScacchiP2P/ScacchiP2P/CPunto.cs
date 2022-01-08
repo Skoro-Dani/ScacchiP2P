@@ -17,6 +17,8 @@
         {
             this.x = x;
             this.y = y;
+            this.PosInCuiMangia = PosInCuiMangia;
+            this.PosInCuiMuove = PosInCuiMuove;
         }
         public CPunto()
         {
