@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ControllaVittoria.cs" />
     <Compile Include="DatiGiocatore.cs" />
     <Compile Include="dgProv.cs" />
     <Compile Include="Listener.cs" />

@@ -56,7 +56,7 @@
                     <RadioButton x:Name="RD_helps" Content="Si" HorizontalAlignment="Left" Margin="0,28,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Aiuti" IsChecked="True" IsEnabled="False" Width="27" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="3"/>
                     <RadioButton x:Name="RD_helpn" Content="No" HorizontalAlignment="Left" Margin="48,28,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Aiuti" IsChecked="True" IsEnabled="False" Width="41" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="3"/>
                     <RadioButton x:Name="RD_standard" Content="standard" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="4" IsChecked="True"/>
-                    <RadioButton x:Name="RD_Scacchi960" Content="Scacchi960" HorizontalAlignment="Left" Margin="0,19,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsChecked="True" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="4"/>
+                    <RadioButton x:Name="RD_Scacchi960_" Content="Scacchi960" HorizontalAlignment="Left" Margin="0,19,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="4"/>
                     <Button x:Name="BTTN_inviaR" Content="Invia" HorizontalAlignment="Left" Margin="0,51,0,0" VerticalAlignment="Top" Width="224" Grid.ColumnSpan="2" Background="#FF6E6E6E" IsEnabled="False" BorderBrush="#FF8D8C8C" Foreground="#FF939393" Height="20" Click="BTTN_inviaR_Click" Grid.Row="4" Grid.Column="1"/>
                     <TextBox x:Name="TXT_Tempo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="16" Margin="82,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Foreground="White" Background="#FF6E6E6E" Grid.Row="3" IsEnabled="False" MaxLength="5" MaxLines="1" CharacterCasing="Lower" Grid.Column="1"/>
                     <TextBox x:Name="TXT_IP_2" HorizontalAlignment="Left" Height="23" Margin="12,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="29" Foreground="White" Background="#FF6E6E6E" Grid.Column="2"/>
@@ -81,7 +81,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="450" Margin="4,5,0,0" VerticalAlignment="Top" Width="450" MouseLeftButtonDown="Click" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+        <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="450" Margin="4,5,0,0" VerticalAlignment="Top" Width="450" MouseLeftButtonDown="Click" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" IsEnabled="False">
             <Canvas.Background>
                 <ImageBrush ImageSource="Standard.png"/>
             </Canvas.Background>
@@ -90,6 +90,9 @@
         <Button x:Name="BTTN_Disconnetiti" Content="Disconnetiti" Grid.Column="3" HorizontalAlignment="Left" Margin="10,16,0,0" Grid.Row="2" VerticalAlignment="Top" Width="243" Height="32" Background="#FF6E6E6E" Foreground="White" Click="BTTN_Disconnetiti_Click"/>
         <Label x:Name="LBL_TimerA" Content="Timer-&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="338,23,0,0" VerticalAlignment="Top" Width="107" Foreground="White"/>
         <Label x:Name="LBL_TimerU" Content="Timer-&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="338,16,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Grid.Row="2"/>
+        <TextBox x:Name="TXT_portascrittura" Grid.Column="3" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="12345"/>
+        <TextBox x:Name="TXT_portaascolto" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="0,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069"/>
+        <Button x:Name="BTTN_collegati" Content="Button" Grid.Column="3" HorizontalAlignment="Left" Margin="125,20,0,0" VerticalAlignment="Top" Width="110" Click="BTTN_collegati_Click"/>
 
     </Grid>
 </Window>

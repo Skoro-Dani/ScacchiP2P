@@ -29,3 +29,4 @@ D:\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.csproj.GenerateR
 D:\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.csproj.CoreCompileInputs.cache
 D:\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.exe
 D:\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.pdb
+D:\GitHub\ScacchiP2P\ScacchiP2P\ScacchiP2P\obj\Debug\ScacchiP2P.csproj.AssemblyReference.cache

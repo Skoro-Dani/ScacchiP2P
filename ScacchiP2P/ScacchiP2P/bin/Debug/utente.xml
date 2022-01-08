@@ -15,4 +15,9 @@
     <Password>0CC175B9C0F1B6A831C399E269772661</Password>
     <Punti>0</Punti>
   </dgProv>
+  <dgProv>
+    <Nome>g</Nome>
+    <Password>B2F5FF47436671B6E533D8DC3614845D</Password>
+    <Punti>0</Punti>
+  </dgProv>
 </ArrayOfDgProv>

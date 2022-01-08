@@ -10,22 +10,30 @@ namespace ScacchiP2P
         DatiCondivisi Dati;
 
         UdpClient Server = new UdpClient();
-        IPEndPoint riceveEP = new IPEndPoint(IPAddress.Any, 42069);
+        IPEndPoint riceveEP;
         private byte[] dataReceived;
-        public Listener()
+        int porta;
+        public Listener(int porta1)
         {
+            porta = porta1;
+            riceveEP = new IPEndPoint(IPAddress.Any, porta);
             Dati = DatiCondivisi.Istanza;
         }
 
         public void ProcThread()
         {
             Server.Client.Bind(riceveEP);
+            Server.Client.ReceiveTimeout = 5000;
             while (!Dati.Flag)
             {
-                dataReceived = Server.Receive(ref riceveEP);
-                string risposta = Encoding.ASCII.GetString(dataReceived);
-                Dati.AddStringRL(risposta + ";" + riceveEP.Address);
-                Console.WriteLine(risposta);
+                try
+                {
+                    dataReceived = Server.Receive(ref riceveEP);
+                    string risposta = Encoding.ASCII.GetString(dataReceived);
+                    Dati.AddStringRL(risposta + ";" + riceveEP.Address);
+                    Console.WriteLine(risposta);
+                }
+                catch (Exception e) { }
             }
         }
     }

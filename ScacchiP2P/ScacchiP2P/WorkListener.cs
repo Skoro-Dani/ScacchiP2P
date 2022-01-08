@@ -76,7 +76,7 @@
                         case "r":
                             if (Dati.Connesso)
                             {
-                                switch (s[2])
+                                switch (s[1])
                                 {
                                     case "0":
                                         sc.Help = true;
@@ -101,6 +101,7 @@
                                         else sc.TipoGioco = "scacchi960";
                                         break;
                                 }
+                                w.RichiediRegole(Dati.DatiRL[count]);
                             }
                             break;
                         case "fp":

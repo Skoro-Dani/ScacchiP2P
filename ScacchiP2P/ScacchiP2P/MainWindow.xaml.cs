@@ -30,6 +30,9 @@ namespace ScacchiP2P
         private List<Image> PosImg;
         private List<Image> PosDot;
         private List<CPunto> posdotP;
+
+        private CPunto punto = new CPunto(0, 0, true, true);
+        private Pezzo p;
         private bool Selezionato = false;
         //costruttore
         public MainWindow()
@@ -47,8 +50,8 @@ namespace ScacchiP2P
             if (ris == false)
                 this.Close();
             LBL_Nome.Content = dg.Nome + "->" + dg.Punti;
-
-            L = new Listener();
+            Dati.w = w;
+            /*L = new Listener();
             WL = new WorkListener();
             W = new Writer();
 
@@ -58,7 +61,7 @@ namespace ScacchiP2P
 
             LT.Start();
             WLT.Start();
-            WT.Start();
+            WT.Start();*/
             RefreshScacchiera();
         }
 
@@ -66,10 +69,11 @@ namespace ScacchiP2P
         private void Click(object sender, MouseButtonEventArgs e)
         {
             //e.GetPosition((IInputElement)sender)
-            char[] a = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+            char[] a = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
             int x = (int)e.GetPosition((IInputElement)sender).X / (int)(ScacchieraRet.Width / 8);
             int y = (int)e.GetPosition((IInputElement)sender).Y / (int)(ScacchieraRet.Height / 8);
-
+            string pos1, pos2;
+            bool trovato = false;
             if (sc.Colore == "bianco")
             {
                 y -= 7;
@@ -88,12 +92,46 @@ namespace ScacchiP2P
 
                 }
             }
-            if (sc.getPezzo(x, y) != null)
+            if (Selezionato == false)
             {
-                posdotP = sc.GetPosizioni(new CPunto(x, y, true, true), sc.getPezzo(x, y));
-                Selezionato = true;
+                if (sc.getPezzo(x, y) != null)
+                {
+                    punto = new CPunto(x, y, true, true);
+                    p = sc.getPezzo(x, y);
+                    posdotP = sc.GetPosizioni(new CPunto(x, y, true, true), sc.getPezzo(x, y));
+                    Selezionato = true;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < posdotP.Count; i++)
+                {
+                    if (x == posdotP[i].x && y == posdotP[i].y)
+                    {
+                        trovato = true;
+                        punto = posdotP[i];
+                    }
+                }
+                if (trovato == true)
+                {
+                    pos1 = a[punto.x] + punto.y.ToString();
+                    pos2 = a[x] + y.ToString();
+                    sc.Mossa(pos1, pos2);
+                    Selezionato = false;
+                }
+                else
+                {
+                    Selezionato = false;
+                    p = null;
+                    punto = null;
+                }
             }
             RefreshScacchiera();
+        }
+        public void DisOrAnb(bool DisOrAbl)
+        {
+            if (DisOrAbl == true) ScacchieraRet.IsEnabled = true;
+            else ScacchieraRet.IsEnabled = false;
         }
 
         //aggiorna la grafica della scacchiera
@@ -184,9 +222,9 @@ namespace ScacchiP2P
                     Canvas.SetTop(PosDot[count], iy * ScacchieraRet.Height / 8);
                     ScacchieraRet.Children.Add(PosDot[count]);
                 }
-                Selezionato = false;
             }
-
+            if (sc.TurnoAvv == false) ScacchieraRet.IsEnabled = true;
+            else ScacchieraRet.IsEnabled = false;
         }
 
         //get this
@@ -204,7 +242,7 @@ namespace ScacchiP2P
                 RD_helpn.IsEnabled = false;
                 RD_helps.IsEnabled = false;
                 RD_standard.IsEnabled = false;
-                RD_Scacchi960.IsEnabled = false;
+                //RD_Scacchi960.IsEnabled = false;
             }
             else if (RD_Personalizzata.IsChecked == true)
             {
@@ -212,7 +250,7 @@ namespace ScacchiP2P
                 RD_helpn.IsEnabled = true;
                 RD_helps.IsEnabled = true;
                 RD_standard.IsEnabled = true;
-                RD_Scacchi960.IsEnabled = true;
+                //RD_Scacchi960.IsEnabled = true;
             }
         }
         //invio Regole
@@ -247,6 +285,7 @@ namespace ScacchiP2P
                     s += "standard;";
                 else
                     s += "scacchi960;";
+                Dati.AddStringDI(s);
             }
         }
         //invio Colore
@@ -255,10 +294,12 @@ namespace ScacchiP2P
             if (RD_bianco.IsChecked == true)
             {
                 Dati.AddStringDI("sc;bianco");
+                sc.Colore = "bianco";
             }
             else
             {
                 Dati.AddStringDI("sc;nero");
+                sc.Colore = "nero";
             }
             RD_Amichevole.IsEnabled = true;
             RD_Competitiva.IsEnabled = true;
@@ -313,11 +354,46 @@ namespace ScacchiP2P
                     Dati.IPVC = "";
                     Dati.VConnesione = false;
                     Dati.ARConnessione = false;
-                    Dati.AddStringDI("y;" + dg.Nome);
+                    Dati.AddStringDI("y;c;" + dg.Nome);
                 }
                 else
                 {
-                    Dati.AddStringDI("n;");
+                    Dati.AddStringDI("n;c;");
+                }
+            });
+        }
+        //Medoto per accettare o rifiutare le regole
+        public void RichiediRegole(string s)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                string[] r = s.Split(';');
+                string domanda = "";
+                switch (r[1])
+                {
+                    case "0":
+                        domanda = "L'avversario vuole fare l'amichevole";
+                        break;
+                    case "1":
+                        domanda = "L'avversario vuole fare una competitiva";
+                        break;
+                    case "2":
+                        domanda = "L'avversario vuole fare una partita con queste regole: \r\n" +
+                            "tempo-> " + r[2] + "\r\n" +
+                            "Help-> " + r[3] + "\r\n" +
+                            "TipoScacchi->" + r[4];
+                        break;
+                }
+                MessageBoxResult result = MessageBox.Show(domanda, "Regole", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Dati.AddStringDI("y;r;");
+                    TAB_partita.IsEnabled = true;
+                    TAB_partita.IsSelected = true;
+                }
+                else
+                {
+                    Dati.AddStringDI("n;r;d;");
                 }
             });
         }
@@ -326,7 +402,7 @@ namespace ScacchiP2P
         {
             Dispatcher.Invoke(() =>
             {
-
+                RefreshScacchiera();
                 MessageBox.Show("La partita è iniziata", "Start", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
             });
@@ -407,7 +483,9 @@ namespace ScacchiP2P
                     MessageBox.Show("L'avversario Ha Acccettato le regole", "Regole", MessageBoxButton.OK);
                     TAB_partita.IsEnabled = true;
                     TAB_partita.IsSelected = true;
-
+                    Dati.AddStringDI("ms;");
+                    sc.PartitaStart();
+                    PartitaStart();
                 }
                 else
                 {
@@ -456,9 +534,6 @@ namespace ScacchiP2P
             BBTN_Connessione.IsEnabled = true;
         }
 
-
-
-
         //aggiorna il timer
         public void RefreshTimer(string ValoreA, string ValoreU)
         {
@@ -467,13 +542,6 @@ namespace ScacchiP2P
                 LBL_TimerA.Content = "Timer-> " + ValoreA;
                 LBL_TimerU.Content = "Timer-> " + ValoreU;
             });
-        }
-
-        //metodo per evitare che l'utente faccia più mosse
-        public void DisOAblSC(bool DisOAbl)
-        {
-            if (DisOAbl) ScacchieraRet.IsEnabled = true;
-            else ScacchieraRet.IsEnabled = false;
         }
 
         public void Rivincita()
@@ -501,5 +569,20 @@ namespace ScacchiP2P
             }
         }
 
+        private void BTTN_collegati_Click(object sender, RoutedEventArgs e)
+        {
+            BTTN_collegati.IsEnabled = false;
+            L = new Listener(int.Parse(TXT_portaascolto.Text));
+            WL = new WorkListener();
+            W = new Writer(int.Parse(TXT_portascrittura.Text));
+
+            LT = new Thread(new ThreadStart(L.ProcThread));
+            WLT = new Thread(new ThreadStart(WL.ProcThread));
+            WT = new Thread(new ThreadStart(W.ProcThread));
+
+            LT.Start();
+            WLT.Start();
+            WT.Start();
+        }
     }
 }

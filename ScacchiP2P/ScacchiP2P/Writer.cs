@@ -8,8 +8,10 @@ namespace ScacchiP2P
         private DatiCondivisi Dati;
         UdpClient client = new UdpClient();
         private byte[] data;
-        public Writer()
+        int porta;
+        public Writer(int porta1)
         {
+            porta = porta1;
             Dati = DatiCondivisi.Istanza;
         }
 
@@ -22,7 +24,7 @@ namespace ScacchiP2P
                 if (Dati.GetLengthDI() > count)
                 {
                     data = Encoding.ASCII.GetBytes(Dati.DatiDI[count]);
-                    client.Send(data, data.Length, Dati.IP, 42069);
+                    client.Send(data, data.Length, Dati.IP, porta);
                     count++;
                     //Pulico il buffer di dati per alleggerire il programma
                     if (Dati.GetLengthDI() > 10)

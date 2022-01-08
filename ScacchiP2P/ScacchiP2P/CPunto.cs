@@ -23,6 +23,13 @@
             x = 0;
             y = 0;
         }
+        public bool equal(CPunto p)
+        {
+            bool ris = true;
+            if (x != p.x) ris = false;
+            if (y != p.y) ris = false;
+            return ris;
+        }
 
     }
 }
