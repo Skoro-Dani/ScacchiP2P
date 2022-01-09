@@ -89,43 +89,38 @@ namespace ScacchiP2P
         /*
         * Patta->Indica se si vuole la patta
         */
-        private bool APatta { get; set; }
+        private static object LockAPatta = new object();
+        private bool APatta_;
+        public bool APatta { get { lock (LockAPatta) { return APatta_; } } set { lock (LockAPatta) { APatta_ = value; } } }
         /*
         * Arresa->Indica se si vuole la resa
         */
-        private bool Arresa { get; set; }
+        private static object LockArresa = new object();
+        private bool Arresa_;
+        public bool Arresa { get { lock (LockArresa) { return Arresa_; } } set { lock (LockArresa) { Arresa_ = value; } } }
         /*
         * Pstart->Indica se la partita è iniziata
         */
         private static object LockPstart = new object();
         private bool Pstart_;
         public bool Pstart { get { lock (LockPstart) { return Pstart_; } } set { lock (LockPstart) { Pstart_ = value; } } }
+        /*
+        * rivincita->Indica se ci può essere una rivincita
+        */
+        private static object Lockriv = new object();
+        private bool rivincita_;
+        public bool rivincita { get { lock (Lockriv) { return rivincita_; } } set { lock (Lockriv) { rivincita_ = value; } } }
 
         private Scacchiera()
         {
             T = new Timer();
-            TimerT= new Thread(new ThreadStart(T.ProcThread));
+            TimerT = new Thread(new ThreadStart(T.ProcThread));
             TimerT.Start();
             sc_ = new Pezzo[8, 8];
-            Arresa = false;
-            APatta = false;
-            Colore = "bianco";
-            TipoGioco = "standard";
-            tempo = 0;
-
-            GeneraScacchiera();
-
             MosseBianco = new List<string>();
             MosseNero = new List<string>();
             alfabetorevers = new Dictionary<char, int>();
-            for (int i = 0; i < 8; i++)
-            {
-                alfabetorevers[alfabeto[i]] = i;
-            }
-
-            Dati = DatiCondivisi.Istanza;
-            w = Dati.w;
-            w = MainWindow.GetMainWindow();
+            AzzeraDati();
         }
         public void setWindow(MainWindow w)
         {
@@ -251,7 +246,6 @@ namespace ScacchiP2P
                 return tempo;
             }
         }
-
         public void resetScacchiera()
         {
             GeneraScacchiera();
@@ -291,7 +285,6 @@ namespace ScacchiP2P
                 return MosseNero;
             }
         }
-
         //metodo per muovere un pezzo
         public void Mossa(string pos1, string pos2)
         {
@@ -305,7 +298,7 @@ namespace ScacchiP2P
                 s1 = pos1.ToCharArray();
                 int po1, po2;
                 po1 = alfabetorevers[s1[0]];
-                po2 = int.Parse(s1[1].ToString())-1;
+                po2 = int.Parse(s1[1].ToString()) - 1;
                 p1 = ScacchieraPezzi[po1, po2];
 
                 //controllo il secondo pezzo
@@ -313,7 +306,7 @@ namespace ScacchiP2P
                 s2 = pos2.ToCharArray();
                 int pob1, pob2;
                 pob1 = alfabetorevers[s2[0]];
-                pob2 = int.Parse(s2[1].ToString())-1;
+                pob2 = int.Parse(s2[1].ToString()) - 1;
 
                 if (ScacchieraPezzi[pob1, pob2] == null)
                     p2 = null;
@@ -348,20 +341,19 @@ namespace ScacchiP2P
                         }
                     }
                 }
-                    
+
 
             }
         }
-
         //metodo che restituisce tutte le posizioni in cui puo andare un pezzo
-        private List<CPunto> GetPosizioneEffetive(CPunto Punto, Pezzo P,Pezzo[,] sc)
+        private List<CPunto> GetPosizioneEffetive(CPunto Punto, Pezzo P, Pezzo[,] sc)
         {
             List<CPunto> Pos = new List<CPunto>();
 
             switch (P.Nome)
             {
                 case Pezzo.InizialePezzo.Cavallo:
-                    Pos = GetPosCavallo(Punto, P,sc);
+                    Pos = GetPosCavallo(Punto, P, sc);
                     break;
                 case Pezzo.InizialePezzo.Torre:
                     Pos = GetPosTorre(Punto, P, sc);
@@ -383,7 +375,6 @@ namespace ScacchiP2P
 
             return Pos;
         }
-
         //metodo in cui restituisce tutte le posizioni dove mangiano i pezzi avversari
         private List<CPunto> PosInCuiSiMangiaNemico(Pezzo[,] Sc, Pezzo.inColore ColoreNemico)
         {
@@ -401,7 +392,7 @@ namespace ScacchiP2P
                         if (Sc[x, y].Colore == ColoreNemico)
                         {
                             //prendo le posizioni effettive
-                            posProv.AddRange(GetPosizioneEffetive(new CPunto(x, y, true, true), Sc[x, y],Sc));
+                            posProv.AddRange(GetPosizioneEffetive(new CPunto(x, y, true, true), Sc[x, y], Sc));
                             //posProv = GetPosizioneEffetive(new CPunto(x, y, true, true), Sc[x, y]);
                             //
                             /*for (int i = 0; i < posProv.Count; i++)
@@ -421,13 +412,12 @@ namespace ScacchiP2P
             }
             return pos;
         }
-
         //metodo il quale restituisce un booleano per capire se una determinata mossa causerà scacco
-        private bool CausaScacco(CPunto Pos1,CPunto Pos2, Pezzo P, Pezzo[,] sc)
+        private bool CausaScacco(CPunto Pos1, CPunto Pos2, Pezzo P, Pezzo[,] sc)
         {
             bool Scacco = false;
             List<CPunto> PosDoveMangiano;
-            Pezzo[,] scProv= (Pezzo[,])sc.Clone();
+            Pezzo[,] scProv = (Pezzo[,])sc.Clone();
             //Posizione Re
             CPunto posRe = new CPunto(-1, -1, true, true);
             //Ciclo che percorre tutta la scacchiera
@@ -447,7 +437,7 @@ namespace ScacchiP2P
             if (scProv[Pos1.x, Pos1.y].Nome == Pezzo.InizialePezzo.Re)
                 posRe = Pos2;
             scProv[Pos2.x, Pos2.y] = scProv[Pos1.x, Pos1.y];
-            scProv[Pos1.x, Pos1.y]=null;
+            scProv[Pos1.x, Pos1.y] = null;
             //decido chi sarà il nemico a seconda del colore del pezzo
             if (P.Colore == Pezzo.inColore.Bianco)
                 PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Nero);
@@ -462,16 +452,15 @@ namespace ScacchiP2P
 
             return Scacco;
         }
-
         //metodo pubblico per ottenere le posizioni
         public List<CPunto> GetPosizioni(CPunto Punto, Pezzo P)
         {
             List<CPunto> pos = new List<CPunto>();
-            List<CPunto> posProv = GetPosizioneEffetive(Punto, P,ScacchieraPezzi);
+            List<CPunto> posProv = GetPosizioneEffetive(Punto, P, ScacchieraPezzi);
 
             for (int i = 0; i < posProv.Count; i++)
             {
-                if (CausaScacco(Punto,posProv[i], P, ScacchieraPezzi) == false)
+                if (CausaScacco(Punto, posProv[i], P, ScacchieraPezzi) == false)
                     pos.Add(posProv[i]);
             }
 
@@ -498,6 +487,7 @@ namespace ScacchiP2P
         {
             bool risControlloScaccoN = true;
             bool risControlloScaccoB = true;
+            bool finePartita = false;
 
             List<CPunto> pos;
 
@@ -525,62 +515,79 @@ namespace ScacchiP2P
 
                 }
             }
-
             if (risControlloScaccoB == true)
             {
                 if (Colore == "bianco") VittoriaAvv = true;
                 else VittoriaAvv = false;
-                FinePartita();
+                finePartita = true;
             }
             if (risControlloScaccoN == true)
             {
                 if (Colore == "nero") VittoriaAvv = true;
                 else VittoriaAvv = false;
-                FinePartita();
+                finePartita = true;
             }
-
+            if (Timer == true)
+            {
+                if (T.tempoA_ == 0 && T.minutiA_ == 0)
+                {
+                    VittoriaAvv = false;
+                    finePartita = true;
+                }
+                else if (T.tempoU_ == 0 && T.minutiU_ == 0)
+                {
+                    VittoriaAvv = true;
+                    finePartita = true;
+                }
+            }
+            if (finePartita == true)
+                FinePartita();
         }
-
+        public Pezzo[,] getScacchiera()
+        {
+            return ScacchieraPezzi;
+        }
         public void Patta()
         {
             APatta = true;
             FinePartita();
         }
-
         public void FinePartita()
         {
             if (Punti == true)
             {
                 if (APatta != true)
                 {
-                    if (Arresa != true)
-                    {
-                        if (VittoriaAvv == false) dg.Punti += 100;
-                        else dg.Punti -= 100;
-                    }
+                    if (VittoriaAvv == false) dg.Punti += 100;
                     else dg.Punti -= 100;
                 }
             }
             if (Timer == true)
             {
                 T.stopTA();
-                T.startTU();
+                T.stopTU();
                 T.setTimer(tempo);
             }
             MosseBianco.Clear();
             MosseNero.Clear();
             GeneraScacchiera();
+            w.Rivincita(VittoriaAvv);
             APatta = false;
             Arresa = false;
             Pstart = false;
-            w.Rivincita(VittoriaAvv);
         }
-
         public void ArresaMet(bool ArresaAvve)
         {
             if (ArresaAvve == false)
+            {
                 Arresa = true;
-            else Arresa = false;
+                VittoriaAvv = true;
+            }
+            else
+            {
+                Arresa = false;
+                VittoriaAvv = false;
+            }
             FinePartita();
         }
         private void InvertiTurno(string pos1, string pos2)
@@ -610,8 +617,7 @@ namespace ScacchiP2P
             w.RefreshScacchiera();
 
         }
-
-        private List<CPunto> GetPosCavallo(CPunto Punto, Pezzo P,Pezzo[,] sc)
+        private List<CPunto> GetPosCavallo(CPunto Punto, Pezzo P, Pezzo[,] sc)
         {
             List<CPunto> Pos = new List<CPunto>();
 
@@ -680,7 +686,7 @@ namespace ScacchiP2P
                 }
                 else Pos.Add(new CPunto(Punto.x - 1, Punto.y + 2, true, true));
             }
-            catch (Exception ) { Console.WriteLine("Pos Non Valida in Cavallo (In Alto a sinistra)"); }
+            catch (Exception) { Console.WriteLine("Pos Non Valida in Cavallo (In Alto a sinistra)"); }
             //In basso a destra
             try
             {
@@ -691,7 +697,7 @@ namespace ScacchiP2P
                 }
                 else Pos.Add(new CPunto(Punto.x + 1, Punto.y - 2, true, true));
             }
-            catch (Exception ) { Console.WriteLine("Pos Non Valida in Cavallo (In basso a destra)"); }
+            catch (Exception) { Console.WriteLine("Pos Non Valida in Cavallo (In basso a destra)"); }
             //In basso a sinistra
             try
             {
@@ -702,12 +708,12 @@ namespace ScacchiP2P
                 }
                 else Pos.Add(new CPunto(Punto.x - 1, Punto.y - 2, true, true));
             }
-            catch (Exception ) { Console.WriteLine("Pos Non Valida in Cavallo (In basso a sinistra)"); }
+            catch (Exception) { Console.WriteLine("Pos Non Valida in Cavallo (In basso a sinistra)"); }
 
 
             return Pos;
         }
-        private List<CPunto> GetPosTorre(CPunto Punto, Pezzo P,Pezzo[,] sc)
+        private List<CPunto> GetPosTorre(CPunto Punto, Pezzo P, Pezzo[,] sc)
         {
             int count;
             List<CPunto> Pos = new List<CPunto>();
@@ -806,7 +812,7 @@ namespace ScacchiP2P
             }
             return Pos;
         }
-        private List<CPunto> GetPosPedone(CPunto Punto, Pezzo P,Pezzo[,] sc)
+        private List<CPunto> GetPosPedone(CPunto Punto, Pezzo P, Pezzo[,] sc)
         {
             List<CPunto> Pos = new List<CPunto>();
             //Se bianco il pedone si muove in un modo
@@ -818,7 +824,7 @@ namespace ScacchiP2P
                     if (sc[Punto.x, Punto.y + 1] == null)
                     {
                         Pos.Add(new CPunto(Punto.x, Punto.y + 1, false, true));
-                        if (sc[Punto.x, Punto.y + 2] == null && Punto.y==1)
+                        if (sc[Punto.x, Punto.y + 2] == null && Punto.y == 1)
                             Pos.Add(new CPunto(Punto.x, Punto.y + 2, false, true));
                     }
                 }
@@ -828,7 +834,7 @@ namespace ScacchiP2P
                 {
                     if (sc[Punto.x + 1, Punto.y + 1] != null)
                     {
-                        if (P.Colore != sc[Punto.x + 1, Punto.y + 1].Colore )
+                        if (P.Colore != sc[Punto.x + 1, Punto.y + 1].Colore)
                             Pos.Add(new CPunto(Punto.x + 1, Punto.y + 1, true, false));
                     }
                 }
@@ -972,8 +978,8 @@ namespace ScacchiP2P
         }
         private List<CPunto> GetPosRegina(CPunto Punto, Pezzo P, Pezzo[,] sc)
         {
-            List<CPunto> posAlfiere = GetPosAlfiere(Punto, P,sc);
-            List<CPunto> posTorre = GetPosTorre(Punto, P,sc);
+            List<CPunto> posAlfiere = GetPosAlfiere(Punto, P, sc);
+            List<CPunto> posTorre = GetPosTorre(Punto, P, sc);
             List<CPunto> Pos = new List<CPunto>();
             Pos.AddRange(posTorre);
             Pos.AddRange(posAlfiere);
@@ -1024,10 +1030,10 @@ namespace ScacchiP2P
             //Indietro
             try
             {
-                if (sc[Punto.x, Punto.y - 1] == null)         
-                    Pos.Add(new CPunto(Punto.x, Punto.y - 1, true, true));           
-                else if (sc[Punto.x, Punto.y - 1].Colore != P.Colore)            
-                    Pos.Add(new CPunto(Punto.x, Punto.y - 1, true, true));               
+                if (sc[Punto.x, Punto.y - 1] == null)
+                    Pos.Add(new CPunto(Punto.x, Punto.y - 1, true, true));
+                else if (sc[Punto.x, Punto.y - 1].Colore != P.Colore)
+                    Pos.Add(new CPunto(Punto.x, Punto.y - 1, true, true));
             }
             catch (Exception) { Console.WriteLine("Pos Non Valida in Re (Indietro)"); }
             //Diagonale indietro sinistra
@@ -1059,5 +1065,46 @@ namespace ScacchiP2P
             catch (Exception) { Console.WriteLine("Pos Non Valida in Re (Diagonale avanti a sinistra)"); }
             return Pos;
         }
+        public void controllorivincita(bool rivincita)
+        {
+            if (this.rivincita == true)
+            {
+                if (rivincita == true)
+                {
+                    InvertiColore();
+                    PartitaStart();
+                    w.PartitaStart();
+                }
+            }
+            else this.rivincita = true;
+        }
+        public void AzzeraDati()
+        {
+            Arresa = false;
+            APatta = false;
+            VittoriaAvv = false;
+            Pstart = false;
+            rivincita = false;
+            Colore = "bianco";
+            TipoGioco = "standard";
+            tempo = 0;
+            rivincita = false;
+
+            GeneraScacchiera();
+            Timer = false;
+            MosseBianco.Clear();
+            MosseNero.Clear();
+
+            for (int i = 0; i < 8; i++)
+            {
+                alfabetorevers[alfabeto[i]] = i;
+            }
+
+            Dati = DatiCondivisi.Istanza;
+            w = Dati.w;
+            w = MainWindow.GetMainWindow();
+            dg = DatiGiocatore.Istanza;
+        }
+
     }
 }

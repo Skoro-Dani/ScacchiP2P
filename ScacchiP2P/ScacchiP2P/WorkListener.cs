@@ -87,7 +87,7 @@
                                         sc.Help = false;
                                         sc.Timer = true;
                                         sc.Punti = true;
-                                        sc.setTimer(10000);
+                                        sc.setTimer(10);
                                         break;
                                     case "2":
                                         sc.Punti = false;
@@ -107,13 +107,13 @@
                         case "fp":
                             if (Dati.Connesso)
                             {
-                                //sc.ControlloVittoria();
+                                sc.ControlloVittoria(sc.getScacchiera());
                             }
                             break;
                         case "a":
                             if (Dati.Connesso)
                             {
-                                /* IN Corso*/
+                                w.rivincita();
                             }
                             break;
                         case "y":

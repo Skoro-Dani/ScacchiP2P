@@ -8,7 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngscacchiera/bite.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pngscacchiera/dot.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pedonenero.ico")]
 
 

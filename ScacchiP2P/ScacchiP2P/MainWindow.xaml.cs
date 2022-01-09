@@ -86,7 +86,6 @@ namespace ScacchiP2P
                 if (y < 0)
                 {
                     y *= -1;
-
                 }
             }
             else
@@ -95,7 +94,6 @@ namespace ScacchiP2P
                 if (x < 0)
                 {
                     x *= -1;
-
                 }
             }
             if (Selezionato == false)
@@ -123,11 +121,11 @@ namespace ScacchiP2P
                 }
                 if (trovato == true)
                 {
-                    pos1 = a[punto1.x] + (punto1.y+1).ToString();
-                    pos2 = a[punto2.x] + (punto2.y+1).ToString();
+                    pos1 = a[punto1.x] + (punto1.y + 1).ToString();
+                    pos2 = a[punto2.x] + (punto2.y + 1).ToString();
                     sc.Mossa(pos1, pos2);
                     Selezionato = false;
-                    Dati.AddStringDI("m;" + a[punto1.x] + (punto1.y+1) + ";" + a[punto2.x] + (punto2.y+1) + ";"+sc.getPezzo(punto2.x,punto2.y).Nome.ToString().Substring(0,1)+";" + "false");
+                    Dati.AddStringDI("m;" + a[punto1.x] + (punto1.y + 1) + ";" + a[punto2.x] + (punto2.y + 1) + ";" + sc.getPezzo(punto2.x, punto2.y).Nome.ToString().Substring(0, 1) + ";" + "false");
                 }
                 else
                 {
@@ -179,8 +177,6 @@ namespace ScacchiP2P
                                 if (iy < 0)
                                 {
                                     iy *= -1;
-
-
                                 }
                             }
                             else
@@ -190,9 +186,7 @@ namespace ScacchiP2P
                                 if (ix < 0)
                                 {
                                     ix *= -1;
-
                                 }
-
                             }
 
                             Canvas.SetLeft(PosImg[count], ix * ScacchieraRet.Width / 8);
@@ -242,12 +236,12 @@ namespace ScacchiP2P
                 else ScacchieraRet.IsEnabled = false;
                 List<string> ut = sc.GetListMosseU();
                 List<string> av = sc.GetListMosseA();
-                string sb="";
+                string sb = "";
                 string sn = "";
                 if (sc.Colore.ToLower() == "bianco")
                 {
                     for (int i = 0; i < ut.Count; i++)
-                        sb += ut[i] + "\r\n"; 
+                        sb += ut[i] + "\r\n";
                     for (int i = 0; i < av.Count; i++)
                         sn += av[i] + "\r\n";
                 }
@@ -274,7 +268,7 @@ namespace ScacchiP2P
         {
             if (RD_Amichevole.IsChecked == true || RD_Competitiva.IsChecked == true)
             {
-                TXT_Tempo.IsEnabled = false;
+                Tempo_list.IsEnabled = false;
                 RD_helpn.IsEnabled = false;
                 RD_helps.IsEnabled = false;
                 RD_standard.IsEnabled = false;
@@ -283,14 +277,14 @@ namespace ScacchiP2P
                 lblh.Visibility = Visibility.Hidden;
                 lbls.Visibility = Visibility.Hidden;
                 lblt.Visibility = Visibility.Hidden;
-                TXT_Tempo.Visibility = Visibility.Hidden;
+                Tempo_list.Visibility = Visibility.Hidden;
                 RD_helpn.Visibility = Visibility.Hidden;
                 RD_helps.Visibility = Visibility.Hidden;
                 //RD_Scacchi960.IsEnabled = false;
             }
             else if (RD_Personalizzata.IsChecked == true)
             {
-                TXT_Tempo.IsEnabled = true;
+                Tempo_list.IsEnabled = true;
                 RD_helpn.IsEnabled = true;
                 RD_helps.IsEnabled = true;
                 RD_standard.IsEnabled = true;
@@ -299,7 +293,7 @@ namespace ScacchiP2P
                 lblh.Visibility = Visibility.Visible;
                 lbls.Visibility = Visibility.Visible;
                 lblt.Visibility = Visibility.Visible;
-                TXT_Tempo.Visibility = Visibility.Visible;
+                Tempo_list.Visibility = Visibility.Visible;
                 RD_helpn.Visibility = Visibility.Visible;
                 RD_helps.Visibility = Visibility.Visible;
                 //RD_Scacchi960.IsEnabled = true;
@@ -319,17 +313,9 @@ namespace ScacchiP2P
             }
             else
             {
-                int tempo = -1;
-                if (TXT_Tempo.Text != "")
-                    int.TryParse(TXT_Tempo.Text, out tempo);
+                string tempos = (string)Tempo_list.SelectedItem;
                 string s = "r;2;";
-                if (tempo != -1)
-                    s += tempo + ";";
-                else
-                {
-                    MessageBox.Show("il tempo può essere espresso solo in numeri", "errore", MessageBoxButton.OK, MessageBoxImage.Error);
-                    TXT_Tempo.Text = "";
-                }
+                s += tempos + ";";
                 if (RD_helps.IsChecked == true)
                     s += "true;";
                 else
@@ -349,13 +335,13 @@ namespace ScacchiP2P
             int ip = 0;
             bool ipb = true;
             string[] ip1 = TXT_IP.Text.Split('.');
-            if(ip1.Length==4)
+            if (ip1.Length == 4)
             {
                 for (int i = 0; i < 4; i++)
                     ipb = int.TryParse(ip1[i], out ip);
             }
 
-            if (ipb==true || TXT_IP.Text=="localhost")
+            if (ipb == true || TXT_IP.Text == "localhost")
             {
                 Dati.IP = TXT_IP.Text;
                 Dati.AddStringDI("c;" + dg.Nome);
@@ -444,7 +430,10 @@ namespace ScacchiP2P
             {
                 RefreshScacchiera();
                 MessageBox.Show("La partita è iniziata", "Start", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
+                disableAll();
+                TAB_partita.Visibility = Visibility.Visible;
+                TAB_partita.IsEnabled = true;
+                TAB_partita.IsSelected = true;
             });
         }
         //arresa dell'avversario
@@ -484,7 +473,6 @@ namespace ScacchiP2P
                 TAB_NPartita.IsSelected = true;
             });
         }
-
         //controllo della conessione da parte dell'utente
         public void ConnesioneA(bool a)
         {
@@ -496,7 +484,7 @@ namespace ScacchiP2P
                     Dati.ARConnessione = false;
                     BTTN_ScNero.Visibility = Visibility.Visible;
                     Bttn_SCBianco.Visibility = Visibility.Visible;
-                    lblsc.Visibility= Visibility.Visible;
+                    lblsc.Visibility = Visibility.Visible;
                     MessageBox.Show("L'avversario si è Connesso", "Connesione", MessageBoxButton.OK);
                 }
                 else
@@ -549,12 +537,14 @@ namespace ScacchiP2P
         {
             Dati.AddStringDI("d;");
             Dati.AzzeraDati();
+            sc.AzzeraDati();
             disableAll();
             MessageBox.Show("Ti sei Disconessio", "Disconnesione", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
         //disabilita tutti i controlli
         private void disableAll()
         {
+            TAB_NPartita.IsSelected = true;
             BBTN_Connessione.IsEnabled = true;
             RD_Amichevole.IsEnabled = false;
             TAB_partita.IsEnabled = false;
@@ -566,23 +556,24 @@ namespace ScacchiP2P
             img_n.Visibility = Visibility.Hidden;
             BTTN_inviaR.IsEnabled = false;
             BBTN_Connessione.IsEnabled = true;
-            RD_Amichevole.Visibility= Visibility.Hidden; ;
-            RD_Competitiva.Visibility= Visibility.Hidden;
-            BTTN_inviaR.Visibility= Visibility.Hidden;
-            TXT_Tempo.Visibility= Visibility.Hidden;
-            RD_helpn.Visibility= Visibility.Hidden;
-            RD_helps.Visibility= Visibility.Hidden;
-            lblh.Visibility= Visibility.Hidden;
-            lblR.Visibility= Visibility.Hidden;
-            lbls.Visibility= Visibility.Hidden;
-            lblt.Visibility= Visibility.Hidden;
-            RD_Personalizzata.Visibility= Visibility.Hidden;
-            RD_Scacchi960_.Visibility= Visibility.Hidden;
-            RD_standard.Visibility= Visibility.Hidden;
-            lblsc.Visibility= Visibility.Hidden;
+            RD_Amichevole.Visibility = Visibility.Hidden; ;
+            RD_Competitiva.Visibility = Visibility.Hidden;
+            BTTN_inviaR.Visibility = Visibility.Hidden;
+            Tempo_list.Visibility = Visibility.Hidden;
+            RD_helpn.Visibility = Visibility.Hidden;
+            RD_helps.Visibility = Visibility.Hidden;
+            lblh.Visibility = Visibility.Hidden;
+            lblR.Visibility = Visibility.Hidden;
+            lbls.Visibility = Visibility.Hidden;
+            lblt.Visibility = Visibility.Hidden;
+            RD_Personalizzata.Visibility = Visibility.Hidden;
+            RD_Scacchi960_.Visibility = Visibility.Hidden;
+            RD_standard.Visibility = Visibility.Hidden;
+            lblsc.Visibility = Visibility.Hidden;
             TAB_partita.Visibility = Visibility.Hidden;
+            TAB_Rivincita.Visibility = Visibility.Hidden;
+            LBL_Risultato.Content = "";
         }
-
         //aggiorna il timer
         public void RefreshTimer(string ValoreA, string ValoreU)
         {
@@ -592,18 +583,25 @@ namespace ScacchiP2P
                 LBL_TimerU.Content = "Timer-> " + ValoreU;
             });
         }
-
         public void Rivincita(bool vittoriaAvversario)
         {
-            string mess="";
-            if (vittoriaAvversario)
-                mess = "Ha vinto l'avversario";
-            else
-                mess = "Hai vinto";
-            MessageBox.Show(mess, "Fine Partita", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            /* IN CORSO*/
+            Dispatcher.Invoke(() =>
+            {
+                TAB_Rivincita.Visibility = Visibility.Visible;
+                TAB_Rivincita.IsSelected = true;
+                TAB_Rivincita.IsEnabled = true;
+                string mess = "";
+                if (sc.APatta == false)
+                {
+                    if (vittoriaAvversario == true)
+                        mess = "Ritenta sarai più fortunato :( Hai perso!!!";
+                    else if (vittoriaAvversario == false)
+                        mess = "Congratulazioni!!!!! Hai vinto!!!";
+                }
+                else mess = "Sad story:( avete fatto patta";
+                LBL_Risultato.Content = mess;
+            });
         }
-
         private void Arresa(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Sicuro di voler Arrenderti", "Resa", MessageBoxButton.YesNo);
@@ -614,7 +612,6 @@ namespace ScacchiP2P
             }
 
         }
-
         private void Patta(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Sicuro di voler Patteggiare", "Patta", MessageBoxButton.YesNo);
@@ -623,7 +620,6 @@ namespace ScacchiP2P
                 Dati.AddStringDI("m;A0;A0;R;true;");
             }
         }
-
         private void BTTN_collegati_Click(object sender, RoutedEventArgs e)
         {
             BTTN_collegati.IsEnabled = false;
@@ -642,18 +638,17 @@ namespace ScacchiP2P
             WLT.Start();
             WT.Start();
             CVT.Start();
-        }
 
+        }
         private void Bttn_SCBianco_Click(object sender, RoutedEventArgs e)
         {
             Dati.AddStringDI("sc;bianco");
             Bttn_SCBianco.Visibility = Visibility.Hidden;
             BTTN_ScNero.Visibility = Visibility.Hidden;
             img_b.Visibility = Visibility.Visible;
-            sc.Colore="bianco";
+            sc.Colore = "bianco";
             VisibleRegole();
         }
-
         private void BTTN_ScNero_Click(object sender, RoutedEventArgs e)
         {
             Dati.AddStringDI("sc;nero");
@@ -669,13 +664,27 @@ namespace ScacchiP2P
             RD_Amichevole.Visibility = Visibility.Visible; ;
             RD_Competitiva.Visibility = Visibility.Visible;
             BTTN_inviaR.Visibility = Visibility.Visible;
-            
+
             lblR.Visibility = Visibility.Visible;
-            RD_Personalizzata.Visibility = Visibility.Visible;     
+            RD_Personalizzata.Visibility = Visibility.Visible;
             RD_Amichevole.IsEnabled = true;
             RD_Competitiva.IsEnabled = true;
             RD_Personalizzata.IsEnabled = true;
             BTTN_inviaR.IsEnabled = true;
         }
+        private void BBTN_Rivincitas_Click(object sender, RoutedEventArgs e)
+        {
+            Dati.AddStringDI("a;");
+            sc.controllorivincita(true);
+        }
+        public void rivincita()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                LBL_avversarioRiv.Content = "L'avversario vuole fare la rivincita";
+                sc.controllorivincita(true);
+            });
+        }
+
     }
 }
