@@ -5,94 +5,104 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScacchiP2P"
         mc:Ignorable="d"
-        Title="ScachiP2P" Height="601.501" Width="837.723"
+        Title="ScachiP2P" Height="606.501" Width="818.223"
         Closing="DataWindow_Closing">
     <Window.Background>
         <ImageBrush/>
     </Window.Background>
     <Grid Background="#FF151515">
         <Grid.RowDefinitions>
-            <RowDefinition Height="59*"/>
-            <RowDefinition Height="454*"/>
-            <RowDefinition Height="58*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="159*"/>
+            <RowDefinition Height="14*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="455*"/>
-            <ColumnDefinition Width="34*"/>
-            <ColumnDefinition Width="291*"/>
+            <ColumnDefinition Width="442*"/>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="243*"/>
+            <ColumnDefinition Width="42*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="lbl_nomesfidante" Content="Sfidante" HorizontalAlignment="Left" Margin="2,24,0,0" VerticalAlignment="Top" Width="199" Foreground="White" Height="26" Grid.Column="1"/>
-        <TabControl x:Name="___Nessun_nome_" Grid.Column="3" HorizontalAlignment="Left" Height="448" Margin="0,5,0,0" VerticalAlignment="Top" Width="253" Background="#FF1B1B1B" Grid.Row="1">
+        <Label x:Name="lbl_nomesfidante" Content="Sfidante" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="199" Foreground="White" Height="26" Grid.Column="1" Grid.Row="1"/>
+        <TabControl x:Name="___Nessun_nome_" Grid.Column="1" HorizontalAlignment="Left" Height="500" Margin="2,35,0,0" VerticalAlignment="Top" Width="717" Background="#FF1B1B1B" Grid.ColumnSpan="4" Grid.RowSpan="3">
             <TabItem x:Name="TAB_NPartita" Header="Nuova Partita">
-                <Grid Background="#FF1B1919" Margin="0,0,-5,-1">
+                <Grid x:Name="Grid" Background="#FF1B1919" Margin="0,0,-5,-1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="91*"/>
-                        <RowDefinition Height="90*"/>
-                        <RowDefinition Height="84*"/>
-                        <RowDefinition Height="60*"/>
-                        <RowDefinition Height="96*"/>
+                        <RowDefinition Height="102*"/>
+                        <RowDefinition Height="170*"/>
+                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="68*"/>
+                        <RowDefinition Height="108*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="13*"/>
-                        <ColumnDefinition Width="105*"/>
-                        <ColumnDefinition Width="121*"/>
-                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="37*"/>
+                        <ColumnDefinition Width="329*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="37*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Ip Avversario:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="81" Grid.Column="1"/>
-                    <Label Content="Scelta Colore:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="82" Grid.Row="1" Grid.Column="1"/>
-                    <TextBox x:Name="TXT_IP_1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" Foreground="White" Background="#FF6E6E6E" Grid.Column="1"/>
-                    <Button x:Name="BBTN_Connessione" Content="Connessione" HorizontalAlignment="Left" Margin="2,53,0,0" VerticalAlignment="Top" Width="224" Grid.ColumnSpan="2" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BBTN_Connessione_Click" Grid.Column="1"/>
-                    <Label Content="Regole:" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="49" Grid.Row="2" Grid.Column="1"/>
-                    <RadioButton x:Name="RD_bianco" Content="Bianco" Grid.Column="2" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Colore" IsChecked="True" IsEnabled="False" Height="15" Width="54" Grid.Row="1"/>
-                    <RadioButton x:Name="RD_nero" Content="Nero" Grid.Column="2" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Colore" IsChecked="True" IsEnabled="False" Height="15" Width="45" Grid.Row="1"/>
-                    <Button x:Name="BTTN_inviaSC" Content="Invia" HorizontalAlignment="Left" Margin="2,51,0,0" VerticalAlignment="Top" Width="224" Grid.ColumnSpan="2" Background="#FF6E6E6E" IsEnabled="False" BorderBrush="#FF8D8C8C" Foreground="#FF939393" Height="20" Click="BTTN_inviaSC_Click" Grid.Row="1" Grid.Column="1"/>
-                    <RadioButton x:Name="RD_Amichevole" Content="Amichevole" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="114" Click="ControlliPartita" Height="15" Grid.Row="2" Grid.Column="2"/>
-                    <RadioButton x:Name="RD_Personalizzata" Content="Personalizzata" HorizontalAlignment="Left" Margin="0,50,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="114" Click="ControlliPartita" Height="15" Grid.Row="2" Grid.Column="2"/>
-                    <RadioButton x:Name="RD_Competitiva" Content="Competitiva" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="114" Click="ControlliPartita" Height="15" Grid.Row="2" Grid.Column="2"/>
-                    <Label Content="Tempo:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="48" Grid.Row="3" Grid.Column="1"/>
-                    <Label Content="Permettere Aiuti:" HorizontalAlignment="Left" Margin="0,22,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="98" Grid.Row="3" Grid.Column="1"/>
-                    <Label Content="Tipo Di Scacchi:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="93" Grid.Row="4" Grid.Column="1"/>
-                    <RadioButton x:Name="RD_helps" Content="Si" HorizontalAlignment="Left" Margin="0,28,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Aiuti" IsChecked="True" IsEnabled="False" Width="27" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="3"/>
-                    <RadioButton x:Name="RD_helpn" Content="No" HorizontalAlignment="Left" Margin="48,28,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Aiuti" IsChecked="True" IsEnabled="False" Width="41" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="3"/>
-                    <RadioButton x:Name="RD_standard" Content="standard" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="4" IsChecked="True"/>
-                    <RadioButton x:Name="RD_Scacchi960_" Content="Scacchi960" HorizontalAlignment="Left" Margin="0,19,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="4"/>
-                    <Button x:Name="BTTN_inviaR" Content="Invia" HorizontalAlignment="Left" Margin="0,51,0,0" VerticalAlignment="Top" Width="224" Grid.ColumnSpan="2" Background="#FF6E6E6E" IsEnabled="False" BorderBrush="#FF8D8C8C" Foreground="#FF939393" Height="20" Click="BTTN_inviaR_Click" Grid.Row="4" Grid.Column="1"/>
-                    <TextBox x:Name="TXT_Tempo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="16" Margin="82,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Foreground="White" Background="#FF6E6E6E" Grid.Row="3" IsEnabled="False" MaxLength="5" MaxLines="1" CharacterCasing="Lower" Grid.Column="1"/>
-                    <TextBox x:Name="TXT_IP_2" HorizontalAlignment="Left" Height="23" Margin="12,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="29" Foreground="White" Background="#FF6E6E6E" Grid.Column="2"/>
-                    <TextBox x:Name="TXT_IP_3" HorizontalAlignment="Left" Height="23" Margin="46,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" Foreground="White" Background="#FF6E6E6E" Grid.Column="2"/>
-                    <TextBox x:Name="TXT_IP_4" HorizontalAlignment="Left" Height="23" Margin="79,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="29" Foreground="White" Background="#FF6E6E6E" Grid.Column="2"/>
-                    <Label Content="." HorizontalAlignment="Left" Margin="3,18,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="12" Grid.Column="2"/>
-                    <Label Content="." HorizontalAlignment="Left" Margin="70,18,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="12" Grid.Column="2"/>
-                    <Label Content="." HorizontalAlignment="Left" Margin="37,18,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="12" Grid.Column="2"/>
+                    <Label x:Name="lblsc" Content="Scelta Colore:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="82" Grid.Row="1" Grid.Column="1"/>
+                    <Button x:Name="BBTN_Connessione" Content="Connessione" HorizontalAlignment="Left" Margin="2,53,0,0" VerticalAlignment="Top" Width="224" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BBTN_Connessione_Click" Grid.Column="1"/>
+                    <Label x:Name="lblR" Content="Regole:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="49" Grid.Row="1" Grid.Column="2"/>
+                    <RadioButton x:Name="RD_Amichevole" Content="Amichevole" HorizontalAlignment="Left" Margin="127,11,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="176" Click="ControlliPartita" Height="15" Grid.Row="1" Grid.Column="2"/>
+                    <RadioButton x:Name="RD_Personalizzata" Content="Personalizzata" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="176" Click="ControlliPartita" Height="15" Grid.Row="1" Grid.Column="2" Margin="127,54,0,0"/>
+                    <RadioButton x:Name="RD_Competitiva" Content="Competitiva" HorizontalAlignment="Left" Margin="127,31,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoGioco" IsChecked="True" IsEnabled="False" Width="176" Click="ControlliPartita" Height="15" Grid.Row="1" Grid.Column="2"/>
+                    <Label x:Name="lblt" Content="Tempo:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="48" Grid.Row="1" Grid.Column="2" Margin="0,98,0,0"/>
+                    <Label x:Name="lblh" Content="Permettere Aiuti:" HorizontalAlignment="Left" Margin="0,142,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="98" Grid.Row="1" Grid.Column="2"/>
+                    <Label x:Name="lbls" Content="Tipo Di Scacchi:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Height="26" Width="93" Grid.Row="3" Grid.Column="2"/>
+                    <RadioButton x:Name="RD_helps" Content="Si" HorizontalAlignment="Left" Margin="127,148,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Aiuti" IsChecked="True" IsEnabled="False" Width="27" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="1"/>
+                    <RadioButton x:Name="RD_helpn" Content="No" HorizontalAlignment="Left" Margin="216,148,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="Aiuti" IsChecked="True" IsEnabled="False" Width="41" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="1"/>
+                    <RadioButton x:Name="RD_standard" Content="standard" HorizontalAlignment="Left" Margin="127,6,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="3" IsChecked="True"/>
+                    <RadioButton x:Name="RD_Scacchi960_" Content="Scacchi960" HorizontalAlignment="Left" Margin="216,6,0,0" VerticalAlignment="Top" Foreground="White" Background="Gray" GroupName="TipoScacchi" IsEnabled="False" Width="89" Click="ControlliPartita" Grid.Column="2" Height="15" Grid.Row="3"/>
+                    <Button x:Name="BTTN_inviaR" Content="Invia" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="313" Background="#FF6E6E6E" IsEnabled="False" BorderBrush="#FF8D8C8C" Foreground="#FF939393" Height="20" Click="BTTN_inviaR_Click" Grid.Row="4" Grid.Column="2"/>
+                    <TextBox x:Name="TXT_Tempo" HorizontalAlignment="Left" Height="16" Margin="127,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Foreground="White" Background="#FF6E6E6E" Grid.Row="1" IsEnabled="False" MaxLength="5" MaxLines="1" CharacterCasing="Lower" Grid.Column="2"/>
+                    <TextBox x:Name="TXT_IP" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="86,13,0,0" TextWrapping="Wrap" Text="localhost" VerticalAlignment="Top" Width="140" Background="#FF6E6E6E" Foreground="White"/>
+                    <Button x:Name="BTTN_ScNero" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="2,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Height="134" Foreground="{x:Null}" BorderBrush="#FF8B00FF" Click="BTTN_ScNero_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="PNGPezzi/ReNero.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="Bttn_SCBianco" Grid.Column="1" HorizontalAlignment="Left" Margin="151,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Height="134" Foreground="{x:Null}" BorderBrush="#FF8B00FF" Click="Bttn_SCBianco_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="PNGPezzi/ReBianco.png"/>
+                        </Button.Background>
+
+                    </Button>
+                    <Image x:Name="img_b" HorizontalAlignment="Left" Height="134" VerticalAlignment="Top" Width="129" Grid.Column="1" Margin="151,26,0,0" Grid.Row="1" Source="PNGPezzi/ReBianco.png" Visibility="Hidden">
+                    </Image>
+                    <Image x:Name="img_n" Grid.Column="1" HorizontalAlignment="Left" Height="134" Margin="2,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Source="PNGPezzi/ReNero.png"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TAB_partita" Header="Partita Corrente" IsEnabled="False">
-                <Grid Background="#FF1B1B1B">
+                <Grid Background="#FF1B1B1B" Margin="0,0,-1,0" HorizontalAlignment="Left" Width="712">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="37*"/>
-                        <RowDefinition Height="383*"/>
+                        <RowDefinition Height="41*"/>
+                        <RowDefinition Height="431*"/>
                     </Grid.RowDefinitions>
-                    <ListBox x:Name="ListBianco" HorizontalAlignment="Left" Height="318" Margin="13,0,0,0" VerticalAlignment="Top" Width="99" Background="#FF1B1B1B" Foreground="White" Grid.Row="1"/>
-                    <ListBox x:Name="ListNero" HorizontalAlignment="Left" Height="318" Margin="134,0,0,0" VerticalAlignment="Top" Width="91" Background="#FF1B1B1B" Foreground="White" Grid.Row="1"/>
-                    <Label Content="Mosse-&gt;" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="81"/>
-                    <Button x:Name="BBTN_Arrenditi" Content="Arrenditi" HorizontalAlignment="Left" Margin="13,335,0,0" VerticalAlignment="Top" Width="99" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Arresa" Grid.Row="1"/>
-                    <Button x:Name="BBTN_Patta" Content="Patta" HorizontalAlignment="Left" Margin="134,335,0,0" VerticalAlignment="Top" Width="91" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Patta" Grid.Row="1"/>
+                    <Label Content="Mosse-&gt;" HorizontalAlignment="Left" Margin="479,10,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="195"/>
+                    <Button x:Name="BBTN_Arrenditi" Content="Arrenditi" HorizontalAlignment="Left" Margin="479,335,0,0" VerticalAlignment="Top" Width="99" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Arresa" Grid.Row="1"/>
+                    <Button x:Name="BBTN_Patta" Content="Patta" HorizontalAlignment="Left" Margin="583,335,0,0" VerticalAlignment="Top" Width="91" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Patta" Grid.Row="1"/>
+                    <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="400" Margin="24,0,0,0" VerticalAlignment="Top" Width="400" MouseLeftButtonDown="Click" IsEnabled="False" Grid.Row="1">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="Standard.png"/>
+                        </Canvas.Background>
+                    </Canvas>
+                    <Label x:Name="LBL_TimerU" Content="Timer-&gt;" HorizontalAlignment="Left" Margin="317,405,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Grid.Row="1" Height="26"/>
+                    <Label x:Name="LBL_TimerA" Content="Timer-&gt;" HorizontalAlignment="Left" Margin="306,5,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Height="26"/>
+                    <Button x:Name="BTTN_Disconnetiti" Content="Disconnetiti" Margin="479,368,52,0" Grid.Row="1" VerticalAlignment="Top" Height="32" Background="#FF6E6E6E" Foreground="White" Click="BTTN_Disconnetiti_Click"/>
+                    <Label x:Name="LBL_Nome" Content="" HorizontalAlignment="Left" Margin="24,405,0,0" Grid.Row="1" VerticalAlignment="Top" Width="114" Foreground="White" Height="26"/>
+                    <Label x:Name="LBL_Nome_Copy" Content="" HorizontalAlignment="Left" Margin="24,11,0,0" VerticalAlignment="Top" Width="114" Foreground="White" Height="26"/>
+                    <Label x:Name="ListBianco" Content="" HorizontalAlignment="Left" Margin="479,0,0,0" Grid.Row="1" VerticalAlignment="Top" Height="318" Width="99" Foreground="White"/>
+                    <Label x:Name="ListNero" Content="" HorizontalAlignment="Left" Margin="575,0,0,0" Grid.Row="1" VerticalAlignment="Top" Height="318" Width="99" Foreground="White"/>
+
                 </Grid>
             </TabItem>
         </TabControl>
-        <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="450" Margin="4,5,0,0" VerticalAlignment="Top" Width="450" MouseLeftButtonDown="Click" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" IsEnabled="False">
-            <Canvas.Background>
-                <ImageBrush ImageSource="Standard.png"/>
-            </Canvas.Background>
-        </Canvas>
-        <Label x:Name="LBL_Nome" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="114" Foreground="White"/>
-        <Button x:Name="BTTN_Disconnetiti" Content="Disconnetiti" Grid.Column="3" HorizontalAlignment="Left" Margin="10,16,0,0" Grid.Row="2" VerticalAlignment="Top" Width="243" Height="32" Background="#FF6E6E6E" Foreground="White" Click="BTTN_Disconnetiti_Click"/>
-        <Label x:Name="LBL_TimerA" Content="Timer-&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="338,23,0,0" VerticalAlignment="Top" Width="107" Foreground="White"/>
-        <Label x:Name="LBL_TimerU" Content="Timer-&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="338,16,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Grid.Row="2"/>
+
+
         <TextBox x:Name="TXT_portascrittura" Grid.Column="3" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="12345"/>
-        <TextBox x:Name="TXT_portaascolto" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="0,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069"/>
-        <Button x:Name="BTTN_collegati" Content="Button" Grid.Column="3" HorizontalAlignment="Left" Margin="125,20,0,0" VerticalAlignment="Top" Width="110" Click="BTTN_collegati_Click"/>
+        <TextBox x:Name="TXT_portaascolto" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="0,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069" Grid.RowSpan="2"/>
+        <Button x:Name="BTTN_collegati" Content="Button" Grid.Column="3" HorizontalAlignment="Left" Margin="125,20,0,0" VerticalAlignment="Top" Width="110" Click="BTTN_collegati_Click" Height="20"/>
 
     </Grid>
 </Window>

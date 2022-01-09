@@ -64,7 +64,7 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Scacchiera.cs" />
-    <Compile Include="ThreadTimer.cs" />
+    <Compile Include="Timer.cs" />
     <Compile Include="WorkListener.cs" />
     <Compile Include="Writer.cs" />
     <Page Include="Login.xaml">

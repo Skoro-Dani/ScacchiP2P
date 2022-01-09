@@ -7,7 +7,7 @@ namespace ScacchiP2P
     public class Scacchiera
     {
         //Dichiarazione dati Neccesari
-        private ThreadTimer T;
+        private Timer T;
         private DatiCondivisi Dati;
         private MainWindow w;
         private DatiGiocatore dg;
@@ -103,8 +103,8 @@ namespace ScacchiP2P
 
         private Scacchiera()
         {
-            T = new ThreadTimer();
-            TimerT = new Thread(new ThreadStart(T.ProcThread));
+            T = new Timer();
+            TimerT= new Thread(new ThreadStart(T.ProcThread));
             TimerT.Start();
             sc_ = new Pezzo[8, 8];
             Arresa = false;
@@ -305,7 +305,7 @@ namespace ScacchiP2P
                 s1 = pos1.ToCharArray();
                 int po1, po2;
                 po1 = alfabetorevers[s1[0]];
-                po2 = int.Parse(s1[1].ToString());
+                po2 = int.Parse(s1[1].ToString())-1;
                 p1 = ScacchieraPezzi[po1, po2];
 
                 //controllo il secondo pezzo
@@ -313,7 +313,7 @@ namespace ScacchiP2P
                 s2 = pos2.ToCharArray();
                 int pob1, pob2;
                 pob1 = alfabetorevers[s2[0]];
-                pob2 = int.Parse(s2[1].ToString());
+                pob2 = int.Parse(s2[1].ToString())-1;
 
                 if (ScacchieraPezzi[pob1, pob2] == null)
                     p2 = null;
@@ -348,6 +348,7 @@ namespace ScacchiP2P
                         }
                     }
                 }
+                    
 
             }
         }
@@ -483,12 +484,13 @@ namespace ScacchiP2P
 
             if (Timer)
             {
-                T.Timer = true;
+                T.setTimer(tempo);
+                T.Timer_ = true;
 
                 if (TurnoAvv) T.startTA();
                 else T.startTU();
             }
-            else T.Timer = false;
+            else T.Timer_ = false;
             GeneraScacchiera();
             Pstart = true;
         }
@@ -565,6 +567,8 @@ namespace ScacchiP2P
                 T.startTU();
                 T.setTimer(tempo);
             }
+            MosseBianco.Clear();
+            MosseNero.Clear();
             GeneraScacchiera();
             APatta = false;
             Arresa = false;
@@ -603,6 +607,7 @@ namespace ScacchiP2P
                 }
                 w.DisOrAnb(true);
             }
+            w.RefreshScacchiera();
 
         }
 
