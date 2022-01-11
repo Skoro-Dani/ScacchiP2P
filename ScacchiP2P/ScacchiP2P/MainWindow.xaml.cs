@@ -53,21 +53,10 @@ namespace ScacchiP2P
                 this.Close();
             LBL_Nome.Content = dg.Nome + "->" + dg.Punti;
             Dati.w = w;
-            /*L = new Listener();
-            WL = new WorkListener();
-            W = new Writer();
-            CV = new ControllaVittoria();
 
-            LT = new Thread(new ThreadStart(L.ProcThread));
-            WLT = new Thread(new ThreadStart(WL.ProcThread));
-            WT = new Thread(new ThreadStart(W.ProcThread));
-            CVT = new Thread(new ThreadStart(CVT.ProcThread));
-
-            LT.Start();
-            WLT.Start();
-            WT.Start();*/
             RefreshScacchiera();
             disableAll();
+            start();
         }
 
         //metodo che serve a riconoscere dove clicca l'utente
@@ -622,23 +611,7 @@ namespace ScacchiP2P
         }
         private void BTTN_collegati_Click(object sender, RoutedEventArgs e)
         {
-            BTTN_collegati.IsEnabled = false;
-            L = new Listener(int.Parse(TXT_portaascolto.Text));
-            WL = new WorkListener();
-            W = new Writer(int.Parse(TXT_portascrittura.Text));
-            CV = new ControllaVittoria();
-
-            CVT = new Thread(new ThreadStart(CV.ProcThread));
-            LT = new Thread(new ThreadStart(L.ProcThread));
-            WLT = new Thread(new ThreadStart(WL.ProcThread));
-            WT = new Thread(new ThreadStart(W.ProcThread));
-
-            sc.setWindow(this);
-            LT.Start();
-            WLT.Start();
-            WT.Start();
-            CVT.Start();
-
+            start();
         }
         private void Bttn_SCBianco_Click(object sender, RoutedEventArgs e)
         {
@@ -684,6 +657,25 @@ namespace ScacchiP2P
                 LBL_avversarioRiv.Content = "L'avversario vuole fare la rivincita";
                 sc.controllorivincita(true);
             });
+        }
+        private void start()
+        {
+            BTTN_collegati.IsEnabled = false;
+            L = new Listener(int.Parse(TXT_portaascolto.Text));
+            WL = new WorkListener();
+            W = new Writer(int.Parse(TXT_portascrittura.Text));
+            CV = new ControllaVittoria();
+
+            CVT = new Thread(new ThreadStart(CV.ProcThread));
+            LT = new Thread(new ThreadStart(L.ProcThread));
+            WLT = new Thread(new ThreadStart(WL.ProcThread));
+            WT = new Thread(new ThreadStart(W.ProcThread));
+
+            sc.setWindow(this);
+            LT.Start();
+            WLT.Start();
+            WT.Start();
+            CVT.Start();
         }
 
     }
