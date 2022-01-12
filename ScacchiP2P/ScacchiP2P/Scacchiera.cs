@@ -1074,6 +1074,7 @@ namespace ScacchiP2P
                 {
                     InvertiColore();
                     PartitaStart();
+                    rivincita = false;
                     w.PartitaStart();
                 }
             }

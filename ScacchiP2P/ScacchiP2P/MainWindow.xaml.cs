@@ -566,6 +566,7 @@ namespace ScacchiP2P
             LBL_Risultato.Content = "";
             BBTN_Rivincitas.IsEnabled = true;
             BBTN_Rivincitan.IsEnabled = true;
+            LBL_avversarioRiv.Content = "Aspettando la risposta dell'avversario";
         }
         //aggiorna il timer
         public void RefreshTimer(string ValoreA, string ValoreU)
@@ -584,6 +585,8 @@ namespace ScacchiP2P
                 TAB_Rivincita.IsSelected = true;
                 TAB_Rivincita.IsEnabled = true;
                 TAB_partita.IsEnabled = false;
+                BBTN_Rivincitas.IsEnabled = true;
+                BBTN_Rivincitan.IsEnabled = true;
                 string mess = "";
                 if (sc.APatta == false)
                 {
