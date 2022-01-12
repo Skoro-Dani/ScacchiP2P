@@ -30,6 +30,8 @@
                                     Dati.VConnesione = true;
                                     Dati.IPVC = s[2];
                                     w.RichiediConnessione(s[1]);
+                                    Dati.AvvNome = s[1];
+                                    w.setAvvNome(s[1]);
                                 }
                             break;
                         case "m":
@@ -41,7 +43,11 @@
                                 }
                                 else
                                 {
-                                    sc.Mossa(s[1], s[2]);
+                                    if(s[5]!="")
+                                    {
+                                        sc.Mossa(s[1], s[2], true, Pezzo.inizialestring(s[5]));
+                                    }
+                                    else sc.Mossa(s[1], s[2], false, Pezzo.InizialePezzo.Vuoto);
                                 }
                             }
                             break;
@@ -121,6 +127,8 @@
                             {
                                 case "c":
                                     w.ConnesioneA(true);
+                                    Dati.AvvNome = s[2];
+                                    w.setAvvNome(s[2]);
                                     break;
                                 case "r":
                                     w.RegoleA(true);

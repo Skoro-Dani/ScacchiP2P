@@ -21,7 +21,16 @@
             }
         }
         private string img_;
-        public string img { get { return img_; } set { img_ = value; } }
+        public string img
+        {
+            get
+            {
+                img_ = "component/PNGPezzi/";
+                img_ += Nome.ToString() + Colore.ToString() + ".png";
+                return img_;
+            }
+            set { img_ = value; }
+        }
 
         public Pezzo()
         {
@@ -34,7 +43,7 @@
             this.Nome = Nome;
             this.Colore = Colore;
             img = "component/PNGPezzi/";
-            img += Nome.ToString() + Colore.ToString()+".png";
+            img += Nome.ToString() + Colore.ToString() + ".png";
         }
         public enum InizialePezzo
         {
@@ -52,7 +61,26 @@
             Nero = 'n',
             nulla = ' ',
         }
-
+        public static InizialePezzo inizialestring(string s)
+        {
+            switch (s.ToUpper())
+            {
+                case "P":
+                    return InizialePezzo.Pedone;
+                case "C":
+                    return InizialePezzo.Cavallo;
+                case "B":
+                    return InizialePezzo.Alfiere;
+                case "R":
+                    return InizialePezzo.Torre;
+                case "Q":
+                    return InizialePezzo.Regina;
+                case "K":
+                    return InizialePezzo.Re;
+                default:
+                    return InizialePezzo.Vuoto;
+            }
+        }
 
         /*public List<CPunto> DovePuoAndare(CPunto P)
         {

@@ -187,8 +187,8 @@ namespace ScacchiP2P
                     }
                 }
             }
-            /*else
-            {
+            else
+            {/*
                 for (int y = 0; y < 2; y++)
                 {
                     for (int x = 0; x < 8; x++)
@@ -224,8 +224,8 @@ namespace ScacchiP2P
                         else if (x == 6 || x == 7)
                             ScacchieraPezzi[x, y] = new Pezzo(Pezzo.InizialePezzo.Cavallo, Pezzo.inColore.Nero);
                     }
-                }
-            }*/
+                }*/
+            }
         }
         public Pezzo getPezzo(int x, int y)
         {
@@ -235,7 +235,6 @@ namespace ScacchiP2P
         {
             lock (Locktempo)
             {
-                T.setTimer(minTempo);
                 tempo = minTempo;
             }
         }
@@ -286,7 +285,8 @@ namespace ScacchiP2P
             }
         }
         //metodo per muovere un pezzo
-        public void Mossa(string pos1, string pos2)
+
+        public void Mossa(string pos1, string pos2, bool Cambia, Pezzo.InizialePezzo InP)
         {
             lock (LockMossa)
             {
@@ -326,8 +326,8 @@ namespace ScacchiP2P
                     {
                         if (c2.equal(posti[i]) == true && posti[i].PosInCuiMuove == true)
                         {
+                            ScacchieraPezzi[pob1, pob2] = ScacchieraPezzi[po1, po2];
                             ScacchieraPezzi[po1, po2] = null;
-                            ScacchieraPezzi[pob1, pob2] = p1;
                             InvertiTurno(pos1, pos2);
                         }
                     }
@@ -335,14 +335,31 @@ namespace ScacchiP2P
                     {
                         if (c2.equal(posti[i]) && posti[i].PosInCuiMangia == true)
                         {
+                            ScacchieraPezzi[pob1, pob2] = ScacchieraPezzi[po1, po2];
                             ScacchieraPezzi[po1, po2] = null;
-                            ScacchieraPezzi[pob1, pob2] = p1;
                             InvertiTurno(pos1, pos2);
                         }
                     }
                 }
-
-
+                if (Cambia == true)
+                {
+                    ChangeP(pos2, p1.Nome, InP);
+                }
+                w.RefreshScacchiera();
+            }
+        }
+        private void ChangeP(string pos, Pezzo.InizialePezzo Piniziale, Pezzo.InizialePezzo Pfinale)
+        {
+            if (Piniziale == Pezzo.InizialePezzo.Pedone)
+            {
+                char[] s;
+                s = new char[2];
+                s = pos.ToCharArray();
+                int Pos1, Pos2;
+                Pos1 = alfabetorevers[s[0]];
+                Pos2 = int.Parse(s[1].ToString()) - 1;
+                Pezzo p = ScacchieraPezzi[Pos1, Pos2];
+                ScacchieraPezzi[Pos1, Pos2].Nome = Pfinale;
             }
         }
         //metodo che restituisce tutte le posizioni in cui puo andare un pezzo
@@ -420,6 +437,7 @@ namespace ScacchiP2P
             Pezzo[,] scProv = (Pezzo[,])sc.Clone();
             //Posizione Re
             CPunto posRe = new CPunto(-1, -1, true, true);
+            bool trovato = false;
             //Ciclo che percorre tutta la scacchiera
             for (int x = 0; x < 8; x++)
             {
@@ -431,25 +449,28 @@ namespace ScacchiP2P
                         {
                             posRe.x = x;
                             posRe.y = y;
+                            trovato = true;
                         }
                 }
             }
-            if (scProv[Pos1.x, Pos1.y].Nome == Pezzo.InizialePezzo.Re)
-                posRe = Pos2;
-            scProv[Pos2.x, Pos2.y] = scProv[Pos1.x, Pos1.y];
-            scProv[Pos1.x, Pos1.y] = null;
-            //decido chi sarà il nemico a seconda del colore del pezzo
-            if (P.Colore == Pezzo.inColore.Bianco)
-                PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Nero);
-            else
-                PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Bianco);
-            //ciclo che percorre tutte le posizioni dove mangiano
-            for (int i = 0; i < PosDoveMangiano.Count; i++)
+            if (trovato == true)
             {
-                if (posRe.equal(PosDoveMangiano[i]) == true)
-                    Scacco = true;
+                if (scProv[Pos1.x, Pos1.y].Nome == Pezzo.InizialePezzo.Re)
+                    posRe = Pos2;
+                scProv[Pos2.x, Pos2.y] = scProv[Pos1.x, Pos1.y];
+                scProv[Pos1.x, Pos1.y] = null;
+                //decido chi sarà il nemico a seconda del colore del pezzo
+                if (P.Colore == Pezzo.inColore.Bianco)
+                    PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Nero);
+                else
+                    PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Bianco);
+                //ciclo che percorre tutte le posizioni dove mangiano
+                for (int i = 0; i < PosDoveMangiano.Count; i++)
+                {
+                    if (posRe.equal(PosDoveMangiano[i]) == true)
+                        Scacco = true;
+                }
             }
-
             return Scacco;
         }
         //metodo pubblico per ottenere le posizioni
@@ -468,10 +489,11 @@ namespace ScacchiP2P
         }
         public void PartitaStart()
         {
+            GeneraScacchiera();
             if (Colore == "bianco") TurnoAvv = false;
             else TurnoAvv = true;
 
-            if (Timer)
+            if (Timer == true)
             {
                 T.setTimer(tempo);
                 T.Timer_ = true;
@@ -480,7 +502,7 @@ namespace ScacchiP2P
                 else T.startTU();
             }
             else T.Timer_ = false;
-            GeneraScacchiera();
+
             Pstart = true;
             rivincita = false;
         }
@@ -1080,6 +1102,7 @@ namespace ScacchiP2P
             }
             else this.rivincita = true;
         }
+
         public void AzzeraDati()
         {
             Arresa = false;

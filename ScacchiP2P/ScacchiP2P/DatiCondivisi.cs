@@ -50,6 +50,9 @@ namespace ScacchiP2P
         private static object LockWindow = new object();
         private MainWindow w_;
         public MainWindow w { get { lock (LockWindow) { return w_; } } set { lock (LockWindow) { w_ = value; } } }
+        private static object lockAvvNome = new object();
+        private string AvvNome_;
+        public string AvvNome { get { lock (lockAvvNome) { return AvvNome_; } } set { lock (lockAvvNome) { AvvNome_ = value; } } }
 
 
 
@@ -167,7 +170,7 @@ namespace ScacchiP2P
             IPVC = "";
             Flag = false;
             w = MainWindow.GetMainWindow();
-
+            AvvNome = "";
         }
     }
 }

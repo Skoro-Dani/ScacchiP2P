@@ -34,8 +34,10 @@ namespace ScacchiP2P
         private List<CPunto> posdotP;
 
         private CPunto punto1 = new CPunto(0, 0, true, true);
+        private CPunto punto2 = new CPunto(-1, -1, true, true);
         private Pezzo p;
         private bool Selezionato = false;
+        private char[] a = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
         //costruttore
         public MainWindow()
         {
@@ -56,19 +58,18 @@ namespace ScacchiP2P
 
             RefreshScacchiera();
             disableAll();
-            start();
+            //start();
         }
 
         //metodo che serve a riconoscere dove clicca l'utente
         private void Click(object sender, MouseButtonEventArgs e)
         {
             //e.GetPosition((IInputElement)sender)
-            char[] a = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
             int x = (int)e.GetPosition((IInputElement)sender).X / (int)(ScacchieraRet.Width / 8);
             int y = (int)e.GetPosition((IInputElement)sender).Y / (int)(ScacchieraRet.Height / 8);
             string pos1, pos2;
             bool trovato = false;
-            CPunto punto2 = new CPunto(-1, -1, true, true);
+
             if (sc.Colore == "bianco")
             {
                 y -= 7;
@@ -85,20 +86,7 @@ namespace ScacchiP2P
                     x *= -1;
                 }
             }
-            if (Selezionato == false)
-            {
-                if (sc.getPezzo(x, y) != null)
-                {
-                    if (sc.getPezzo(x, y).Colore.ToString().ToLower() == sc.Colore.ToLower())
-                    {
-                        punto1 = new CPunto(x, y, true, true);
-                        p = sc.getPezzo(x, y);
-                        posdotP = sc.GetPosizioni(new CPunto(x, y, true, true), sc.getPezzo(x, y));
-                        Selezionato = true;
-                    }
-                }
-            }
-            else
+            if (Selezionato == true)
             {
                 for (int i = 0; i < posdotP.Count; i++)
                 {
@@ -110,20 +98,46 @@ namespace ScacchiP2P
                 }
                 if (trovato == true)
                 {
-                    pos1 = a[punto1.x] + (punto1.y + 1).ToString();
-                    pos2 = a[punto2.x] + (punto2.y + 1).ToString();
-                    sc.Mossa(pos1, pos2);
-                    Selezionato = false;
-                    Dati.AddStringDI("m;" + a[punto1.x] + (punto1.y + 1) + ";" + a[punto2.x] + (punto2.y + 1) + ";" + sc.getPezzo(punto2.x, punto2.y).Nome.ToString().Substring(0, 1) + ";" + "false");
+                    if (sc.getPezzo(punto1.x, punto1.y).Nome == Pezzo.InizialePezzo.Pedone && (punto2.y == 7 || punto2.y == 0))
+                    {
+                        ScacchieraRet.IsEnabled = false;
+                        cmb_pedone.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        pos1 = a[punto1.x] + (punto1.y + 1).ToString();
+                        pos2 = a[punto2.x] + (punto2.y + 1).ToString();
+                        sc.Mossa(pos1, pos2, false, Pezzo.InizialePezzo.Pedone);
+                        Selezionato = false;
+                        Dati.AddStringDI("m;" + a[punto1.x] + (punto1.y + 1) + ";" + a[punto2.x] + (punto2.y + 1) + ";" + sc.getPezzo(punto2.x, punto2.y).Nome.ToString().Substring(0, 1) + ";" + "false;;");
+
+                    }
                 }
-                else
+                else Selezione(x, y);
+            }
+            else Selezione(x, y);
+
+
+            RefreshScacchiera();
+        }
+        private void Selezione(int x, int y)
+        {
+            if (sc.getPezzo(x, y) != null)
+            {
+                if (sc.getPezzo(x, y).Colore.ToString().ToLower() == sc.Colore.ToLower())
                 {
-                    Selezionato = false;
-                    p = null;
-                    punto1 = null;
+                    punto1 = new CPunto(x, y, true, true);
+                    p = sc.getPezzo(x, y);
+                    posdotP = sc.GetPosizioni(new CPunto(x, y, true, true), sc.getPezzo(x, y));
+                    Selezionato = true;
                 }
             }
-            RefreshScacchiera();
+            else
+            {
+                Selezionato = false;
+                p = null;
+                punto1 = null;
+            }
         }
         public void DisOrAnb(bool DisOrAbl)
         {
@@ -227,22 +241,24 @@ namespace ScacchiP2P
                 List<string> av = sc.GetListMosseA();
                 string sb = "";
                 string sn = "";
+                ListBianco.Items.Clear();
+                ListNero.Items.Clear();
                 if (sc.Colore.ToLower() == "bianco")
                 {
                     for (int i = 0; i < ut.Count; i++)
-                        sb += ut[i] + "\r\n";
+                        ListBianco.Items.Add(ut[i]);
                     for (int i = 0; i < av.Count; i++)
-                        sn += av[i] + "\r\n";
+                        ListNero.Items.Add(av[i]);
                 }
                 else
                 {
                     for (int i = 0; i < ut.Count; i++)
-                        sn += ut[i] + "\r\n";
+                        ListNero.Items.Add(ut[i]);
                     for (int i = 0; i < av.Count; i++)
-                        sb += av[i] + "\r\n";
+                        ListBianco.Items.Add(av[i]);
+
                 }
-                ListBianco.Content = sb;
-                ListNero.Content = sn;
+
             });
         }
 
@@ -299,12 +315,16 @@ namespace ScacchiP2P
             else if (RD_Competitiva.IsChecked == true)
             {
                 Dati.AddStringDI("r;1");
+                sc.Timer = true;
+                sc.setTimer(10);
             }
             else
             {
                 string tempos = (string)Tempo_list.SelectedItem;
                 string s = "r;2;";
                 s += tempos + ";";
+                sc.Timer = true;
+                sc.setTimer((int)Tempo_list.SelectedItem);
                 if (RD_helps.IsChecked == true)
                     s += "true;";
                 else
@@ -688,5 +708,26 @@ namespace ScacchiP2P
             CVT.Start();
         }
 
+        private void cmb_pedone_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmb_pedone.SelectedIndex >= 0)
+            {
+                string pos1 = a[punto1.x] + (punto1.y + 1).ToString();
+                string pos2 = a[punto2.x] + (punto2.y + 1).ToString();
+                sc.Mossa(pos1, pos2, true, Pezzo.inizialestring(cmb_pedone.SelectedItem.ToString().Substring(0, 1)));
+                Selezionato = false;
+                Dati.AddStringDI("m;" + a[punto1.x] + (punto1.y + 1) + ";" + a[punto2.x] + (punto2.y + 1) + ";" + sc.getPezzo(punto2.x, punto2.y).Nome.ToString().Substring(0, 1) + ";" + "false;" + cmb_pedone.SelectedItem.ToString().Substring(0, 1) + ";");
+                RefreshScacchiera();
+                cmb_pedone.SelectedIndex = -1;
+                cmb_pedone.Visibility = Visibility.Hidden;
+            }
+        }
+        public void setAvvNome(string s)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                LBL_avversarioNome.Content = s;
+            });
+        }
     }
 }

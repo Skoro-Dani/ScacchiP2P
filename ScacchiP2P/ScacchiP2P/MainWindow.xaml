@@ -84,25 +84,35 @@
             </TabItem>
             <TabItem x:Name="TAB_partita" Header="Partita Corrente" IsEnabled="False">
                 <Grid Background="#FF1B1B1B" Margin="0,0,-1,0" HorizontalAlignment="Left" Width="712">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="11*"/>
+                        <ColumnDefinition Width="345*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="41*"/>
                         <RowDefinition Height="431*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="Mosse-&gt;" HorizontalAlignment="Left" Margin="479,10,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="195"/>
-                    <Button x:Name="BBTN_Arrenditi" Content="Arrenditi" HorizontalAlignment="Left" Margin="479,335,0,0" VerticalAlignment="Top" Width="99" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Arresa" Grid.Row="1"/>
-                    <Button x:Name="BBTN_Patta" Content="Patta" HorizontalAlignment="Left" Margin="583,335,0,0" VerticalAlignment="Top" Width="91" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Patta" Grid.Row="1"/>
-                    <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="400" Margin="24,0,0,0" VerticalAlignment="Top" Width="400" MouseLeftButtonDown="Click" IsEnabled="False" Grid.Row="1">
+                    <Label Content="Mosse-&gt;" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Foreground="White" Height="26" Width="195" Grid.Column="1"/>
+                    <Button x:Name="BBTN_Arrenditi" Content="Arrenditi" HorizontalAlignment="Left" Margin="457,335,0,0" VerticalAlignment="Top" Width="99" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Arresa" Grid.Row="1" Grid.Column="1"/>
+                    <Button x:Name="BBTN_Patta" Content="Patta" HorizontalAlignment="Left" Margin="561,335,0,0" VerticalAlignment="Top" Width="91" Background="#FF6E6E6E" Foreground="White" Height="20" Click="Patta" Grid.Row="1" Grid.Column="1"/>
+                    <Canvas x:Name="ScacchieraRet" HorizontalAlignment="Left" Height="400" Margin="2,0,0,0" VerticalAlignment="Top" Width="400" MouseLeftButtonDown="Click" IsEnabled="False" Grid.Row="1" Grid.Column="1">
                         <Canvas.Background>
                             <ImageBrush ImageSource="Standard.png"/>
                         </Canvas.Background>
                     </Canvas>
-                    <Label x:Name="LBL_TimerU" Content="Timer-&gt;" HorizontalAlignment="Left" Margin="317,405,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Grid.Row="1" Height="26"/>
-                    <Label x:Name="LBL_TimerA" Content="Timer-&gt;" HorizontalAlignment="Left" Margin="306,5,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Height="26"/>
-                    <Button x:Name="BTTN_Disconnetiti" Content="Disconnetiti" Margin="479,368,38,0" Grid.Row="1" VerticalAlignment="Top" Height="32" Background="#FF6E6E6E" Foreground="White" Click="BTTN_Disconnetiti_Click"/>
-                    <Label x:Name="LBL_Nome" Content="" HorizontalAlignment="Left" Margin="24,405,0,0" Grid.Row="1" VerticalAlignment="Top" Width="114" Foreground="White" Height="26"/>
-                    <Label x:Name="LBL_Nome_Copy" Content="" HorizontalAlignment="Left" Margin="24,11,0,0" VerticalAlignment="Top" Width="114" Foreground="White" Height="26"/>
-                    <Label x:Name="ListBianco" Content="" HorizontalAlignment="Left" Margin="479,0,0,0" Grid.Row="1" VerticalAlignment="Top" Height="318" Width="99" Foreground="White"/>
-                    <Label x:Name="ListNero" Content="" HorizontalAlignment="Left" Margin="575,0,0,0" Grid.Row="1" VerticalAlignment="Top" Height="318" Width="99" Foreground="White"/>
+                    <Label x:Name="LBL_TimerU" Content="Timer-&gt;" HorizontalAlignment="Left" Margin="295,405,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Grid.Row="1" Height="26" Grid.Column="1"/>
+                    <Label x:Name="LBL_TimerA" Content="Timer-&gt;" HorizontalAlignment="Left" Margin="284,5,0,0" VerticalAlignment="Top" Width="107" Foreground="White" Height="26" Grid.Column="1"/>
+                    <Button x:Name="BTTN_Disconnetiti" Content="Disconnetiti" Margin="457,368,38,0" Grid.Row="1" VerticalAlignment="Top" Height="32" Background="#FF6E6E6E" Foreground="White" Click="BTTN_Disconnetiti_Click" Grid.Column="1"/>
+                    <Label x:Name="LBL_Nome" Content="" HorizontalAlignment="Left" Margin="2,405,0,0" Grid.Row="1" VerticalAlignment="Top" Width="114" Foreground="White" Height="26" Grid.Column="1"/>
+                    <Label x:Name="LBL_avversarioNome" Content="" HorizontalAlignment="Left" Margin="2,11,0,0" VerticalAlignment="Top" Width="114" Foreground="White" Height="26" Grid.Column="1"/>
+                    <ListBox x:Name="ListBianco" Width="100" Grid.Column="1" Margin="457,1,133,113" Grid.Row="1" Background="#FF1B1B1B" Foreground="White"/>
+                    <ComboBox x:Name="cmb_pedone" HorizontalAlignment="Left" Margin="2,1,0,0" VerticalAlignment="Top" Width="400" SelectionChanged="cmb_pedone_SelectionChanged" Height="49" Grid.Row="1" Background="#FFFF0909" Visibility="Hidden" Grid.Column="1">
+                        <System:String>Q-Regina</System:String>
+                        <System:String>R-Torre</System:String>
+                        <System:String>B-Alfiere</System:String>
+                        <System:String>C-Cavallo</System:String>
+                    </ComboBox>
+                    <ListBox x:Name="ListNero" Width="100" Grid.Column="1" Margin="557,1,33,113" Grid.Row="1" Background="#FF1B1B1B" Foreground="White"/>
 
                 </Grid>
             </TabItem>
@@ -126,9 +136,9 @@
         </TabControl>
 
 
-        <TextBox x:Name="TXT_portascrittura" Grid.Column="3" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069" Visibility="Hidden"/>
-        <TextBox x:Name="TXT_portaascolto" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="0,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069" Grid.RowSpan="2" Visibility="Hidden"/>
-        <Button x:Name="BTTN_collegati" Content="Button" Grid.Column="3" HorizontalAlignment="Left" Margin="125,20,0,0" VerticalAlignment="Top" Width="110" Click="BTTN_collegati_Click" Height="20" Visibility="Hidden"/>
+        <TextBox x:Name="TXT_portascrittura" Grid.Column="3" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069"/>
+        <TextBox x:Name="TXT_portaascolto" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="0,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069" Grid.RowSpan="2"/>
+        <Button x:Name="BTTN_collegati" Content="Button" Grid.Column="3" HorizontalAlignment="Left" Margin="125,20,0,0" VerticalAlignment="Top" Width="110" Click="BTTN_collegati_Click" Height="20"/>
 
     </Grid>
 </Window>

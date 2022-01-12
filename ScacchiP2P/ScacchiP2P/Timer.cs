@@ -12,15 +12,15 @@ namespace ScacchiP2P
         private int minutiU;
         private int minutiA;
 
-        private int tempoU;
-        private int tempoA;
+        private int secondiU;
+        private int secondiA;
         private bool boolU;
         private bool boolA;
 
         public int minutiU_ { get { return minutiU; } }
         public int minutiA_ { get { return minutiA; } }
-        public int tempoU_ { get { return tempoU; } }
-        public int tempoA_ { get { return tempoA; } }
+        public int tempoU_ { get { return secondiU; } }
+        public int tempoA_ { get { return secondiA; } }
         public Timer()
         {
             Dati = DatiCondivisi.Istanza;
@@ -35,26 +35,27 @@ namespace ScacchiP2P
                 {
                     if (boolA == true)
                     {
-                        
-                        if(tempoA<0)
+                        secondiA--;
+                        if (secondiA<0)
                         {
-                            tempoA = 60;
                             minutiA--;
+                            secondiA = 60;
+                            
                         }
-                        tempoA--;
+                        
                     }
                     else if (boolU == true)
                     {
-                        
-                        if (tempoU < 0)
+                        secondiU--;
+                        if (secondiU < 0)
                         {
-                            tempoU = 60;
-                            tempoU--;
+                            secondiU = 60;
+                            minutiU--;
                         }
-                        tempoU--;
+                        
                     }
 
-                    w.RefreshTimer(minutiA+"."+tempoA.ToString(), minutiU + "." + tempoU.ToString());
+                    w.RefreshTimer(minutiA+"."+secondiA.ToString(), minutiU + "." + secondiU.ToString());
                 }
                 Thread.Sleep(1000);
             }
@@ -65,8 +66,8 @@ namespace ScacchiP2P
             w = MainWindow.GetMainWindow();
             minutiA = tempo;
             minutiU = tempo;
-            tempoU = 0;
-            tempoA = 0;
+            secondiU = 0;
+            secondiA = 0;
         }
 
         public void startTA()
