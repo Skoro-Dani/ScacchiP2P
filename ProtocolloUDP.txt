@@ -40,8 +40,9 @@ Avvio gioco:
 	(chi ha il bianco invia)
 	ms;//messagio che indicherà l'inizio della partita(avvio timer)
 
-	m;daPos;aPos;inizialeStandardEnglish;patta	
-	m;a1;a2;R;false //esempio
+	m;daPos;aPos;inizialeStandardEnglish;patta;PedoneCambiato
+	m;a1;a2;R;false;; //esempio senza cambiamento
+	m;a7;a8;P;false;Q; //esempio con cambiamento
 	
 	(se patta = true):
 	y;m;->finisce la partita in parità
