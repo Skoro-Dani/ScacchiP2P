@@ -527,10 +527,10 @@ namespace ScacchiP2P
         private void BTTN_Disconnetiti_Click(object sender, RoutedEventArgs e)
         {
             Dati.AddStringDI("d;");
-            Dati.AzzeraDati();
             sc.AzzeraDati();
             disableAll();
             MessageBox.Show("Ti sei Disconessio", "Disconnesione", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Dati.AzzeraDati();
         }
         //disabilita tutti i controlli
         private void disableAll()
