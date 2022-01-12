@@ -513,6 +513,7 @@ namespace ScacchiP2P
         //metodo chiusura della finestra
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
+            Dati.AddStringDI("d;");
             Dati.Flag = true;
             dg.deserialize();
             for (int i = 0; i < dg.lista.Count; i++)

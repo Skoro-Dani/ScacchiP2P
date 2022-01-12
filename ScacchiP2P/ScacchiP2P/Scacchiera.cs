@@ -482,6 +482,7 @@ namespace ScacchiP2P
             else T.Timer_ = false;
             GeneraScacchiera();
             Pstart = true;
+            rivincita = false;
         }
         public void ControlloVittoria(Pezzo[,] sc)
         {
