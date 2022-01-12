@@ -108,14 +108,18 @@
             </TabItem>
             <TabItem x:Name="TAB_Rivincita" Header="Rivincita" IsEnabled="False">
                 <Grid Background="#FF1B1B1B" Margin="0,0,-1,0" HorizontalAlignment="Left" Width="712">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="72*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                     </Grid.RowDefinitions>
-                    <Label x:Name="LBL_Risultato" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="50" Width="692" Foreground="White" FontSize="24" FontWeight="Bold"/>
-                    <Label x:Name="LBL_Rivincita" Content="Rivincita? Si giocherà la stessa modalita, ma i colori saranno invertiti" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Height="32" Width="378" Foreground="White"/>
-                    <Button x:Name="BBTN_Rivincitas" Content="si" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="169" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BBTN_Rivincitas_Click"/>
-                    <Button x:Name="BBTN_Rivincitan" Content="no" HorizontalAlignment="Left" Margin="219,115,0,0" VerticalAlignment="Top" Width="169" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BTTN_Disconnetiti_Click"/>
-                    <Label x:Name="LBL_avversarioRiv" Content="Aspettando la risposta dell'avversario" HorizontalAlignment="Left" Margin="10,157,0,0" VerticalAlignment="Top" Width="378" Foreground="White"/>
-                    <Button x:Name="BTTN_Disconnetiti_Copy1" Content="Disconnetiti" Margin="10,205,324,0" VerticalAlignment="Top" Height="32" Background="#FF6E6E6E" Foreground="White" Click="BTTN_Disconnetiti_Click"/>
+                    <Label x:Name="LBL_Risultato" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="50" Width="692" Foreground="White" FontSize="24" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                    <Label x:Name="LBL_Rivincita" Content="Rivincita? Si giocherà la stessa modalita, ma i colori saranno invertiti" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Height="32" Width="378" Foreground="White" Grid.ColumnSpan="2"/>
+                    <Button x:Name="BBTN_Rivincitas" Content="si" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="169" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BBTN_Rivincitas_Click" Grid.ColumnSpan="2"/>
+                    <Button x:Name="BBTN_Rivincitan" Content="no" HorizontalAlignment="Left" Margin="83,115,0,0" VerticalAlignment="Top" Width="169" Background="#FF6E6E6E" Foreground="White" Height="20" Click="BTTN_Disconnetiti_Click" Grid.Column="1"/>
+                    <Label x:Name="LBL_avversarioRiv" Content="Aspettando la risposta dell'avversario" HorizontalAlignment="Left" Margin="10,157,0,0" VerticalAlignment="Top" Width="378" Foreground="White" Grid.ColumnSpan="2"/>
+                    <Button x:Name="BTTN_Disconnetiti_Copy1" Content="Disconnetiti" Margin="10,205,324,0" VerticalAlignment="Top" Height="32" Background="#FF6E6E6E" Foreground="White" Click="BTTN_Disconnetiti_Click" Grid.ColumnSpan="2"/>
 
                 </Grid>
             </TabItem>

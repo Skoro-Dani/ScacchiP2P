@@ -431,6 +431,7 @@ namespace ScacchiP2P
             Dispatcher.Invoke(() =>
             {
                 sc.ArresaMet(true);
+
                 MessageBox.Show("L'avversario si è arreso", "Vittoria", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             });
         }
@@ -456,9 +457,9 @@ namespace ScacchiP2P
         {
             Dispatcher.Invoke(() =>
             {
+                disableAll();
                 Dati.AzzeraDati();
                 MessageBox.Show("L'avversario si è disconnesso", "Disconnesione", MessageBoxButton.OK);
-                disableAll();
                 TAB_NPartita.IsSelected = true;
             });
         }
@@ -562,6 +563,8 @@ namespace ScacchiP2P
             TAB_partita.Visibility = Visibility.Hidden;
             TAB_Rivincita.Visibility = Visibility.Hidden;
             LBL_Risultato.Content = "";
+            BBTN_Rivincitas.IsEnabled = true;
+            BBTN_Rivincitan.IsEnabled = true;
         }
         //aggiorna il timer
         public void RefreshTimer(string ValoreA, string ValoreU)
@@ -579,6 +582,7 @@ namespace ScacchiP2P
                 TAB_Rivincita.Visibility = Visibility.Visible;
                 TAB_Rivincita.IsSelected = true;
                 TAB_Rivincita.IsEnabled = true;
+                TAB_partita.IsEnabled = false;
                 string mess = "";
                 if (sc.APatta == false)
                 {
@@ -649,6 +653,8 @@ namespace ScacchiP2P
         {
             Dati.AddStringDI("a;");
             sc.controllorivincita(true);
+            BBTN_Rivincitas.IsEnabled = false;
+            BBTN_Rivincitan.IsEnabled = false;
         }
         public void rivincita()
         {
