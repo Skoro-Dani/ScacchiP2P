@@ -58,7 +58,7 @@ namespace ScacchiP2P
 
             RefreshScacchiera();
             disableAll();
-            //start();
+            start();
         }
 
         //metodo che serve a riconoscere dove clicca l'utente

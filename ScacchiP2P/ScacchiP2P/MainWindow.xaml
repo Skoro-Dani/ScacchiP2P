@@ -136,9 +136,9 @@
         </TabControl>
 
 
-        <TextBox x:Name="TXT_portascrittura" Grid.Column="3" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069"/>
-        <TextBox x:Name="TXT_portaascolto" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="0,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069" Grid.RowSpan="2"/>
-        <Button x:Name="BTTN_collegati" Content="Button" Grid.Column="3" HorizontalAlignment="Left" Margin="125,20,0,0" VerticalAlignment="Top" Width="110" Click="BTTN_collegati_Click" Height="20"/>
+        <TextBox x:Name="TXT_portascrittura" Grid.Column="3" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069" Visibility="Hidden"/>
+        <TextBox x:Name="TXT_portaascolto" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="0,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="42069" Grid.RowSpan="2" Visibility="Hidden"/>
+        <Button x:Name="BTTN_collegati" Content="Button" Grid.Column="3" HorizontalAlignment="Left" Margin="125,20,0,0" VerticalAlignment="Top" Width="110" Click="BTTN_collegati_Click" Height="20" Visibility="Hidden"/>
 
     </Grid>
 </Window>

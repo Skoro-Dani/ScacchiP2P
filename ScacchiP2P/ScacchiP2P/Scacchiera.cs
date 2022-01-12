@@ -437,40 +437,41 @@ namespace ScacchiP2P
             Pezzo[,] scProv = (Pezzo[,])sc.Clone();
             //Posizione Re
             CPunto posRe = new CPunto(-1, -1, true, true);
-            bool trovato = false;
-            //Ciclo che percorre tutta la scacchiera
-            for (int x = 0; x < 8; x++)
+            if (scProv[Pos1.x, Pos1.y].Nome == Pezzo.InizialePezzo.Re)
+                posRe = Pos2;
+            else
             {
-                for (int y = 0; y < 8; y++)
+                //Ciclo che percorre tutta la scacchiera
+                for (int x = 0; x < 8; x++)
                 {
-                    if (sc[x, y] != null)
-                        //Controllo che il pezzo si un re e che il colore sia uguale al pezzo
-                        if (sc[x, y].Nome == Pezzo.InizialePezzo.Re && sc[x, y].Colore == P.Colore)
-                        {
-                            posRe.x = x;
-                            posRe.y = y;
-                            trovato = true;
-                        }
+                    for (int y = 0; y < 8; y++)
+                    {
+                        if (sc[x, y] != null)
+                            //Controllo che il pezzo si un re e che il colore sia uguale al pezzo
+                            if (sc[x, y].Nome == Pezzo.InizialePezzo.Re && sc[x, y].Colore == P.Colore)
+                            {
+                                posRe.x = x;
+                                posRe.y = y;
+                            }
+                    }
                 }
             }
-            if (trovato == true)
+
+            
+            scProv[Pos2.x, Pos2.y] = scProv[Pos1.x, Pos1.y];
+            scProv[Pos1.x, Pos1.y] = null;
+            //decido chi sarà il nemico a seconda del colore del pezzo
+            if (P.Colore == Pezzo.inColore.Bianco)
+                PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Nero);
+            else
+                PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Bianco);
+            //ciclo che percorre tutte le posizioni dove mangiano
+            for (int i = 0; i < PosDoveMangiano.Count; i++)
             {
-                if (scProv[Pos1.x, Pos1.y].Nome == Pezzo.InizialePezzo.Re)
-                    posRe = Pos2;
-                scProv[Pos2.x, Pos2.y] = scProv[Pos1.x, Pos1.y];
-                scProv[Pos1.x, Pos1.y] = null;
-                //decido chi sarà il nemico a seconda del colore del pezzo
-                if (P.Colore == Pezzo.inColore.Bianco)
-                    PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Nero);
-                else
-                    PosDoveMangiano = PosInCuiSiMangiaNemico(scProv, Pezzo.inColore.Bianco);
-                //ciclo che percorre tutte le posizioni dove mangiano
-                for (int i = 0; i < PosDoveMangiano.Count; i++)
-                {
-                    if (posRe.equal(PosDoveMangiano[i]) == true)
-                        Scacco = true;
-                }
+                if (posRe.equal(PosDoveMangiano[i]) == true)
+                    Scacco = true;
             }
+
             return Scacco;
         }
         //metodo pubblico per ottenere le posizioni
