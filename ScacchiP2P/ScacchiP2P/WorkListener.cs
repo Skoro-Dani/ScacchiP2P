@@ -1,4 +1,6 @@
-﻿namespace ScacchiP2P
+﻿using System;
+
+namespace ScacchiP2P
 {
     class WorkListener
     {
@@ -43,11 +45,14 @@
                                 }
                                 else
                                 {
-                                    if(s[5]!="")
+                                    if (s.Length == 7 && s[5] != "")
                                     {
                                         sc.Mossa(s[1], s[2], true, Pezzo.inizialestring(s[5]));
                                     }
-                                    else sc.Mossa(s[1], s[2], false, Pezzo.InizialePezzo.Vuoto);
+                                    else
+                                    {
+                                        sc.Mossa(s[1], s[2], false, Pezzo.InizialePezzo.Vuoto);
+                                    }
                                 }
                             }
                             break;
@@ -151,6 +156,9 @@
                                     w.PattaRifutata();
                                     break;
                             }
+                            break;
+                        default:
+                            Console.WriteLine(Dati.DatiRL[count]);
                             break;
                     }
                     count++;

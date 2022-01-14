@@ -437,27 +437,28 @@ namespace ScacchiP2P
             Pezzo[,] scProv = (Pezzo[,])sc.Clone();
             //Posizione Re
             CPunto posRe = new CPunto(-1, -1, true, true);
-            if (scProv[Pos1.x, Pos1.y].Nome == Pezzo.InizialePezzo.Re)
-                posRe = Pos2;
-            else
-            {
-                //Ciclo che percorre tutta la scacchiera
-                for (int x = 0; x < 8; x++)
+            if (scProv[Pos1.x, Pos1.y] != null)
+                if (scProv[Pos1.x, Pos1.y].Nome == Pezzo.InizialePezzo.Re)
+                    posRe = Pos2;
+                else
                 {
-                    for (int y = 0; y < 8; y++)
+                    //Ciclo che percorre tutta la scacchiera
+                    for (int x = 0; x < 8; x++)
                     {
-                        if (sc[x, y] != null)
-                            //Controllo che il pezzo si un re e che il colore sia uguale al pezzo
-                            if (sc[x, y].Nome == Pezzo.InizialePezzo.Re && sc[x, y].Colore == P.Colore)
-                            {
-                                posRe.x = x;
-                                posRe.y = y;
-                            }
+                        for (int y = 0; y < 8; y++)
+                        {
+                            if (sc[x, y] != null)
+                                //Controllo che il pezzo si un re e che il colore sia uguale al pezzo
+                                if (sc[x, y].Nome == Pezzo.InizialePezzo.Re && sc[x, y].Colore == P.Colore)
+                                {
+                                    posRe.x = x;
+                                    posRe.y = y;
+                                }
+                        }
                     }
                 }
-            }
 
-            
+
             scProv[Pos2.x, Pos2.y] = scProv[Pos1.x, Pos1.y];
             scProv[Pos1.x, Pos1.y] = null;
             //decido chi sarà il nemico a seconda del colore del pezzo
